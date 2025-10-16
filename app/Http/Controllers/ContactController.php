@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactFormMail;
+use Illuminate\Support\Facades\Validator;
+
+class ContactController extends Controller
+{
+    public function send(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string'
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Store contact message in database if needed
+        // $contact = Contact::create($request->all());
+
+        // Send email
+        try {
+            Mail::to(config('mail.from.address'))->send(new ContactFormMail($request->all()));
+            return redirect()->back()->with('success', 'Thank you for your message. We will get back to you soon!');
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->with('error', 'Sorry, there was an error sending your message. Please try again later.')
+                ->withInput();
+        }
+    }
+}
