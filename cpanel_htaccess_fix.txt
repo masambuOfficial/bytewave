@@ -1,0 +1,39 @@
+# .htaccess file for cPanel Laravel deployment
+# Place this in your public_html folder if Laravel is in a subfolder
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Handle Angular routes (if using frontend routing)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/your-laravel-folder/
+    
+    # Redirect to Laravel public folder
+    RewriteRule ^(.*)$ /your-laravel-folder/public/$1 [L]
+</IfModule>
+
+# Alternative: If you want to point domain directly to Laravel
+# Move this content to your-laravel-folder/public/.htaccess instead:
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Send Requests To Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>

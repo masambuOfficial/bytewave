@@ -26,17 +26,14 @@ return [
             'report' => false,
         ],
 
-        // === THIS IS THE SECTION TO CHANGE ===
         'public' => [
             'driver' => 'local',
-            // Change storage_path to public_path
-            'root' => public_path('storage'), // <-- THE ONLY LINE THAT CHANGES
+            'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
         ],
-        // === END OF CHANGED SECTION ===
 
         's3' => [
             'driver' => 's3',
