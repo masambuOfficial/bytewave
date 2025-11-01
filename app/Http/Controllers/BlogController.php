@@ -107,12 +107,18 @@ class BlogController extends Controller
         $blog->incrementViews();
 
         // Load relationships
-        $blog->load(['author', 'category', 'tags', 'approvedComments.user', 'approvedComments.replies']);
+        $blog->load(['author', 'category', 'tags']);
 
         // Get related articles
-        $relatedArticles = $blog->getRelatedPosts(3);
+        $relatedArticles = Blog::published()
+            ->where('id', '!=', $blog->id)
+            ->where('category_id', $blog->category_id)
+            ->with(['author', 'category'])
+            ->latest()
+            ->limit(3)
+            ->get();
 
-        return view('blog.show', compact('blog', 'relatedArticles'));
+        return view('blog.show-new', compact('blog', 'relatedArticles'));
     }
 
     /**
