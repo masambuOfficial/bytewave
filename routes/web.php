@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\NewsletterController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PortfolioController;
@@ -30,10 +31,18 @@ Route::view('/faqs', 'pages.faqs')->name('faqs');
 Route::view('/help', 'pages.help')->name('help');
 
 // Blog routes
-Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
-Route::get('/blog/search', [BlogController::class, 'search'])->name('blog.search');
-Route::get('/blog/category/{category}', [BlogController::class, 'category'])->name('blog.category');
-Route::get('/blog/{post}', [BlogController::class, 'show'])->name('blog.show');
+Route::prefix('blog')->name('blog.')->group(function () {
+    Route::get('/', [BlogController::class, 'index'])->name('index');
+    Route::get('/all', [BlogController::class, 'all'])->name('all');
+    Route::get('/category/{category:slug}', [BlogController::class, 'category'])->name('category');
+    Route::get('/tag/{tag:slug}', [BlogController::class, 'tag'])->name('tag');
+    Route::get('/{blog:slug}', [BlogController::class, 'show'])->name('show');
+    Route::post('/{blog:slug}/comments', [BlogController::class, 'storeComment'])->name('comments.store');
+});
+
+// Newsletter routes
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::get('/newsletter/unsubscribe/{token}', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
 
 // Product routes
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
@@ -48,6 +57,10 @@ Route::get('/portfolios', [PortfolioController::class, 'index'])->name('portfoli
 Route::get('/portfolios/{portfolio}', [PortfolioController::class, 'show'])->name('portfolios.show');
 
 // Admin routes
+Route::get('/admin', function () {
+    return redirect()->route('admin.dashboard');
+})->middleware(['auth', 'admin']);
+
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     

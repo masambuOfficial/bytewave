@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'newsapi' => [
+        'key' => env('NEWS_API_KEY'),
+        'sources' => env('NEWS_API_SOURCES', 'techcrunch,the-verge,wired,ars-technica'),
+    ],
+
 ];

@@ -2,123 +2,183 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post;
+use App\Models\Blog;
+use App\Models\Category;
 use App\Models\Tag;
+use App\Models\Comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\DB;
 
 class BlogController extends Controller
 {
     /**
-     * Display a listing of blog posts.
+     * Display blog overview page (hero + latest posts)
      */
     public function index()
     {
-        $posts = Post::with(['author', 'tags'])
-            ->when(request('category'), function($query, $category) {
-                return $query->where('category', $category);
-            })
-            ->when(request('tag'), function($query, $tag) {
-                return $query->whereHas('tags', function($q) use ($tag) {
-                    $q->where('slug', $tag);
-                });
-            })
-            ->orderBy('created_at', 'desc')
-            ->paginate(9);
+        // Get hero article
+        $heroArticle = Blog::published()
+            ->hero()
+            ->with(['author', 'category', 'tags'])
+            ->first();
 
-        // Get all categories
-        $categories = Post::select('category')
-            ->whereNotNull('category')
-            ->distinct()
-            ->pluck('category');
+        // Get latest 5 posts for sidebar
+        $latestPosts = Blog::published()
+            ->with(['author', 'category'])
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // Get featured articles for "Latest from the blog" section
+        $featuredArticles = Blog::published()
+            ->featured()
+            ->with(['author', 'category', 'tags'])
+            ->latest()
+            ->take(6)
+            ->get();
+
+        // Get all categories for "Explore topics"
+        $categories = Category::withCount('blogs')->get();
 
         // Get popular tags
-        $tags = Tag::withCount('posts')
-            ->orderBy('posts_count', 'desc')
+        $popularTags = Tag::withCount('blogs')
+            ->orderBy('blogs_count', 'desc')
             ->take(10)
             ->get();
 
-        return view('blog.index', compact('posts', 'categories', 'tags'));
+        return view('blog.index', compact(
+            'heroArticle',
+            'latestPosts',
+            'featuredArticles',
+            'categories',
+            'popularTags'
+        ));
     }
 
     /**
-     * Display the specified blog post.
+     * Display all articles page with filters and search
      */
-    public function show(Post $post)
+    public function all(Request $request)
     {
-        $relatedPosts = Post::where('category', $post->category)
-            ->where('id', '!=', $post->id)
-            ->take(3)
-            ->get();
+        $query = Blog::published()->with(['author', 'category', 'tags']);
 
-        // Get all categories
-        $categories = Post::select('category')
-            ->whereNotNull('category')
-            ->distinct()
-            ->pluck('category');
+        // Search
+        if ($search = $request->get('search')) {
+            $query->search($search);
+        }
 
-        // Get popular tags
-        $tags = Tag::withCount('posts')
-            ->orderBy('posts_count', 'desc')
-            ->take(10)
-            ->get();
+        // Filter by category
+        if ($categoryId = $request->get('category')) {
+            $query->byCategory($categoryId);
+        }
 
-        return view('blog.show', compact('post', 'relatedPosts', 'categories', 'tags'));
+        // Filter by tag
+        if ($tagId = $request->get('tag')) {
+            $query->byTag($tagId);
+        }
+
+        // Sort
+        $sort = $request->get('sort', 'recent');
+        switch ($sort) {
+            case 'popular':
+                $query->popular();
+                break;
+            case 'featured':
+                $query->featured();
+                break;
+            default:
+                $query->latest();
+        }
+
+        $articles = $query->paginate(12);
+
+        // Get all categories and tags for filters
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('blog.all', compact('articles', 'categories', 'tags', 'search', 'sort'));
     }
 
     /**
-     * Display blog posts by category.
+     * Display single article
      */
-    public function category($category)
+    public function show(Blog $blog)
     {
-        $posts = Post::with(['author', 'tags'])
-            ->where('category', $category)
-            ->orderBy('created_at', 'desc')
-            ->paginate(9);
+        // Increment view count
+        $blog->incrementViews();
 
-        // Get all categories
-        $categories = Post::select('category')
-            ->whereNotNull('category')
-            ->distinct()
-            ->pluck('category');
+        // Load relationships
+        $blog->load(['author', 'category', 'tags', 'approvedComments.user', 'approvedComments.replies']);
 
-        // Get popular tags
-        $tags = Tag::withCount('posts')
-            ->orderBy('posts_count', 'desc')
-            ->take(10)
-            ->get();
+        // Get related articles
+        $relatedArticles = $blog->getRelatedPosts(3);
 
-        return view('blog.index', compact('posts', 'categories', 'tags'))
-            ->with('category', $category);
+        return view('blog.show', compact('blog', 'relatedArticles'));
     }
 
     /**
-     * Search blog posts.
+     * Display articles by category
      */
-    public function search(Request $request)
+    public function category(Category $category)
     {
-        $query = $request->get('q');
-        
-        $posts = Post::with(['author', 'tags'])
-            ->where('title', 'like', "%{$query}%")
-            ->orWhere('content', 'like', "%{$query}%")
-            ->orderBy('created_at', 'desc')
-            ->paginate(9);
+        $articles = Blog::published()
+            ->byCategory($category->id)
+            ->with(['author', 'category', 'tags'])
+            ->latest()
+            ->paginate(12);
 
-        // Get all categories
-        $categories = Post::select('category')
-            ->whereNotNull('category')
-            ->distinct()
-            ->pluck('category');
+        $categories = Category::all();
+        $tags = Tag::all();
 
-        // Get popular tags
-        $tags = Tag::withCount('posts')
-            ->orderBy('posts_count', 'desc')
-            ->take(10)
-            ->get();
+        return view('blog.all', compact('articles', 'category', 'categories', 'tags'));
+    }
 
-        return view('blog.index', compact('posts', 'categories', 'tags'))
-            ->with('search', $query);
+    /**
+     * Display articles by tag
+     */
+    public function tag(Tag $tag)
+    {
+        $articles = Blog::published()
+            ->byTag($tag->id)
+            ->with(['author', 'category', 'tags'])
+            ->latest()
+            ->paginate(12);
+
+        $categories = Category::all();
+        $tags = Tag::all();
+
+        return view('blog.all', compact('articles', 'tag', 'categories', 'tags'));
+    }
+
+    /**
+     * Store a comment
+     */
+    public function storeComment(Request $request, Blog $blog)
+    {
+        $validated = $request->validate([
+            'body' => 'required|min:3|max:1000',
+            'parent_id' => 'nullable|exists:comments,id'
+        ]);
+
+        $comment = new Comment($validated);
+        $comment->blog_id = $blog->id;
+
+        if (auth()->check()) {
+            $comment->user_id = auth()->id();
+        } else {
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|max:255'
+            ]);
+            $comment->name = $request->name;
+            $comment->email = $request->email;
+        }
+
+        // Auto-approve for authenticated users, require approval for guests
+        $comment->is_approved = auth()->check();
+        $comment->save();
+
+        return back()->with('success', auth()->check() 
+            ? 'Comment posted successfully!' 
+            : 'Comment submitted and awaiting approval.');
     }
 }

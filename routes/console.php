@@ -94,6 +94,11 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
+// Schedule: Fetch news articles automatically
+use Illuminate\Console\Scheduling\Schedule;
+
+app(Schedule::class)->command('news:fetch --limit=10')->everySixHours();
+
 Artisan::command('db:sync-production', function () {
     /** @var ClosureCommand $this */
     $this->info('Starting production database sync...');

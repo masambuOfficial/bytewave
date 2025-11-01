@@ -169,7 +169,7 @@
                             </div>
                             <div class="cta-content ms-4">
                                 <p class="mb-1 text-white">Mail Us Now</p>
-                                <h3 class="mb-0 text-white">info@bytewave.com</h3>
+                                <h3 class="mb-0"><a href="mailto:info@bytewaveinvestments.com" class="text-white text-decoration-none">info@bytewaveinvestments.com</a></h3>
                             </div>
                         </div>
                     </div>
