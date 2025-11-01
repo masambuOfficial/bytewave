@@ -18,7 +18,7 @@ class BlogSystemSeeder extends Seeder
             'slug' => 'bytewave-editorial',
             'email' => 'editorial@bytewave.com',
             'bio' => 'The BYTEWAVE editorial team brings you the latest in technology and multimedia.',
-            'avatar' => 'images/bytewave-logo.png'
+            'avatar' => '/bytewave_icon.jpg'
         ]);
 
         // Create categories
