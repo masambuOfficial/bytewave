@@ -146,6 +146,58 @@
         </div>
     </section>
 
+    <!-- Latest News & Articles Section -->
+    @if($heroArticle || $latestPosts->count() > 0)
+    <section class="bg-gray-50 py-5">
+        <div class="container mx-auto px-4">
+            <div class="section-header text-center mb-5">
+                <span class="section-subtitle">Stay Updated</span>
+                <h2 class="section-title">Latest News & Articles</h2>
+                <p class="text-gray-600 mt-2">Discover the latest insights, trends, and updates from the tech world</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+                @if($heroArticle)
+                <div class="lg:col-span-2">
+                    <x-blog.hero-article :article="$heroArticle" />
+                </div>
+                @endif
+                
+                @if($latestPosts->count() > 0)
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Latest Posts</h3>
+                    @foreach($latestPosts as $post)
+                        <a href="{{ route('blog.show', $post->slug) }}" class="block group">
+                            <div class="flex space-x-3 bg-white p-3 rounded-lg hover:shadow-md transition-shadow">
+                                <img 
+                                    src="{{ $post->cover_image }}" 
+                                    alt="{{ $post->title }}"
+                                    class="w-24 h-24 object-cover rounded-lg flex-shrink-0"
+                                >
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2 text-sm">
+                                        {{ $post->title }}
+                                    </h4>
+                                    <p class="text-xs text-gray-500 mt-1">
+                                        {{ $post->published_at?->format('M d, Y') }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    @endforeach
+                </div>
+                @endif
+            </div>
+            
+            <div class="text-center">
+                <a href="{{ route('blog.index') }}" class="btn btn-warning btn-lg px-4 py-2">
+                    View All Articles →
+                </a>
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- Call to Action -->
     <section class="cta-section py-5">
         <div class="container">

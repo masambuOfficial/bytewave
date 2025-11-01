@@ -7,13 +7,37 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactFormMail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Portfolio;
+use App\Models\Blog;
 
 class HomeController extends Controller
 {
     public function index()
     {
         $latestPortfolios = Portfolio::latest()->take(6)->get();
-        return view('home', compact('latestPortfolios'));
+        
+        // Get blog articles for homepage
+        $heroArticle = Blog::published()
+            ->with(['author', 'category'])
+            ->where('hero', true)
+            ->latest()
+            ->first();
+            
+        // If no hero article, get the latest one
+        if (!$heroArticle) {
+            $heroArticle = Blog::published()
+                ->with(['author', 'category'])
+                ->latest()
+                ->first();
+        }
+        
+        $latestPosts = Blog::published()
+            ->with(['author', 'category'])
+            ->where('id', '!=', $heroArticle?->id)
+            ->latest()
+            ->take(4)
+            ->get();
+        
+        return view('home', compact('latestPortfolios', 'heroArticle', 'latestPosts'));
     }
 
     public function about()
