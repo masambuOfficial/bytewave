@@ -198,6 +198,133 @@
     </section>
     @endif
     
+    <!-- Our Clients Section -->
+    <section class="clients-section py-5" style="background-color: #e3f2fd;">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold mb-3">Trusted by Leading Organizations</h2>
+                <p class="lead text-muted">Proud to partner with innovative companies across industries</p>
+            </div>
+            
+            <div class="clients-slider-wrapper">
+                <div class="clients-slider">
+                    <!-- First set of logos -->
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac Client Logo">
+                    </div>
+                    
+                    <!-- Duplicate set for seamless loop -->
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts Client Logo">
+                    </div>
+                    <div class="client-logo">
+                        <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac Client Logo">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .clients-section {
+            overflow: hidden;
+        }
+
+        .clients-slider-wrapper {
+            overflow: hidden;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .clients-slider {
+            display: flex;
+            gap: 60px;
+            animation: scroll 30s linear infinite;
+            width: fit-content;
+        }
+
+        .client-logo {
+            flex-shrink: 0;
+            width: 180px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .client-logo img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+
+        .client-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .client-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Pause animation on hover */
+        .clients-slider-wrapper:hover .clients-slider {
+            animation-play-state: paused;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .client-logo {
+                width: 140px;
+                height: 80px;
+            }
+
+            .clients-slider {
+                gap: 40px;
+                animation: scroll 20s linear infinite;
+            }
+        }
+    </style>
+    
     <!-- Call to Action -->
     <section class="cta-section py-5">
         <div class="container">
