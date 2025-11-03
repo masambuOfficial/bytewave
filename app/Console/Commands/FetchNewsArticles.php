@@ -22,11 +22,16 @@ class FetchNewsArticles extends Command
             return 1;
         }
 
-        $this->info('Found ' . count($articles) . ' articles. Importing...');
+        $this->info('Found ' . count($articles) . ' articles from NewsAPI. Importing...');
 
         $imported = $newsApiService->importArticles($articles);
 
-        $this->info("Successfully imported {$imported} new articles.");
+        if ($imported > 0) {
+            $this->info("✅ Successfully imported {$imported} new articles.");
+        } else {
+            $this->warn("⚠️  No new articles imported. All " . count($articles) . " articles already exist in database.");
+            $this->info("This is normal - NewsAPI free tier only provides recent articles (24-48 hours).");
+        }
 
         return 0;
     }

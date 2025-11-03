@@ -53,6 +53,7 @@ class NewsApiService
     public function importArticles($articles)
     {
         $imported = 0;
+        $skipped = 0;
         $defaultAuthor = Author::first();
 
         if (!$defaultAuthor) {
@@ -63,6 +64,8 @@ class NewsApiService
         foreach ($articles as $article) {
             // Skip if already exists
             if (Blog::where('source_url', $article['url'])->exists()) {
+                $skipped++;
+                Log::info('Skipping duplicate article', ['title' => $article['title']]);
                 continue;
             }
 
@@ -109,6 +112,12 @@ class NewsApiService
 
             $imported++;
         }
+
+        Log::info('Article import completed', [
+            'imported' => $imported,
+            'skipped' => $skipped,
+            'total_processed' => count($articles)
+        ]);
 
         return $imported;
     }
