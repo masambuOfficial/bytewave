@@ -97,8 +97,7 @@ Artisan::command('inspire', function () {
 // Schedule: Fetch news articles automatically
 use Illuminate\Console\Scheduling\Schedule;
 
-// Temporarily set to hourly for testing - change back to everySixHours() later
-app(Schedule::class)->command('news:fetch --limit=10')->hourly();
+app(Schedule::class)->command('news:fetch --limit=10')->everySixHours();
 
 Artisan::command('db:sync-production', function () {
     /** @var ClosureCommand $this */
