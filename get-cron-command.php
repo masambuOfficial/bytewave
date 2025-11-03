@@ -4,7 +4,7 @@
  * Access via: https://yourdomain.com/get-cron-command.php
  */
 
-$basePath = __DIR__;
+$basePath = dirname(__DIR__); // Parent directory since we're in public/
 $phpPath = PHP_BINARY;
 
 echo "<h2>cPanel Cron Job Setup Instructions</h2>";
