@@ -50,6 +50,7 @@ Route::get('/products/{product}', [ProductController::class, 'show'])->name('pro
 
 // Service routes
 Route::get('/services', [ServiceController::class, 'index'])->name('services.index');
+Route::get('/services/audio-visual-production', [ServiceController::class, 'audioVisual'])->name('services.audio-visual');
 Route::get('/services/{service}', [ServiceController::class, 'show'])->name('services.show');
 
 // Portfolio routes

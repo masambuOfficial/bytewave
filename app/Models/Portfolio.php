@@ -59,6 +59,7 @@ class Portfolio extends Model
      */
     public function hasImage()
     {
-        return $this->image_url && $this->image_url !== 'images/no-image.png';
+        $rawValue = $this->getRawOriginal('image_url');
+        return $rawValue && $rawValue !== 'images/no-image.png';
     }
 }

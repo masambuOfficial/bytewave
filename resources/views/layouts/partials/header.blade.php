@@ -15,18 +15,18 @@
                 <div class="hidden xl:flex items-center text-blue-600">
                     <small>Quality Digital Services You Really Need!</small>
                 </div>
-                <div class="flex items-center space-x-2">
-                    <a href="#" class="bg-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors" title="Facebook">
-                        <i class="fab fa-facebook-f text-blue-600 text-sm"></i>
+                <div class="flex gap-2">
+                    <a href="#" class="bg-bytewave-blue w-8 text-white hover:text-bytewave-blue h-8 rounded-full flex items-center justify-center hover:bg-bytewave-gold transition-all duration-500 ease-in-out hover:scale-110 social-icon" title="Facebook">
+                        <i class="fab fa-facebook-f"></i>
                     </a>
-                    <a href="#" class="bg-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors" title="Twitter">
-                        <i class="fab fa-twitter text-blue-600 text-sm"></i>
+                    <a href="#" class="bg-bytewave-blue w-8 text-white hover:text-bytewave-blue h-8 rounded-full flex items-center justify-center hover:bg-bytewave-gold transition-all duration-500 ease-in-out hover:scale-110 social-icon" title="Twitter">
+                        <i class="fab fa-twitter"></i>
                     </a>
-                    <a href="#" class="bg-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors" title="Instagram">
-                        <i class="fab fa-instagram text-blue-600 text-sm"></i>
+                    <a href="#" class="bg-bytewave-blue w-8 text-white hover:text-bytewave-blue h-8 rounded-full flex items-center justify-center hover:bg-bytewave-gold transition-all duration-500 ease-in-out hover:scale-110 social-icon" title="Instagram">
+                        <i class="fab fa-instagram"></i>
                     </a>
-                    <a href="#" class="bg-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-blue-50 transition-colors" title="LinkedIn">
-                        <i class="fab fa-linkedin-in text-blue-600 text-sm"></i>
+                    <a href="#" class="bg-bytewave-blue w-8 text-white hover:text-bytewave-blue h-8 rounded-full flex items-center justify-center hover:bg-bytewave-gold transition-all duration-500 ease-in-out hover:scale-110 social-icon" title="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
             </div>

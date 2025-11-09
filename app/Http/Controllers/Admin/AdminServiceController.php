@@ -30,7 +30,11 @@ class AdminServiceController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('services', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = Str::slug($validated['name']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('services', $filename, 'public');
             $validated['image'] = $path;
         }
 
@@ -57,7 +61,11 @@ class AdminServiceController extends Controller
         ]);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('services', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = Str::slug($validated['name']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('services', $filename, 'public');
             $validated['image'] = $path;
         }
 

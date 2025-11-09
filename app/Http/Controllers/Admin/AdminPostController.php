@@ -46,7 +46,11 @@ class AdminPostController extends Controller
         }
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('posts', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = \Str::slug($validated['title']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('posts', $filename, 'public');
             $validated['image'] = $path;
         }
 
@@ -94,7 +98,11 @@ class AdminPostController extends Controller
                 \Storage::disk('public')->delete($post->image);
             }
             
-            $path = $request->file('image')->store('posts', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = \Str::slug($validated['title']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('posts', $filename, 'public');
             $validated['image'] = $path;
         }
 

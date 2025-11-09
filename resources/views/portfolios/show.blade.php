@@ -4,14 +4,14 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5">
-        <div class="container text-center py-5">
-            <h1 class="display-2 text-warning mb-4 animated slideInDown">{{ $portfolio->title }}</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a class="text-white" href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a class="text-white" href="{{ route('portfolios.index') }}">Portfolio</a></li>
-                    <li class="breadcrumb-item text-white active" aria-current="page">{{ $portfolio->title }}</li>
+    <div class="w-full py-20 bg-cover bg-center bg-no-repeat relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('css/img/bg-1.jpg') }}');">
+        <div class="max-w-7xl mx-auto px-4 text-center py-12">
+            <h1 class="text-5xl md:text-6xl text-yellow-500 mb-6 font-bold animate-fade-in-down">{{ $portfolio->title }}</h1>
+            <nav aria-label="breadcrumb" class="animate-fade-in-down">
+                <ol class="flex justify-center items-center space-x-2 text-white">
+                    <li><a class="text-white hover:text-yellow-500 transition-colors" href="{{ url('/') }}">Home</a></li>
+                    <li class="before:content-['/'] before:mx-2"><a class="text-white hover:text-yellow-500 transition-colors" href="{{ route('portfolios.index') }}">Portfolio</a></li>
+                    <li class="before:content-['/'] before:mx-2">{{ $portfolio->title }}</li>
                 </ol>
             </nav>
         </div>
@@ -19,70 +19,69 @@
     <!-- Page Header End -->
 
     <!-- Portfolio Details Start -->
-    <div class="container-fluid py-5 my-5">
-        <div class="container py-5">
-            <div class="row g-5">
+    <div class="w-full py-12 my-12">
+        <div class="max-w-7xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
                 <!-- Project Image -->
-                <div class="col-lg-6 wow fadeIn" data-wow-delay=".3s">
-                    <div class="position-relative">
+                <div class="animate-fade-in">
+                    <div class="relative">
                         <img src="{{ asset($portfolio->image_url) }}" 
-                             class="img-fluid w-100 rounded" 
-                             alt="{{ $portfolio->title }}"
-                             style="max-height: 500px; object-fit: cover;">
+                             class="w-full rounded-lg shadow-lg max-h-[500px] object-cover" 
+                             alt="{{ $portfolio->title }}">
                         @if($portfolio->project_url)
                             <a href="{{ $portfolio->project_url }}" 
                                target="_blank" 
-                               class="btn btn-warning text-white position-absolute top-0 end-0 m-3 px-4 py-2 rounded-pill">
-                                <i class="fas fa-external-link-alt me-2"></i>Visit Project
+                               class="absolute top-0 right-0 m-4 bg-yellow-500 text-white px-6 py-3 rounded-full hover:bg-yellow-600 transition-colors inline-flex items-center">
+                                <i class="fas fa-external-link-alt mr-2"></i>Visit Project
                             </a>
                         @endif
                     </div>
                 </div>
 
                 <!-- Project Details -->
-                <div class="col-lg-6 wow fadeIn" data-wow-delay=".5s">
-                    <div class="h-100">
-                        <h2 class="display-6 mb-4">{{ $portfolio->title }}</h2>
+                <div class="animate-fade-in">
+                    <div class="h-full">
+                        <h2 class="text-4xl md:text-5xl font-bold mb-6">{{ $portfolio->title }}</h2>
                         
-                        <div class="row mb-4">
-                            <div class="col-sm-6 mb-3">
-                                <h6 class="text-primary">Client</h6>
-                                <p class="mb-0">{{ $portfolio->client ?? 'Confidential' }}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
+                            <div>
+                                <h6 class="text-blue-600 font-semibold text-sm uppercase mb-2">Client</h6>
+                                <p class="text-gray-700">{{ $portfolio->client ?? 'Confidential' }}</p>
                             </div>
-                            <div class="col-sm-6 mb-3">
-                                <h6 class="text-primary">Completion Date</h6>
-                                <p class="mb-0">{{ $portfolio->completion_date->format('F Y') }}</p>
+                            <div>
+                                <h6 class="text-blue-600 font-semibold text-sm uppercase mb-2">Completion Date</h6>
+                                <p class="text-gray-700">{{ $portfolio->completion_date->format('F Y') }}</p>
                             </div>
-                            <div class="col-sm-6 mb-3">
-                                <h6 class="text-primary">Category</h6>
-                                <p class="mb-0">{{ $portfolio->category }}</p>
+                            <div>
+                                <h6 class="text-blue-600 font-semibold text-sm uppercase mb-2">Category</h6>
+                                <p class="text-gray-700">{{ $portfolio->category }}</p>
                             </div>
                             @if($portfolio->technologies)
-                            <div class="col-sm-6 mb-3">
-                                <h6 class="text-primary">Technologies Used</h6>
-                                <div class="technologies">
+                            <div>
+                                <h6 class="text-blue-600 font-semibold text-sm uppercase mb-2">Technologies Used</h6>
+                                <div class="flex flex-wrap gap-2">
                                     @foreach($portfolio->technologies as $tech)
-                                        <span class="badge bg-primary me-1 mb-1">{{ $tech }}</span>
+                                        <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">{{ $tech }}</span>
                                     @endforeach
                                 </div>
                             </div>
                             @endif
                         </div>
 
-                        <div class="mb-4">
-                            <h5 class="text-primary mb-3">Project Overview</h5>
-                            <p class="lead mb-4">{{ $portfolio->description }}</p>
+                        <div class="mb-6">
+                            <h5 class="text-blue-600 font-semibold text-xl mb-3">Project Overview</h5>
+                            <p class="text-lg text-gray-700 leading-relaxed mb-4">{{ $portfolio->description }}</p>
                         </div>
 
-                        <div class="mb-4">
-                            <h5 class="text-primary mb-3">Work Done</h5>
-                            <p>{{ $portfolio->work_done }}</p>
+                        <div class="mb-6">
+                            <h5 class="text-blue-600 font-semibold text-xl mb-3">Work Done</h5>
+                            <p class="text-gray-700 leading-relaxed">{{ $portfolio->work_done }}</p>
                         </div>
 
-                        <div class="mt-5">
-                            <h4 class="mb-3">Start Your Project with Us</h4>
-                            <p class="text-muted">Interested in working with us? Let's discuss your project and create something amazing together.</p>
-                            <a href="{{ route('contact') }}" class="btn btn-primary text-white px-5 py-3 rounded-pill">
+                        <div class="mt-8 p-6 bg-gray-50 rounded-lg">
+                            <h4 class="text-2xl font-bold mb-3">Start Your Project with Us</h4>
+                            <p class="text-gray-600 mb-4">Interested in working with us? Let's discuss your project and create something amazing together.</p>
+                            <a href="{{ route('contact') }}" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-semibold hover:bg-blue-700 transition-colors">
                                 Get Started
                             </a>
                         </div>
@@ -92,29 +91,26 @@
 
             @if($relatedPortfolios->isNotEmpty())
             <!-- Related Projects Start -->
-            <div class="related-projects mt-5 pt-5 border-top">
-                <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
-                    <h5 class="text-primary">More Projects</h5>
-                    <h1 class="text-warning">Similar Projects</h1>
+            <div class="mt-20 pt-12 border-t border-gray-200">
+                <div class="text-center mx-auto pb-12 max-w-2xl">
+                    <h5 class="text-blue-600 text-lg font-semibold mb-2">More Projects</h5>
+                    <h1 class="text-4xl md:text-5xl text-yellow-500 font-bold">Similar Projects</h1>
                 </div>
-                <div class="row g-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($relatedPortfolios as $relatedPortfolio)
-                        <div class="col-lg-4 wow fadeIn" data-wow-delay=".3s">
-                            <div class="portfolio-wrap">
-                                <div class="portfolio-img position-relative overflow-hidden">
+                        <div class="group">
+                            <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                                <div class="relative overflow-hidden rounded-t-lg">
                                     <img src="{{ asset($relatedPortfolio->image_url) }}" 
-                                         class="img-fluid w-100" 
-                                         alt="{{ $relatedPortfolio->title }}"
-                                         style="height: 250px; object-fit: cover;">
-                                    <div class="portfolio-overlay">
-                                        <div class="d-flex flex-column align-items-center justify-content-center h-100">
-                                            <h5 class="text-white mb-2">{{ $relatedPortfolio->title }}</h5>
-                                            <p class="text-white-50 mb-3">{{ $relatedPortfolio->category }}</p>
-                                            <a href="{{ route('portfolios.show', $relatedPortfolio->slug) }}" 
-                                               class="btn btn-warning text-white px-4 py-2 rounded-pill">
-                                                View Details
-                                            </a>
-                                        </div>
+                                         class="w-full h-64 object-cover" 
+                                         alt="{{ $relatedPortfolio->title }}">
+                                    <div class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                        <h5 class="text-white text-xl font-semibold mb-2">{{ $relatedPortfolio->title }}</h5>
+                                        <p class="text-white/70 mb-4">{{ $relatedPortfolio->category }}</p>
+                                        <a href="{{ route('portfolios.show', $relatedPortfolio->slug) }}" 
+                                           class="bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600 transition-colors">
+                                            View Details
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -126,51 +122,12 @@
             @endif
 
             <!-- Back to Portfolio -->
-            <div class="text-center mt-5">
-                <a href="{{ route('portfolios.index') }}" class="text-primary">
-                    <i class="fas fa-arrow-left me-2"></i>Back to Portfolio
+            <div class="text-center mt-12">
+                <a href="{{ route('portfolios.index') }}" class="text-blue-600 hover:text-blue-800 transition-colors inline-flex items-center text-lg">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Portfolio
                 </a>
             </div>
         </div>
     </div>
     <!-- Portfolio Details End -->
-@endsection
-
-@section('styles')
-<style>
-    .page-header {
-        background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)), url('{{ asset('css/img/bg-1.jpg') }}') center center no-repeat;
-        background-size: cover;
-    }
-    .page-header .breadcrumb-item + .breadcrumb-item::before {
-        color: var(--bs-white);
-    }
-    .portfolio-wrap {
-        transition: all 0.3s ease;
-    }
-    .portfolio-wrap:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-    }
-    .portfolio-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.7);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: all 0.3s ease;
-    }
-    .portfolio-img:hover .portfolio-overlay {
-        opacity: 1;
-    }
-    .technologies .badge {
-        font-size: 0.75rem;
-        padding: 0.5em 0.75em;
-    }
-</style>
 @endsection

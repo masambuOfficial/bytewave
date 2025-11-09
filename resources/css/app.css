@@ -7,6 +7,31 @@
 @source "../**/*.vue";
 
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    /* BYTEWAVE Brand Colors */
+    --color-bytewave-blue: #0773B8;
+    --color-bytewave-blue-50: #E6F3FB;
+    --color-bytewave-blue-100: #CCE7F7;
+    --color-bytewave-blue-200: #99CFEF;
+    --color-bytewave-blue-300: #66B7E7;
+    --color-bytewave-blue-400: #339FDF;
+    --color-bytewave-blue-500: #0773B8;
+    --color-bytewave-blue-600: #055C93;
+    --color-bytewave-blue-700: #04456E;
+    --color-bytewave-blue-800: #032E49;
+    --color-bytewave-blue-900: #011724;
+    
+    --color-bytewave-gold: #FBB145;
+    --color-bytewave-gold-50: #FEF5E7;
+    --color-bytewave-gold-100: #FEEBD0;
+    --color-bytewave-gold-200: #FDD7A1;
+    --color-bytewave-gold-300: #FCC372;
+    --color-bytewave-gold-400: #FBB145;
+    --color-bytewave-gold-500: #F9A62C;
+    --color-bytewave-gold-600: #E88F0F;
+    --color-bytewave-gold-700: #B76F0C;
+    --color-bytewave-gold-800: #865008;
+    --color-bytewave-gold-900: #553105;
 }

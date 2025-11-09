@@ -38,7 +38,13 @@ class AdminPortfolioController extends Controller
         ]);
 
         if ($request->hasFile('image_url')) {
-            $path = $request->file('image_url')->store('portfolios', 'public');
+            $file = $request->file('image_url');
+            $extension = $file->getClientOriginalExtension();
+            $slug = \Illuminate\Support\Str::slug($validated['title']);
+            $filename = $slug . '.' . $extension;
+            
+            // Store with descriptive filename
+            $path = $file->storeAs('portfolios', $filename, 'public');
             $validated['image_url'] = $path;
         }
 
@@ -110,9 +116,12 @@ class AdminPortfolioController extends Controller
                  Log::info("[Portfolio Update] No old image to delete.");
             }
             
-            // Store the new image
+            // Store the new image with descriptive filename
             Log::info("[Portfolio Update] Storing new image in 'portfolios' directory.");
-            $path = $request->file('image_url')->store('portfolios', 'public');
+            $extension = $file->getClientOriginalExtension();
+            $slug = \Illuminate\Support\Str::slug($validated['title']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('portfolios', $filename, 'public');
             $validated['image_url'] = $path;
             Log::info("[Portfolio Update] New image successfully stored. New path is: '{$path}'");
         } else {

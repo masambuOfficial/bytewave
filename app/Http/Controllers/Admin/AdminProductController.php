@@ -35,7 +35,11 @@ class AdminProductController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = Str::slug($validated['name']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('products', $filename, 'public');
             $validated['image_url'] = $path;
         }
 
@@ -65,7 +69,11 @@ class AdminProductController extends Controller
         $validated['slug'] = Str::slug($validated['name']);
 
         if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $slug = Str::slug($validated['name']);
+            $filename = $slug . '.' . $extension;
+            $path = $file->storeAs('products', $filename, 'public');
             $validated['image_url'] = $path;
         }
 
