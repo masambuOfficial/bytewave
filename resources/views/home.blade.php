@@ -250,128 +250,154 @@
     @endif
     
     <!-- Our Clients Section -->
-    <section class="clients-section py-12 md:py-20 bg-blue-50">
+    <section class="clients-section py-12 md:py-20 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Header Section -->
             <div class="text-center mb-12">
                 <h2 class="text-3xl md:text-5xl font-bold text-gray-900 mb-4">Trusted by Leading Organizations</h2>
                 <p class="text-lg text-gray-600">Proud to partner with innovative companies across industries</p>
             </div>
-            
-            <div class="clients-slider-wrapper">
-                <div class="clients-slider">
-                    <!-- First set of logos -->
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac Client Logo">
-                    </div>
-                    
-                    <!-- Duplicate set for seamless loop -->
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts Client Logo">
-                    </div>
-                    <div class="client-logo">
-                        <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac Client Logo">
-                    </div>
+
+            <!-- Clients Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+                <!-- Client 1 - 11AEW9AEC -->
+                <div class="client-card">
+                    <a href="#" class="client-logo-wrapper" title="11AEW9AEC">
+                        <div class="client-logo-container">
+                            <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 2 - Flourish Hub -->
+                <div class="client-card">
+                    <a href="#" class="client-logo-wrapper" title="Flourish Hub">
+                        <div class="client-logo-container">
+                            <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 3 - HESFB -->
+                <div class="client-card">
+                    <a href="#" class="client-logo-wrapper" title="HESFB">
+                        <div class="client-logo-container">
+                            <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 4 - Kafu Prime Cuts -->
+                <div class="client-card">
+                    <a href="#" class="client-logo-wrapper" title="Kafu Prime Cuts">
+                        <div class="client-logo-container">
+                            <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 5 - Modiac -->
+                <div class="client-card">
+                    <a href="#" class="client-logo-wrapper" title="Modiac">
+                        <div class="client-logo-container">
+                            <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 6 - IGAD -->
+                <div class="client-card">
+                    <a href="https://igad.int/" target="_blank" rel="noopener noreferrer" class="client-logo-wrapper" title="IGAD">
+                        <div class="client-logo-container">
+                            <img src="https://africa-knowledge-platform.ec.europa.eu/sites/default/files/styles/max_325x325/public/2024-01/IGAD_LOGO-01_pWTr1XF.png?itok=mFgrjoCu" alt="IGAD Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 7 - UIPE -->
+                <div class="client-card">
+                    <a href="https://uipe.co.ug/" target="_blank" rel="noopener noreferrer" class="client-logo-wrapper" title="UIPE">
+                        <div class="client-logo-container">
+                            <img src="https://uipe.co.ug/wp-content/uploads/2022/08/cropped-UIPE-logo-1.jpg" alt="UIPE Client Logo" class="client-logo">
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Client 8 - UVTAB -->
+                <div class="client-card">
+                    <a href="https://uvtab.go.ug/" target="_blank" rel="noopener noreferrer" class="client-logo-wrapper" title="UVTAB">
+                        <div class="client-logo-container">
+                            <img src="https://uvtab.go.ug/static/media/uvtab-logo.b50d6a6eb1c4f6887a4c.png" alt="UVTAB Client Logo" class="client-logo">
+                        </div>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
+        </div>
+    </section>
 
     <style>
+        /* Clients Grid Styling */
         .clients-section {
-            overflow: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
         }
 
-        .clients-slider-wrapper {
-            overflow: hidden;
-            padding: 20px 0;
-            position: relative;
+        .client-card {
+            width: 100%;
         }
 
-        .clients-slider {
-            display: flex;
-            gap: 60px;
-            animation: scroll 30s linear infinite;
-            width: fit-content;
-        }
-
-        .client-logo {
-            flex-shrink: 0;
-            width: 180px;
-            height: 100px;
+        .client-logo-wrapper {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            height: 100%;
+            text-decoration: none;
             transition: all 0.3s ease;
         }
 
-        .client-logo img {
-            max-width: 100%;
-            max-height: 100%;
+        .client-logo-container {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            padding: 12px;
+            background-color: #f0f9ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .client-logo {
+            max-width: 90%;
+            max-height: 90%;
             object-fit: contain;
-            filter: grayscale(100%);
-            opacity: 0.6;
             transition: all 0.3s ease;
         }
 
-        .client-logo:hover img {
-            filter: grayscale(0%);
-            opacity: 1;
-        }
-
-        .client-logo:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        @keyframes scroll {
-            0% {
-                transform: translateX(0);
-            }
-            100% {
-                transform: translateX(-50%);
-            }
-        }
-
-        /* Pause animation on hover */
-        .clients-slider-wrapper:hover .clients-slider {
-            animation-play-state: paused;
+        .client-logo-wrapper:hover .client-logo-container {
+            background-color: #ffffff;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+            border-color: rgba(59, 130, 246, 0.2);
+            transform: scale(1.08);
         }
 
         /* Responsive adjustments */
         @media (max-width: 768px) {
-            .client-logo {
-                width: 140px;
-                height: 80px;
+            .client-logo-container {
+                padding: 10px;
             }
 
-            .clients-slider {
-                gap: 40px;
-                animation: scroll 20s linear infinite;
+            .client-logo {
+                max-width: 85%;
+                max-height: 85%;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .client-logo-container {
+                padding: 8px;
             }
         }
     </style>
@@ -387,16 +413,16 @@
                         </div>
                         <div>
                             <p class="text-white/90 text-sm mb-1">Call Us Now</p>
-                            <h3 class="text-white text-2xl md:text-3xl font-bold">0773448069</h3>
+                            <h3 class="text-white text-2xl md:text-3xl font-bold">+256-782-440907</h3>
                         </div>
                     </div>
                     <div class="flex items-center gap-6">
                         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
                             <i class="fas fa-envelope-open text-bytewave-blue text-2xl"></i>
                         </div>
-                        <div>
+                        <div class="min-w-0">
                             <p class="text-white/90 text-sm mb-1">Mail Us Now</p>
-                            <h3 class="text-white text-xl md:text-2xl font-bold"><a href="mailto:info@bytewaveinvestments.com" class="hover:text-bytewave-gold transition-colors duration-300">info@bytewaveinvestments.com</a></h3>
+                            <a href="mailto:info@bytewaveinvestments.com" class="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold hover:text-bytewave-gold transition-colors duration-300 break-all">info@bytewaveinvestments.com</a>
                         </div>
                     </div>
                 </div>

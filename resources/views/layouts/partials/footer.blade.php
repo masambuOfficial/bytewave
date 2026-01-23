@@ -1,5 +1,5 @@
 <!-- Footer Start -->
-<div class="w-full footer bg-bytewave-blue wow fadeIn" data-wow-delay="0.1s">
+<div class="w-full footer bg-blue-600 wow fadeIn" data-wow-delay="0.1s">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="wow fadeInUp" data-wow-delay="0.1s">
