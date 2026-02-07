@@ -167,42 +167,108 @@
                             </div>
 
                             <div class="col-md-4">
-                                <!-- Image -->
                                 <div class="mb-3">
-                                    <label class="form-label">Project Image</label>
-                                    <div class="preview-wrapper mb-2">
-                                        @if(isset($portfolio) && $portfolio->hasImage())
-                                            <img src="{{ asset($portfolio->image_url) }}" 
-                                                 alt="Project Image Preview" 
-                                                 class="image-preview" 
+                                    <label class="form-label">Project Media</label>
+
+                                    <select class="form-select mb-2 @error('primary_media_type') is-invalid @enderror" id="primary_media_type" name="primary_media_type">
+                                        @php
+                                            $selectedType = old('primary_media_type', $portfolio->primary_media_type ?? 'image');
+                                        @endphp
+                                        <option value="image" {{ $selectedType === 'image' ? 'selected' : '' }}>Image Upload</option>
+                                        <option value="video" {{ $selectedType === 'video' ? 'selected' : '' }}>Video Upload</option>
+                                        <option value="embed" {{ $selectedType === 'embed' ? 'selected' : '' }}>Embed (YouTube/Vimeo/iframe)</option>
+                                    </select>
+                                    @error('primary_media_type')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    <div class="preview-wrapper mb-2" id="primaryImagePreviewWrapper">
+                                        @php
+                                            $primaryType = isset($portfolio) ? ($portfolio->primary_media_type ?? null) : null;
+                                            $primaryPath = isset($portfolio) ? ($portfolio->getRawOriginal('primary_media_path') ?? null) : null;
+                                            $legacyPath = isset($portfolio) ? ($portfolio->getRawOriginal('image_url') ?? null) : null;
+                                            $imageToShow = $primaryType === 'image' && $primaryPath ? ('storage/' . $primaryPath) : ($legacyPath ? ('storage/' . $legacyPath) : null);
+                                        @endphp
+                                        @if(isset($portfolio) && $imageToShow)
+                                            <img src="{{ asset($imageToShow) }}"
+                                                 alt="Project Media Preview"
+                                                 class="image-preview"
                                                  id="imagePreview">
                                         @else
                                             <div class="text-center text-muted" id="placeholderText">
                                                 <i class="fas fa-image fa-3x mb-2"></i>
-                                                <p class="mb-0">No image selected</p>
+                                                <p class="mb-0">No media selected</p>
                                             </div>
-                                            <img src="" 
-                                                 alt="Project Image Preview" 
-                                                 class="image-preview d-none" 
+                                            <img src=""
+                                                 alt="Project Media Preview"
+                                                 class="image-preview d-none"
                                                  id="imagePreview">
                                         @endif
                                         <div class="preview-overlay">
-                                            <button type="button" 
-                                                    class="btn btn-light" 
-                                                    onclick="document.getElementById('image_url').click()">
-                                                <i class="fas fa-upload"></i> Change Image
+                                            <button type="button" class="btn btn-light" id="primaryUploadButton">
+                                                <i class="fas fa-upload"></i> Change Media
                                             </button>
                                         </div>
                                     </div>
-                                    <input type="file" 
-                                           class="form-control d-none @error('image_url') is-invalid @enderror" 
-                                           id="image_url" 
-                                           name="image_url" 
+
+                                    <input type="file"
+                                           class="form-control d-none @error('primary_image') is-invalid @enderror"
+                                           id="primary_image"
+                                           name="primary_image"
                                            accept="image/*">
-                                    <small class="text-muted">Recommended size: 1200x800px. Max size: 2MB</small>
-                                    @error('image_url')
+                                    @error('primary_image')
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
+
+                                    <input type="file"
+                                           class="form-control d-none @error('primary_video') is-invalid @enderror"
+                                           id="primary_video"
+                                           name="primary_video"
+                                           accept="video/mp4,video/webm,video/quicktime">
+                                    @error('primary_video')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    <div id="primaryEmbedWrapper" class="d-none">
+                                        <textarea class="form-control @error('primary_embed') is-invalid @enderror"
+                                                  id="primary_embed"
+                                                  name="primary_embed"
+                                                  rows="3"
+                                                  placeholder="Paste a YouTube/Vimeo URL or an iframe code">{{ old('primary_embed', isset($portfolio) ? ($portfolio->primary_media_embed ?? '') : '') }}</textarea>
+                                        @error('primary_embed')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <small class="text-muted" id="primaryHelpText">Image max size: 2MB. Video max size: 50MB.</small>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Gallery Media (optional)</label>
+
+                                    <input type="file"
+                                           class="form-control @error('gallery_uploads') is-invalid @enderror"
+                                           id="gallery_uploads"
+                                           name="gallery_uploads[]"
+                                           multiple
+                                           accept="image/*,video/mp4,video/webm,video/quicktime">
+                                    @error('gallery_uploads')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                    @error('gallery_uploads.*')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    <textarea class="form-control mt-2 @error('gallery_embeds') is-invalid @enderror"
+                                              id="gallery_embeds"
+                                              name="gallery_embeds"
+                                              rows="4"
+                                              placeholder="Paste embed URLs/iframes, one per line">{{ old('gallery_embeds') }}</textarea>
+                                    @error('gallery_embeds')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+
+                                    <small class="text-muted">You can upload multiple images/videos and/or add embed links (one per line).</small>
                                 </div>
 
                                 <!-- Category -->
@@ -226,6 +292,7 @@
                                     <div id="newCategoryInput" class="mt-2 {{ !in_array(old('category', $portfolio->category ?? ''), $categories->toArray()) ? '' : 'd-none' }}">
                                         <input type="text" 
                                                class="form-control" 
+                                               name="new_category"
                                                placeholder="Enter new category"
                                                value="{{ !in_array(old('category', $portfolio->category ?? ''), $categories->toArray()) ? old('category', $portfolio->category ?? '') : '' }}">
                                     </div>
@@ -285,25 +352,65 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Image Preview
-    const imageInput = document.getElementById('image_url');
+    const primaryTypeSelect = document.getElementById('primary_media_type');
+    const primaryImageInput = document.getElementById('primary_image');
+    const primaryVideoInput = document.getElementById('primary_video');
+    const primaryEmbedWrapper = document.getElementById('primaryEmbedWrapper');
+    const primaryUploadButton = document.getElementById('primaryUploadButton');
+    const primaryHelpText = document.getElementById('primaryHelpText');
+
     const imagePreview = document.getElementById('imagePreview');
     const placeholderText = document.getElementById('placeholderText');
 
-    imageInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagePreview.src = e.target.result;
-                imagePreview.classList.remove('d-none');
-                if (placeholderText) {
-                    placeholderText.classList.add('d-none');
+    function setPrimaryTypeUI(type) {
+        if (type === 'image') {
+            primaryEmbedWrapper.classList.add('d-none');
+            primaryHelpText.textContent = 'Image max size: 2MB.';
+        }
+        if (type === 'video') {
+            primaryEmbedWrapper.classList.add('d-none');
+            primaryHelpText.textContent = 'Video max size: 50MB (mp4/webm/mov).';
+        }
+        if (type === 'embed') {
+            primaryEmbedWrapper.classList.remove('d-none');
+            primaryHelpText.textContent = 'Paste a YouTube/Vimeo URL or iframe code.';
+        }
+    }
+
+    function bindPrimaryPreview(inputEl) {
+        inputEl.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file && file.type && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagePreview.src = e.target.result;
+                    imagePreview.classList.remove('d-none');
+                    if (placeholderText) {
+                        placeholderText.classList.add('d-none');
+                    }
                 }
+                reader.readAsDataURL(file);
             }
-            reader.readAsDataURL(file);
+        });
+    }
+
+    bindPrimaryPreview(primaryImageInput);
+
+    primaryUploadButton.addEventListener('click', function() {
+        const type = primaryTypeSelect.value;
+        if (type === 'image') {
+            primaryImageInput.click();
+        }
+        if (type === 'video') {
+            primaryVideoInput.click();
         }
     });
+
+    primaryTypeSelect.addEventListener('change', function() {
+        setPrimaryTypeUI(this.value);
+    });
+
+    setPrimaryTypeUI(primaryTypeSelect.value);
 
     // Category Management
     const categorySelect = document.getElementById('category');
@@ -323,7 +430,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Form Submit Handler
     document.getElementById('portfolioForm').addEventListener('submit', function() {
         if (categorySelect.value === 'other' && newCategoryField.value.trim()) {
-            categorySelect.value = newCategoryField.value.trim();
+            const newValue = newCategoryField.value.trim();
+            const option = new Option(newValue, newValue, true, true);
+            categorySelect.add(option);
+            categorySelect.value = newValue;
         }
     });
 

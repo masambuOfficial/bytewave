@@ -94,7 +94,6 @@
                                         <div class="mb-3">
                                             <label for="price" class="form-label">Price</label>
                                             <div class="input-group">
-                                                <span class="input-group-text">$</span>
                                                 <input type="number" 
                                                        class="form-control @error('price') is-invalid @enderror" 
                                                        id="price" 
@@ -106,6 +105,45 @@
                                                     <div class="invalid-feedback">{{ $message }}</div>
                                                 @enderror
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="billing_cycle" class="form-label">Billing Cycle</label>
+                                            <select class="form-select @error('billing_cycle') is-invalid @enderror"
+                                                    id="billing_cycle"
+                                                    name="billing_cycle"
+                                                    required>
+                                                @php
+                                                    $cycleValue = old('billing_cycle', $product->billing_cycle ?? 'one_time');
+                                                @endphp
+                                                <option value="one_time" {{ $cycleValue === 'one_time' ? 'selected' : '' }}>One-time</option>
+                                                <option value="monthly" {{ $cycleValue === 'monthly' ? 'selected' : '' }}>Monthly</option>
+                                                <option value="annual" {{ $cycleValue === 'annual' ? 'selected' : '' }}>Annual</option>
+                                            </select>
+                                            @error('billing_cycle')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="currency" class="form-label">Currency</label>
+                                            <select class="form-select @error('currency') is-invalid @enderror"
+                                                    id="currency"
+                                                    name="currency"
+                                                    required>
+                                                @php
+                                                    $currencyValue = old('currency', $product->currency ?? 'USD');
+                                                @endphp
+                                                <option value="USD" {{ $currencyValue === 'USD' ? 'selected' : '' }}>USD</option>
+                                                <option value="UGX" {{ $currencyValue === 'UGX' ? 'selected' : '' }}>UGX</option>
+                                            </select>
+                                            @error('currency')
+                                                <div class="invalid-feedback">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
 

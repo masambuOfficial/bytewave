@@ -45,16 +45,36 @@
                     <div class="portfolio-item {{ Str::slug($portfolio->category) }} group">
                         <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                             <div class="relative overflow-hidden">
-                                <img src="{{ asset($portfolio->image_url) }}" 
-                                     class="w-full h-64 object-cover" 
-                                     alt="{{ $portfolio->title }}">
-                                <div class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                    <h5 class="text-white text-xl font-semibold mb-2">{{ $portfolio->title }}</h5>
-                                    <p class="text-white/70 mb-4">{{ $portfolio->category }}</p>
-                                    <a href="{{ route('portfolios.show', $portfolio->slug) }}" 
-                                       class="bg-yellow-500 text-white px-6 py-2 rounded-full hover:bg-yellow-600 transition-colors">
-                                        View Details
-                                    </a>
+                                @php
+                                    $type = $portfolio->getPrimaryMediaType();
+                                    $src = $portfolio->primaryMediaPublicUrl();
+                                    $embedSrc = $portfolio->primaryEmbedSrc();
+                                @endphp
+                                @if($type === 'video' && $src)
+                                    <video class="w-full h-64 object-cover" muted playsinline preload="metadata">
+                                        <source src="{{ $src }}" type="video/mp4">
+                                    </video>
+                                @elseif($type === 'embed' && $embedSrc)
+                                    <div class="w-full h-64 bg-black">
+                                        <iframe class="w-full h-64" src="{{ $embedSrc }}" title="{{ $portfolio->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                                    </div>
+                                @else
+                                    <img src="{{ $src ? $src : asset($portfolio->image_url) }}"
+                                         class="w-full h-64 object-cover"
+                                         alt="{{ $portfolio->title }}">
+                                @endif
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/55 to-black/10 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                    <div class="absolute inset-x-0 bottom-0 p-5 translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                        <p class="text-white/70 text-xs font-medium tracking-wide uppercase mb-1">{{ $portfolio->category }}</p>
+                                        <h5 class="text-white text-lg font-semibold leading-snug line-clamp-2" style="text-shadow: 0 2px 12px rgba(0,0,0,.65);">{{ $portfolio->title }}</h5>
+                                        <div class="mt-4">
+                                            <a href="{{ route('portfolios.show', $portfolio->slug) }}"
+                                               class="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-2 rounded-full border border-white/20 hover:bg-white/20 transition-colors">
+                                                <span class="text-sm font-medium">View</span>
+                                                <i class="fas fa-arrow-right text-xs"></i>
+                                            </a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="p-6 bg-gray-50">
@@ -88,7 +108,7 @@
 
             <!-- Pagination -->
             <div class="flex justify-center mt-12">
-                {{ $portfolios->links() }}
+                {{ $portfolios->links('vendor.pagination.bytewave') }}
             </div>
         </div>
     </div>

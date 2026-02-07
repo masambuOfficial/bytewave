@@ -15,7 +15,7 @@ class PortfolioController extends Controller
 
     public function show($slug)
     {
-        $portfolio = Portfolio::where('slug', $slug)->firstOrFail();
+        $portfolio = Portfolio::with('media')->where('slug', $slug)->firstOrFail();
         
         $relatedPortfolios = Portfolio::where('id', '!=', $portfolio->id)
             ->when($portfolio->category, function($query) use ($portfolio) {

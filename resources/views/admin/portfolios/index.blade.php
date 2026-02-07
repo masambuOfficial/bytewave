@@ -86,10 +86,26 @@
                 <div class="col-md-6 col-lg-4 mb-4">
                     <div class="card shadow portfolio-card h-100">
                         <div class="position-relative">
-                            @if($portfolio->hasImage())
-                                <img src="{{ asset($portfolio->image_url) }}" 
-                                     alt="{{ $portfolio->title }}" 
-                                     class="portfolio-image w-100">
+                            @php
+                                $type = $portfolio->getPrimaryMediaType();
+                                $src = $portfolio->primaryMediaPublicUrl();
+                                $embedSrc = $portfolio->primaryEmbedSrc();
+                                $embedThumb = $portfolio->primaryEmbedThumbnailUrl();
+                            @endphp
+                            @if($type === 'video' && $src)
+                                <video class="portfolio-image w-100" muted playsinline preload="metadata">
+                                    <source src="{{ $src }}" type="video/mp4">
+                                </video>
+                            @elseif($type === 'embed' && $embedThumb)
+                                <img src="{{ $embedThumb }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
+                            @elseif($type === 'embed' && $embedSrc)
+                                <div class="portfolio-image bg-dark d-flex align-items-center justify-content-center">
+                                    <i class="fas fa-link fa-3x text-white"></i>
+                                </div>
+                            @elseif($src)
+                                <img src="{{ $src }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
+                            @elseif($portfolio->hasImage())
+                                <img src="{{ asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
                             @else
                                 <div class="portfolio-image bg-light d-flex align-items-center justify-content-center">
                                     <i class="fas fa-project-diagram fa-3x text-muted"></i>

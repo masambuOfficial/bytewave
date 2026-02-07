@@ -26,10 +26,16 @@ class AdminProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'currency' => 'nullable|string|in:USD,UGX',
+            'billing_cycle' => 'required|string|in:one_time,monthly,annual',
             'stock' => 'required|integer|min:0',
             'category' => 'required|string|in:Hardware,Software,Networking,Security,Other',
             'image' => 'nullable|image|max:2048'
         ]);
+
+        if (empty($validated['currency'])) {
+            $validated['currency'] = 'USD';
+        }
 
         // Generate slug from name
         $validated['slug'] = Str::slug($validated['name']);
@@ -60,10 +66,16 @@ class AdminProductController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
+            'currency' => 'nullable|string|in:USD,UGX',
+            'billing_cycle' => 'required|string|in:one_time,monthly,annual',
             'stock' => 'required|integer|min:0',
             'category' => 'required|string|in:Hardware,Software,Networking,Security,Other',
             'image' => 'nullable|image|max:2048'
         ]);
+
+        if (empty($validated['currency'])) {
+            $validated['currency'] = $product->currency ?? 'USD';
+        }
 
         // Generate slug from name
         $validated['slug'] = Str::slug($validated['name']);

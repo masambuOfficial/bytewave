@@ -15,6 +15,8 @@ class Product extends Model
         'slug',
         'description',
         'price',
+        'currency',
+        'billing_cycle',
         'stock',
         'category',
         'image_url'
@@ -24,6 +26,29 @@ class Product extends Model
         'price' => 'decimal:2',
         'stock' => 'integer'
     ];
+
+    public function getFormattedPriceAttribute(): string
+    {
+        $currency = strtoupper((string) ($this->currency ?? 'USD'));
+        $amount = (float) $this->price;
+
+        if ($currency === 'UGX') {
+            return 'UGX ' . number_format($amount, 0);
+        }
+
+        return '$' . number_format($amount, 2);
+    }
+
+    public function getBillingCycleLabelAttribute(): string
+    {
+        $cycle = (string) ($this->billing_cycle ?? 'one_time');
+
+        return match ($cycle) {
+            'monthly' => 'Monthly',
+            'annual' => 'Annual',
+            default => 'One-time',
+        };
+    }
 
     protected static function boot()
     {

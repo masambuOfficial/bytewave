@@ -38,7 +38,12 @@
                         <p class="text-xl text-gray-700 mb-6 leading-relaxed">{{ $product->description }}</p>
 
                         <div class="flex items-center gap-4 mb-6">
-                            <h3 class="text-3xl font-bold text-bytewave-blue">${{ number_format($product->price, 2) }}</h3>
+                            <div class="flex items-center gap-3 flex-wrap">
+                                <h3 class="text-3xl font-bold text-bytewave-blue">{{ $product->formatted_price }}</h3>
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-bytewave-blue/10 text-bytewave-blue">
+                                    {{ $product->billing_cycle_label }}
+                                </span>
+                            </div>
                             @if($product->stock > 0)
                                 <span class="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold">In Stock</span>
                             @else

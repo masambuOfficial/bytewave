@@ -25,9 +25,25 @@
                 <!-- Project Image -->
                 <div class="animate-fade-in">
                     <div class="relative">
-                        <img src="{{ asset($portfolio->image_url) }}" 
-                             class="w-full rounded-lg shadow-lg max-h-[500px] object-cover" 
-                             alt="{{ $portfolio->title }}">
+                        @php
+                            $type = $portfolio->getPrimaryMediaType();
+                            $src = $portfolio->primaryMediaPublicUrl();
+                            $embedSrc = $portfolio->primaryEmbedSrc();
+                        @endphp
+
+                        @if($type === 'video' && $src)
+                            <video class="w-full rounded-lg shadow-lg max-h-[500px] object-cover" controls playsinline preload="metadata">
+                                <source src="{{ $src }}" type="video/mp4">
+                            </video>
+                        @elseif($type === 'embed' && $embedSrc)
+                            <div class="w-full rounded-lg shadow-lg overflow-hidden" style="max-height: 500px;">
+                                <iframe class="w-full" style="height: 500px;" src="{{ $embedSrc }}" title="{{ $portfolio->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                            </div>
+                        @else
+                            <img src="{{ $src ? $src : asset($portfolio->image_url) }}"
+                                 class="w-full rounded-lg shadow-lg max-h-[500px] object-cover"
+                                 alt="{{ $portfolio->title }}">
+                        @endif
                         @if($portfolio->project_url)
                             <a href="{{ $portfolio->project_url }}" 
                                target="_blank" 
@@ -119,6 +135,36 @@
                 </div>
             </div>
             <!-- Related Projects End -->
+            @endif
+
+            @if($portfolio->media && $portfolio->media->isNotEmpty())
+            <div class="mt-20 pt-12 border-t border-gray-200">
+                <div class="text-center mx-auto pb-12 max-w-2xl">
+                    <h5 class="text-blue-600 text-lg font-semibold mb-2">Gallery</h5>
+                    <h1 class="text-4xl md:text-5xl text-yellow-500 font-bold">More Media</h1>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    @foreach($portfolio->media as $media)
+                        @php
+                            $mType = $media->media_type;
+                            $mSrc = $media->media_path ? asset('storage/' . ltrim($media->media_path, '/')) : null;
+                            $mEmbed = \App\Models\Portfolio::embedSrcFromRaw($media->media_embed);
+                        @endphp
+                        <div class="bg-gray-50 rounded-lg overflow-hidden shadow">
+                            @if($mType === 'video' && $mSrc)
+                                <video class="w-full h-64 object-cover" controls playsinline preload="metadata">
+                                    <source src="{{ $mSrc }}" type="video/mp4">
+                                </video>
+                            @elseif($mType === 'embed' && $mEmbed)
+                                <iframe class="w-full h-64" src="{{ $mEmbed }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                            @else
+                                <img src="{{ $mSrc }}" class="w-full h-64 object-cover" alt="{{ $portfolio->title }}">
+                            @endif
+                        </div>
+                    @endforeach
+                </div>
+            </div>
             @endif
 
             <!-- Back to Portfolio -->

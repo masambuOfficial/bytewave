@@ -49,7 +49,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($products as $product)
                     <div class="product-card animate-fadeIn hover:transform hover:-translate-y-2 transition-all duration-500">
-                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 h-full relative overflow-hidden group border border-gray-100">
+                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 h-full relative overflow-hidden group border border-gray-100 flex flex-col">
                             <!-- Animated Border Gradient -->
                             <div class="absolute inset-0 bg-gradient-to-br from-bytewave-blue via-blue-500 to-bytewave-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" style="padding: 2px;">
                                 <div class="bg-white h-full w-full rounded-2xl"></div>
@@ -79,18 +79,25 @@
                             </div>
                             
                             <!-- Content Section - Bottom Half -->
-                            <div class="p-8 text-center relative z-20">
-                                <div class="flex flex-col items-center">
-                                    <!-- Product Name & Price -->
-                                    <div class="w-full flex justify-between items-start mb-4">
-                                        <h5 class="text-xl font-bold text-gray-800 group-hover:text-white transition-colors duration-300">{{ $product->name }}</h5>
-                                        <span class="text-bytewave-blue group-hover:text-white font-bold text-lg transition-colors duration-300">${{ number_format($product->price, 2) }}</span>
+                            <div class="p-8 text-center relative z-20 flex flex-col flex-1">
+                                <!-- Product Name & Price -->
+                                <div class="w-full mb-4 text-left">
+                                    <h5 class="text-xl font-bold text-gray-800 group-hover:text-white transition-colors duration-300">{{ $product->name }}</h5>
+                                    <div class="mt-2">
+                                        <div class="flex items-center gap-2 flex-wrap">
+                                            <span class="inline-block whitespace-nowrap text-bytewave-blue group-hover:text-white font-bold text-lg transition-colors duration-300">{{ $product->formatted_price }}</span>
+                                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-bytewave-blue/10 text-bytewave-blue group-hover:bg-white/15 group-hover:text-white transition-colors duration-300">
+                                                {{ $product->billing_cycle_label }}
+                                            </span>
+                                        </div>
                                     </div>
-                                    
-                                    <!-- Description -->
-                                    <p class="text-gray-600 group-hover:text-white/90 transition-colors duration-300 leading-relaxed mb-6">{{ Str::limit($product->description, 100) }}</p>
-                                    
-                                    <!-- CTA Button with Arrow -->
+                                </div>
+                                
+                                <!-- Description -->
+                                <p class="text-gray-600 group-hover:text-white/90 transition-colors duration-300 leading-relaxed mb-6 text-left">{{ Str::limit($product->description, 100) }}</p>
+                                
+                                <!-- CTA Button with Arrow -->
+                                <div class="mt-auto pt-2 flex justify-center">
                                     <a href="{{ route('products.show', $product->slug) }}" 
                                        class="inline-flex items-center gap-2 bg-bytewave-gold hover:bg-yellow-600 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 group-hover:gap-4 group-hover:shadow-lg">
                                         View Details

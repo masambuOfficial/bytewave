@@ -172,11 +172,29 @@
                 <div class="group">
                     <div class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 h-full">
                         <div class="relative overflow-hidden">
-                            <img src="{{ asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105">
+                            @php
+                                $type = $portfolio->getPrimaryMediaType();
+                                $src = $portfolio->primaryMediaPublicUrl();
+                                $embedSrc = $portfolio->primaryEmbedSrc();
+                            @endphp
+
+                            @if($type === 'video' && $src)
+                                <video class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105" muted playsinline preload="metadata">
+                                    <source src="{{ $src }}" type="video/mp4">
+                                </video>
+                            @elseif($type === 'embed' && $embedSrc)
+                                <div class="w-full h-64 bg-black">
+                                    <iframe class="w-full h-64" src="{{ $embedSrc }}" title="{{ $portfolio->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+                                </div>
+                            @else
+                                <img src="{{ $src ? $src : asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105">
+                            @endif
                             <div class="absolute inset-0 bg-bytewave-blue/80 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href="{{ asset($portfolio->image_url) }}" class="w-12 h-12 bg-white text-bytewave-blue rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-colors duration-300" data-lightbox="portfolio">
-                                    <i class="fas fa-eye"></i>
-                                </a>
+                                @if($type === 'image' && $src)
+                                    <a href="{{ $src }}" class="w-12 h-12 bg-white text-bytewave-blue rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-colors duration-300" data-lightbox="portfolio">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                @endif
                                 <a href="{{ route('portfolios.show', $portfolio->slug) }}" class="w-12 h-12 bg-white text-bytewave-blue rounded-full flex items-center justify-center hover:bg-gray-900 hover:text-white transition-colors duration-300">
                                     <i class="fas fa-link"></i>
                                 </a>
