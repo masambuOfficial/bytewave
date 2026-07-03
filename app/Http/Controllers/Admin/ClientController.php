@@ -10,7 +10,21 @@ class ClientController extends Controller
 {
     public function index()
     {
-        $clients = Client::orderBy('name')->paginate(10);
+        $q = request()->string('q')->trim()->toString();
+
+        $clientsQuery = Client::query()->orderBy('name');
+
+        if ($q !== '') {
+            $clientsQuery->where(function ($query) use ($q) {
+                $query
+                    ->where('name', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%")
+                    ->orWhere('phone', 'like', "%{$q}%")
+                    ->orWhere('address', 'like', "%{$q}%");
+            });
+        }
+
+        $clients = $clientsQuery->paginate(10)->withQueryString();
         return view('admin.clients.index', compact('clients'));
     }
 

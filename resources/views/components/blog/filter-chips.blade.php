@@ -3,7 +3,7 @@
 <div class="flex flex-wrap gap-3" x-data="{ showAll: false }">
     <!-- All Articles -->
     <a href="{{ route('blog.all') }}" 
-       class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !$activeCategory && !$activeTag ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+       class="px-4 py-2 rounded-full text-sm font-medium transition-colors {{ !$activeCategory && !$activeTag ? 'bg-bytewave-blue text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
         All Articles
     </a>
     
@@ -24,7 +24,7 @@
         
         @foreach($tags->take(5) as $tag)
             <a href="{{ route('blog.tag', $tag->slug) }}" 
-               class="px-3 py-1 rounded-full text-xs font-medium transition-colors {{ $activeTag && $activeTag->id === $tag->id ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+               class="px-3 py-1 rounded-full text-xs font-medium transition-colors {{ $activeTag && $activeTag->id === $tag->id ? 'bg-bytewave-blue text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                 #{{ $tag->name }}
             </a>
         @endforeach
@@ -32,7 +32,7 @@
         @if($tags->count() > 5)
             <button 
                 @click="showAll = !showAll"
-                class="px-3 py-1 text-xs font-medium text-blue-600 hover:text-blue-700">
+                class="px-3 py-1 text-xs font-medium text-bytewave-blue hover:text-bytewave-blue-600">
                 <span x-show="!showAll">+{{ $tags->count() - 5 }} more</span>
                 <span x-show="showAll" x-cloak>Show less</span>
             </button>
@@ -40,7 +40,7 @@
             <div x-show="showAll" x-cloak class="flex flex-wrap gap-2 w-full">
                 @foreach($tags->slice(5) as $tag)
                     <a href="{{ route('blog.tag', $tag->slug) }}" 
-                       class="px-3 py-1 rounded-full text-xs font-medium transition-colors {{ $activeTag && $activeTag->id === $tag->id ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
+                       class="px-3 py-1 rounded-full text-xs font-medium transition-colors {{ $activeTag && $activeTag->id === $tag->id ? 'bg-bytewave-blue text-white' : 'bg-gray-100 text-gray-600 hover:bg-gray-200' }}">
                         #{{ $tag->name }}
                     </a>
                 @endforeach

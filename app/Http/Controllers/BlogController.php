@@ -15,26 +15,48 @@ class BlogController extends Controller
      */
     public function index()
     {
-        // Get hero article
+        // Get hero article — fall back to the latest published post if none is flagged hero
         $heroArticle = Blog::published()
             ->hero()
             ->with(['author', 'category', 'tags'])
             ->first();
 
-        // Get latest 5 posts for sidebar
+        if (!$heroArticle) {
+            $heroArticle = Blog::published()
+                ->with(['author', 'category', 'tags'])
+                ->latest()
+                ->first();
+        }
+
+        // Get latest 5 posts for sidebar, excluding the hero article
         $latestPosts = Blog::published()
             ->with(['author', 'category'])
+            ->where('id', '!=', $heroArticle?->id)
             ->latest()
             ->take(5)
             ->get();
 
-        // Get featured articles for "Latest from the blog" section
+        // Get featured articles for "Latest from the blog" section — fall back to the
+        // latest published posts (excluding hero/sidebar) if nothing is flagged featured
         $featuredArticles = Blog::published()
             ->featured()
             ->with(['author', 'category', 'tags'])
             ->latest()
             ->take(6)
             ->get();
+
+        if ($featuredArticles->isEmpty()) {
+            $excludedIds = collect([$heroArticle?->id])
+                ->merge($latestPosts->pluck('id'))
+                ->filter();
+
+            $featuredArticles = Blog::published()
+                ->whereNotIn('id', $excludedIds)
+                ->with(['author', 'category', 'tags'])
+                ->latest()
+                ->take(6)
+                ->get();
+        }
 
         // Get all categories for "Explore topics"
         $categories = Category::withCount('blogs')->get();
@@ -92,8 +114,8 @@ class BlogController extends Controller
         $articles = $query->paginate(12);
 
         // Get all categories and tags for filters
-        $categories = Category::all();
-        $tags = Tag::all();
+        $categories = Category::withCount('blogs')->get();
+        $tags = Tag::withCount('blogs')->get();
 
         return view('blog.all', compact('articles', 'categories', 'tags', 'search', 'sort'));
     }

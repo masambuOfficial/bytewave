@@ -4,6 +4,41 @@
 
 @push('styles')
 <style>
+    .bw-card {
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        border-radius: 12px;
+    }
+    .bw-card-header {
+        background: #fff;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .bw-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin: 0;
+    }
+    .bw-subtitle {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: 0.25rem;
+    }
+    .bw-table {
+        min-width: 1100px;
+    }
+    .bw-table thead th {
+        font-size: 0.8rem;
+        letter-spacing: 0.02em;
+        color: #6c757d;
+        text-transform: uppercase;
+        background: #f8fafc;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 0.85rem 0.9rem;
+        white-space: nowrap;
+    }
+    .bw-table tbody td {
+        padding: 0.85rem 0.9rem;
+        vertical-align: middle;
+    }
     .task-card {
         transition: transform 0.2s;
     }
@@ -42,8 +77,11 @@
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Task Management</h1>
+    <div class="d-flex justify-content-between align-items-start mb-4">
+        <div>
+            <h1 class="bw-title">Task Management</h1>
+            <div class="bw-subtitle">Track tasks, assignees, priorities and due dates.</div>
+        </div>
         <a href="{{ route('admin.tasks.create') }}" class="btn btn-primary">
             <i class="fas fa-plus"></i> New Task
         </a>
@@ -65,10 +103,13 @@
             </a>
         </div>
     @else
-        <div class="card shadow mb-4">
-            <div class="card-body">
+        <div class="card shadow-sm bw-card mb-4">
+            <div class="card-header bw-card-header py-3">
+                <div class="fw-semibold">All Tasks</div>
+            </div>
+            <div class="card-body p-0">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+                    <table class="table table-hover mb-0 bw-table">
                         <thead>
                             <tr>
                                 <th>Task ID</th>

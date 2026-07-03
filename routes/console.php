@@ -94,10 +94,15 @@ Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
 
-// Schedule: Fetch news articles automatically
+// Schedule: Fetch news articles automatically.
+// Imported posts auto-publish immediately (see NewsApiService::importArticles) — the only
+// safety net is the isRelevant() topic filter, since there's no human review step by design.
 use Illuminate\Console\Scheduling\Schedule;
 
 app(Schedule::class)->command('news:fetch --limit=10')->everySixHours();
+
+// Keep the public sitemap fresh for search/AI crawlers
+app(Schedule::class)->command('sitemap:generate')->daily();
 
 Artisan::command('db:sync-production', function () {
     /** @var ClosureCommand $this */

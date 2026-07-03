@@ -45,7 +45,7 @@
                     </div>
                     <h4 class="text-xl font-semibold mb-4">Call Us</h4>
                     <p class="text-gray-600 mb-2">24/7 Support Line</p>
-                    <a href="tel:+256773448069" class="text-bytewave-blue hover:text-bytewave-gold transition-colors">+256773448069/+256782440907</a>
+                    <a href="tel:{{ config('company.phone') }}" class="text-bytewave-blue hover:text-bytewave-gold transition-colors">{{ config('company.phone') }}</a>
                 </div>
                 <div class="bg-white p-8 text-center rounded-xl shadow-lg hover:-translate-y-2 transition-all duration-500 h-full">
                     <div class="w-16 h-16 bg-bytewave-blue rounded-full flex items-center justify-center mx-auto mb-6">

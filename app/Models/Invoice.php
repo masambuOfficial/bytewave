@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Invoice extends Model
 {
@@ -14,24 +13,29 @@ class Invoice extends Model
         'invoice_number',
         'client_id',
         'quotation_id',
+        'work_order_id',
         'date',
         'due_date',
         'status',
+        'currency',
         'subtotal',
         'tax_rate',
         'tax_amount',
         'total_amount',
         'notes',
-        'payment_details'
+        'payment_details',
+        'issued_at',
+        'issued_by_user_id'
     ];
 
     protected $casts = [
-        'date' => 'datetime',
-        'due_date' => 'datetime',
+        'date' => 'date',
+        'due_date' => 'date',
         'tax_rate' => 'decimal:2',
         'tax_amount' => 'decimal:2',
         'subtotal' => 'decimal:2',
-        'total_amount' => 'decimal:2'
+        'total_amount' => 'decimal:2',
+        'issued_at' => 'datetime',
     ];
 
     public function client()
@@ -49,39 +53,60 @@ class Invoice extends Model
         return $this->hasMany(InvoiceItem::class);
     }
 
+    public function workOrder()
+    {
+        return $this->belongsTo(WorkOrder::class);
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function getAmountPaidAttribute(): float
+    {
+        return (float) ($this->payments()->sum('amount') ?? 0);
+    }
+
+    public function getBalanceDueAttribute(): float
+    {
+        return max(0, (float) $this->total_amount - (float) $this->amount_paid);
+    }
+
     public function getStatusColorAttribute()
     {
         return [
             'draft' => 'secondary',
-            'sent' => 'info',
+            'issued' => 'info',
+            'partially_paid' => 'primary',
             'paid' => 'success',
             'overdue' => 'danger',
-            'cancelled' => 'dark'
+            'void' => 'dark'
         ][$this->status] ?? 'secondary';
     }
 
-    protected static function boot()
+    public function syncStatusFromPayments(): void
     {
-        parent::boot();
+        if ($this->status === 'void') {
+            return;
+        }
 
-        static::creating(function ($invoice) {
-            // Calculate totals
-            $invoice->subtotal = $invoice->items->sum(function ($item) {
-                return $item->quantity * $item->rate;
-            });
-            
-            $invoice->tax_amount = $invoice->subtotal * ($invoice->tax_rate / 100);
-            $invoice->total_amount = $invoice->subtotal + $invoice->tax_amount;
-        });
+        $paid  = (float) $this->payments()->sum('amount');
+        $total = (float) $this->total_amount;
 
-        static::updating(function ($invoice) {
-            // Calculate totals
-            $invoice->subtotal = $invoice->items->sum(function ($item) {
-                return $item->quantity * $item->rate;
-            });
-            
-            $invoice->tax_amount = $invoice->subtotal * ($invoice->tax_rate / 100);
-            $invoice->total_amount = $invoice->subtotal + $invoice->tax_amount;
-        });
+        if ($paid <= 0) {
+            if (in_array($this->status, ['paid', 'partially_paid'])) {
+                $this->status = 'issued';
+                $this->save();
+            }
+            return;
+        }
+
+        $newStatus = $paid >= $total ? 'paid' : 'partially_paid';
+
+        if ($this->status !== $newStatus) {
+            $this->status = $newStatus;
+            $this->save();
+        }
     }
 }

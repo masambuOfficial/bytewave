@@ -1,0 +1,41 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        if (Schema::hasTable('quotation_items')) {
+            return;
+        }
+
+        Schema::create('quotation_items', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('quotation_id');
+
+            $table->unsignedInteger('position')->default(0);
+
+            $table->longText('description')->nullable();
+            $table->decimal('quantity', 15, 2)->default(1);
+            $table->string('unit')->nullable();
+            $table->decimal('rate', 15, 2)->default(0);
+            $table->decimal('line_total', 15, 2)->default(0);
+
+            $table->unsignedBigInteger('service_id')->nullable();
+
+            $table->timestamps();
+
+            $table->index('quotation_id');
+            $table->index('service_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('quotation_items');
+    }
+};

@@ -73,9 +73,9 @@
                             <div>Suite No. 01 - West Wing Plot 5134</div>
                         </div>
                     </a>
-                    <a href="tel:+256123456789" class="py-3 text-gray-200 border-b border-bytewave-blue-600 hover:text-bytewave-gold transition-colors duration-300 flex gap-2">
+                    <a href="tel:{{ config('company.phone') }}" class="py-3 text-gray-200 border-b border-bytewave-blue-600 hover:text-bytewave-gold transition-colors duration-300 flex gap-2">
                         <i class="fas fa-phone-alt text-bytewave-gold mt-1 flex-shrink-0"></i>
-                        <span>+256 123 456 789</span>
+                        <span>{{ config('company.phone') }}</span>
                     </a>
                     <a href="mailto:info@bytewaveinvestments.com" class="py-3 text-gray-200 border-b border-bytewave-blue-600 hover:text-bytewave-gold transition-colors duration-300 flex gap-2">
                         <i class="fas fa-envelope text-bytewave-gold mt-1 flex-shrink-0"></i>

@@ -134,7 +134,7 @@
                                     </div>
                                     <div class="ms-3">
                                         <h5 class="mb-1">Phone</h5>
-                                        <p class="mb-0">+256 123 456 789</p>
+                                        <p class="mb-0">{{ config('company.phone') }}</p>
                                         <small class="text-muted">Monday - Friday, 9:00 AM - 5:00 PM EAT</small>
                                     </div>
                                 </div>

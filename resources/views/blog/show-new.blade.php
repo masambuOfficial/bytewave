@@ -1,67 +1,118 @@
 @extends('layouts.app')
 
 @section('title', $blog->title . ' - BYTEWAVE Blog')
+@section('meta_description', $blog->meta_description ?: Str::limit(strip_tags($blog->content), 160))
+@section('og_type', 'article')
+@if($blog->cover_image)
+    @section('og_image', asset($blog->cover_image))
+@endif
+
+@push('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": @json($blog->title),
+    "description": @json($blog->meta_description ?: Str::limit(strip_tags($blog->content), 160)),
+    "datePublished": @json(optional($blog->published_at)->toIso8601String()),
+    "dateModified": @json(optional($blog->updated_at)->toIso8601String()),
+    "author": {
+        "@type": "Person",
+        "name": @json($blog->author_name ?: 'ByteWave Investments')
+    },
+    @if($blog->cover_image)
+    "image": @json(asset($blog->cover_image)),
+    @endif
+    "publisher": {
+        "@type": "Organization",
+        "name": @json(config('company.name')),
+        "logo": {
+            "@type": "ImageObject",
+            "url": @json(asset(config('company.logo')))
+        }
+    }
+}
+</script>
+@endpush
 
 @section('content')
 <div x-data="{ replyTo: null }">
-    <article class="max-w-4xl mx-auto px-4 py-8">
-        <!-- Article Header -->
-        <header class="mb-8">
+    @php
+        $hasRealImage = $blog->getRawOriginal('cover_image') || $blog->image_url;
+        $heroStyle = $hasRealImage
+            ? "background-image: linear-gradient(rgba(3,46,73,0.75), rgba(3,46,73,0.88)), url('{$blog->cover_image}'); background-size: cover; background-position: center;"
+            : "background:
+                radial-gradient(circle at 15% 20%, rgba(251, 177, 69, 0.25) 0%, transparent 45%),
+                radial-gradient(circle at 85% 75%, rgba(102, 183, 231, 0.25) 0%, transparent 45%),
+                radial-gradient(rgba(255, 255, 255, 0.07) 1px, transparent 1px),
+                linear-gradient(135deg, #032E49 0%, #04456E 45%, #0773B8 100%);
+                background-size: auto, auto, 24px 24px, auto;";
+    @endphp
+
+    <!-- Article Hero Header -->
+    <div class="relative overflow-hidden bg-cover bg-center py-20 md:py-28" style="{{ $heroStyle }}">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <nav aria-label="breadcrumb" class="mb-6">
+                <ol class="flex items-center flex-wrap gap-2 text-white/80 text-sm">
+                    <li><a href="{{ url('/') }}" class="hover:text-bytewave-gold transition-colors">Home</a></li>
+                    <li>/</li>
+                    <li><a href="{{ route('blog.index') }}" class="hover:text-bytewave-gold transition-colors">Blog</a></li>
+                    <li>/</li>
+                    <li class="text-white truncate max-w-xs">{{ $blog->title }}</li>
+                </ol>
+            </nav>
+
+            @if($blog->source_url)
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-white rounded-full mb-4 mr-2 bg-white/15 backdrop-blur-sm">
+                    Curated
+                </span>
+            @endif
             @if($blog->category && is_object($blog->category))
-                <a href="{{ route('blog.category', $blog->category->slug) }}" 
+                <a href="{{ route('blog.category', $blog->category->slug) }}"
                    class="inline-block px-3 py-1 text-sm font-semibold text-white rounded-full mb-4"
                    style="background-color: {{ $blog->category->color }}">
                     {{ $blog->category->name }}
                 </a>
             @endif
-            
-            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{{ $blog->title }}</h1>
-            
-            <div class="flex items-center space-x-6 text-gray-600 mb-6">
+
+            <h1 class="text-3xl md:text-5xl font-bold text-white mb-6">{{ $blog->title }}</h1>
+
+            <div class="flex flex-wrap items-center gap-x-6 gap-y-3 text-white/90">
                 @if($blog->author)
-                    <div class="flex items-center space-x-2">
-                        <img 
-                            src="{{ $blog->author->avatar }}" 
+                    <div class="flex items-center gap-2">
+                        <img
+                            src="{{ $blog->author->avatar }}"
                             alt="{{ $blog->author->name }}"
-                            class="w-12 h-12 rounded-full"
+                            class="w-10 h-10 rounded-full border-2 border-white/40 object-cover"
                         >
                         <div>
-                            <p class="font-semibold text-gray-900">{{ $blog->author->name }}</p>
-                            <p class="text-sm">{{ $blog->published_at?->format('M d, Y') }}</p>
+                            <p class="font-semibold text-white text-sm">{{ $blog->author->name }}</p>
+                            <p class="text-xs text-white/70">{{ $blog->published_at?->format('M d, Y') }}</p>
                         </div>
                     </div>
                 @endif
-                
+
                 @if($blog->read_time)
-                    <span>{{ $blog->read_time }} min read</span>
+                    <span class="text-sm">{{ $blog->read_time }} min read</span>
                 @endif
-                
-                <span>{{ number_format($blog->views) }} views</span>
+
+                <span class="text-sm">{{ number_format($blog->views) }} views</span>
             </div>
-            
-            @if($blog->tags && $blog->tags->isNotEmpty())
-                <div class="flex flex-wrap gap-2 mb-6">
-                    @foreach($blog->tags as $tag)
-                        <a href="{{ route('blog.tag', $tag->slug) }}" 
-                           class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200">
-                            #{{ $tag->name }}
-                        </a>
-                    @endforeach
-                </div>
-            @endif
-        </header>
-        
-        <!-- Featured Image -->
-        @if($blog->cover_image)
-            <div class="mb-8 rounded-2xl overflow-hidden">
-                <img 
-                    src="{{ $blog->cover_image }}" 
-                    alt="{{ $blog->title }}"
-                    class="w-full h-auto"
-                >
+        </div>
+    </div>
+
+    <article class="max-w-4xl mx-auto px-4 py-8">
+        @if($blog->tags && $blog->tags->isNotEmpty())
+            <div class="flex flex-wrap gap-2 mb-8">
+                @foreach($blog->tags as $tag)
+                    <a href="{{ route('blog.tag', $tag->slug) }}"
+                       class="px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200">
+                        #{{ $tag->name }}
+                    </a>
+                @endforeach
             </div>
         @endif
-        
+
         <!-- Article Content -->
         <div class="prose prose-lg max-w-none mb-12">
             {!! str($blog->content)->markdown() !!}
@@ -71,9 +122,10 @@
         @if($blog->source_url)
             <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-8">
                 <p class="text-sm text-gray-700">
-                    <strong>Source:</strong> This article was originally published on 
+                    This is ByteWave's take on a story from
+                    <strong>{{ $blog->source_name }}</strong>. Continue reading the full original article
                     <a href="{{ $blog->source_url }}" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:text-blue-700 underline">
-                        {{ $blog->source_name }}
+                        here &rarr;
                     </a>
                 </p>
             </div>

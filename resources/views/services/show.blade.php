@@ -1,6 +1,26 @@
 @extends('layouts.app')
 
 @section('title', $service->name . ' - BYTEWAVE')
+@section('meta_description', Str::limit($service->description, 160))
+@section('og_type', 'website')
+@if($service->image)
+    @section('og_image', asset('storage/' . $service->image))
+@endif
+
+@push('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": @json($service->name),
+    "description": @json($service->description),
+    "provider": {
+        "@type": "LocalBusiness",
+        "name": @json(config('company.name'))
+    }
+}
+</script>
+@endpush
 
 @section('content')
     <!-- Page Header Start -->

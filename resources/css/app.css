@@ -7,7 +7,7 @@
 @source "../**/*.vue";
 
 @theme {
-    --font-sans: 'Outfit', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    --font-sans: 'Mona Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     
     /* BYTEWAVE Brand Colors */
@@ -34,4 +34,9 @@
     --color-bytewave-gold-700: #B76F0C;
     --color-bytewave-gold-800: #865008;
     --color-bytewave-gold-900: #553105;
+}
+
+/* Prevent horizontal scroll */
+body {
+    overflow-x: hidden;
 }

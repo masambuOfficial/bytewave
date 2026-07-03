@@ -11,9 +11,19 @@ class QuotationItem extends Model
 
     protected $fillable = [
         'quotation_id',
+        'position',
+        'description',
         'service_id',
         'quantity',
-        'rate'
+        'unit',
+        'rate',
+        'line_total'
+    ];
+
+    protected $casts = [
+        'quantity' => 'decimal:2',
+        'rate' => 'decimal:2',
+        'line_total' => 'decimal:2',
     ];
 
     public function quotation()

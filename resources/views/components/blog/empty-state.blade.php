@@ -7,7 +7,7 @@
     <h3 class="mt-4 text-lg font-medium text-gray-900">{{ $message }}</h3>
     <p class="mt-2 text-sm text-gray-500">Try adjusting your search or filter to find what you're looking for.</p>
     <div class="mt-6">
-        <a href="{{ route('blog.all') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+        <a href="{{ route('blog.all') }}" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-full text-white bg-bytewave-blue hover:bg-bytewave-blue-600">
             View all articles
         </a>
     </div>

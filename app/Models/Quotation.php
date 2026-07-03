@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Carbon\Carbon;
 
 class Quotation extends Model
 {
@@ -16,13 +15,27 @@ class Quotation extends Model
         'date',
         'valid_until',
         'status',
+        'currency',
+        'subject',
+        'attn_name',
         'notes',
-        'total_amount'
+        'subtotal',
+        'tax_rate',
+        'tax_total',
+        'total_amount',
+        'prepared_by_user_id',
+        'accepted_at',
+        'accepted_by_user_id'
     ];
 
     protected $casts = [
-        'date' => 'datetime',
-        'valid_until' => 'datetime',
+        'date' => 'date',
+        'valid_until' => 'date',
+        'subtotal' => 'decimal:2',
+        'tax_rate' => 'decimal:2',
+        'tax_total' => 'decimal:2',
+        'total_amount' => 'decimal:2',
+        'accepted_at' => 'datetime',
     ];
 
     public function client()
@@ -40,6 +53,11 @@ class Quotation extends Model
         return $this->hasOne(Invoice::class);
     }
 
+    public function workOrder()
+    {
+        return $this->hasOne(WorkOrder::class);
+    }
+
     public function getStatusColorAttribute()
     {
         return [
@@ -48,24 +66,5 @@ class Quotation extends Model
             'accepted' => 'success',
             'rejected' => 'danger'
         ][$this->status] ?? 'secondary';
-    }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($quotation) {
-            // Calculate total amount from items
-            $quotation->total_amount = $quotation->items->sum(function ($item) {
-                return $item->quantity * $item->rate;
-            });
-        });
-
-        static::updating(function ($quotation) {
-            // Calculate total amount from items
-            $quotation->total_amount = $quotation->items->sum(function ($item) {
-                return $item->quantity * $item->rate;
-            });
-        });
     }
 }

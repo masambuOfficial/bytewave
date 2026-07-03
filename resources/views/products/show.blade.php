@@ -1,6 +1,27 @@
 @extends('layouts.app')
 
 @section('title', $product->name . ' - BYTEWAVE')
+@section('meta_description', Str::limit($product->description, 160))
+@section('og_type', 'website')
+@section('og_image', asset($product->image_url))
+
+@push('schema')
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": @json($product->name),
+    "description": @json($product->description),
+    "image": @json(asset($product->image_url)),
+    "offers": {
+        "@type": "Offer",
+        "price": @json((float) $product->price),
+        "priceCurrency": @json(strtoupper($product->currency ?? 'USD')),
+        "availability": "https://schema.org/InStock"
+    }
+}
+</script>
+@endpush
 
 @section('content')
     <!-- Page Header Start -->
@@ -84,7 +105,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mx-auto pb-12 max-w-2xl animate-fadeIn">
                 <h5 class="text-bytewave-blue font-semibold text-base uppercase tracking-wider mb-4">Our Products</h5>
-                <h1 class="text-3xl md:text-4xl font-bold text-bytewave-gold">Other Products You Might Like</h1>
+                <h2 class="text-3xl md:text-4xl font-bold text-bytewave-gold">Other Products You Might Like</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($relatedProducts as $relatedProduct)

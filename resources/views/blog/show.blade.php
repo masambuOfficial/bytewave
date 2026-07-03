@@ -39,7 +39,7 @@
                             <div class="row g-2 mb-4">
                                 <div class="col-auto">
                                     @if($post->author)
-                                        <img src="{{ $post->author->avatar ?? asset('img/admin.jpg') }}" 
+                                        <img src="{{ $post->author->avatar ?? asset('admin.jpg') }}" 
                                              class="rounded-circle" 
                                              alt="{{ $post->author->name }}"
                                              width="40" height="40">

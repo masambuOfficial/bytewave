@@ -13,7 +13,9 @@ class ClientService extends Model
         'name',
         'description',
         'rate',
-        'unit'
+        'currency',
+        'unit',
+        'status'
     ];
 
     public function quotationItems()

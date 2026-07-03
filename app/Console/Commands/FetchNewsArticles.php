@@ -27,10 +27,10 @@ class FetchNewsArticles extends Command
         $imported = $newsApiService->importArticles($articles);
 
         if ($imported > 0) {
-            $this->info("✅ Successfully imported {$imported} new articles.");
+            $this->info("✅ Successfully imported and published {$imported} new digest posts.");
         } else {
-            $this->warn("⚠️  No new articles imported. All " . count($articles) . " articles already exist in database.");
-            $this->info("This is normal - NewsAPI free tier only provides recent articles (24-48 hours).");
+            $this->warn("⚠️  No new articles imported. All fetched articles were either duplicates or filtered out as off-topic.");
+            $this->info("This is normal - NewsAPI free tier only provides recent articles (24-48 hours), and the topic filter rejects non-tech headlines.");
         }
 
         return 0;

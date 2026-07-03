@@ -378,6 +378,13 @@
                     <span>Portfolio</span>
                 </a>
             </li>
+            <li class="sidebar-item">
+                <a href="{{ route('admin.testimonials.index') }}" 
+                   class="sidebar-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
+                    <i class="fas fa-comments"></i>
+                    <span>Testimonials</span>
+                </a>
+            </li>
         </ul>
 
         <!-- Business Management Section -->
@@ -484,6 +491,81 @@
         });
     </script>
     
+    {{-- Shared Send Email Modal --}}
+    <div class="modal fade" id="sendEmailModal" tabindex="-1" aria-labelledby="sendEmailModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <form id="sendEmailForm" method="POST">
+                @csrf
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="sendEmailModalLabel">
+                            <i class="fas fa-paper-plane me-2 text-primary"></i>
+                            <span id="sendEmailModalTitle">Send Document</span>
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-3 p-2 rounded d-flex align-items-center justify-content-between" style="background:#f0f7ff;border:1px solid #c8e0f7">
+                            <span style="font-size:.85rem;color:#0773B8"><i class="fas fa-eye me-2"></i>Always preview before sending</span>
+                            <a id="sendEmailPreviewBtn" href="#" target="_blank"
+                               class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-external-link-alt me-1"></i> Preview
+                            </a>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">To</label>
+                            <input type="text" id="sendEmailTo" class="form-control bg-light" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">CC <span class="text-muted fw-normal">(optional — comma-separated)</span></label>
+                            <input type="text" name="cc" id="sendEmailCc" class="form-control" placeholder="e.g. manager@company.com, boss@company.com">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">BCC <span class="text-muted fw-normal">(optional — comma-separated)</span></label>
+                            <input type="text" name="bcc" id="sendEmailBcc" class="form-control" placeholder="e.g. accounts@company.com">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" id="sendEmailSubmitBtn" class="btn btn-primary">
+                            <i class="fas fa-paper-plane me-1"></i> Send
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var modalEl = document.getElementById('sendEmailModal');
+            if (!modalEl) return;
+
+            var sendForm = document.getElementById('sendEmailForm');
+            var sendBtn  = document.getElementById('sendEmailSubmitBtn');
+
+            document.querySelectorAll('[data-send-modal]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    document.getElementById('sendEmailModalTitle').textContent = this.dataset.title;
+                    document.getElementById('sendEmailTo').value = this.dataset.to;
+                    sendForm.action = this.dataset.action;
+                    document.getElementById('sendEmailCc').value = '';
+                    document.getElementById('sendEmailBcc').value = '';
+                    sendBtn.disabled = false;
+                    sendBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Send';
+                    var previewBtn = document.getElementById('sendEmailPreviewBtn');
+                    if (previewBtn) previewBtn.href = this.dataset.preview || '#';
+                    bootstrap.Modal.getOrCreateInstance(modalEl).show();
+                });
+            });
+
+            sendForm.addEventListener('submit', function () {
+                sendBtn.disabled = true;
+                sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Sending…';
+            });
+        });
+    </script>
+
     @stack('scripts')
 </body>
 </html>

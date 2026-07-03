@@ -6,7 +6,7 @@
     <!-- Page Header Start -->
     <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('css/img/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
-            <h1 class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">Services</h1>
+            <p class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">Services</p>
             <nav aria-label="breadcrumb" class="animate-fadeInDown">
                 <ol class="flex justify-center items-center space-x-2 text-white">
                     <li><a class="hover:text-bytewave-gold transition-colors" href="{{ url('/') }}">Home</a></li>
@@ -44,60 +44,110 @@
                 <p class="text-gray-600 mt-4 text-lg">Innovative solutions tailored to drive your business forward</p>
             </div>
 
-            <!-- Services Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                @forelse($services as $service)
-                    <div class="service-card animate-fadeIn hover:transform hover:-translate-y-2 transition-all duration-500">
-                        <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 h-full relative overflow-hidden group border border-gray-100">
-                            <!-- Animated Border Gradient -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-bytewave-blue via-blue-500 to-bytewave-gold opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl" style="padding: 2px;">
-                                <div class="bg-white h-full w-full rounded-2xl"></div>
-                            </div>
-                            
-                            <!-- Blue Overlay on Hover -->
-                            <div class="absolute inset-0 bg-gradient-to-br from-bytewave-blue to-blue-600 opacity-0 group-hover:opacity-95 transition-opacity duration-500 z-10 rounded-2xl"></div>
-                            
-                            <!-- Decorative Corner Element -->
-                            <div class="absolute top-0 right-0 w-20 h-20 bg-bytewave-gold/10 rounded-bl-full transform translate-x-10 -translate-y-10 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-500"></div>
-                            
-                            <!-- Image Section - Top Half -->
-                            <div class="relative h-64 overflow-hidden rounded-t-2xl">
-                                <img src="{{ $service->image ? asset('storage/' . $service->image) : asset('css/img/bytewave_livestreaming.jpg') }}" 
-                                     alt="{{ $service->name }}" 
-                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                <div class="absolute inset-0 bg-bytewave-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                            </div>
-                            
-                            <!-- Content Section - Bottom Half -->
-                            <div class="p-8 text-center relative z-20">
-                                <div class="flex flex-col items-center">
-                                    <!-- Service Name -->
-                                    <h4 class="text-2xl font-bold mb-4 text-gray-800 group-hover:text-white transition-colors duration-300">
-                                        {{ $service->name }}
-                                    </h4>
+            <!-- Services by Category with Accordion -->
+            @php
+                $servicesByCategory = $services->groupBy('category');
+            @endphp
+            
+            <div class="space-y-4" x-data="{ openCategory: '{{ $servicesByCategory->keys()->first() }}' }">
+                @forelse($servicesByCategory as $category => $categoryServices)
+                    <!-- Category Accordion Item -->
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 animate-fadeIn">
+                        <!-- Accordion Header -->
+                        <button 
+                            @click="openCategory = openCategory === '{{ $category }}' ? null : '{{ $category }}'"
+                            class="w-full px-8 py-6 flex items-center justify-between bg-gradient-to-r from-bytewave-blue to-blue-600 hover:from-bytewave-blue-600 hover:to-blue-700 transition-all duration-300"
+                        >
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
+                                    @php
+                                        $iconMap = [
+                                            'ICT Solutions & Support' => 'computer',
+                                            'Multimedia Production' => 'video',
+                                            'Web & Software Development' => 'code',
+                                            'Digital Marketing' => 'chart'
+                                        ];
+                                        $iconName = $iconMap[$category] ?? 'computer';
+                                    @endphp
                                     
-                                    <!-- Description -->
-                                    <p class="mb-6 text-gray-600 group-hover:text-white/90 transition-colors duration-300 leading-relaxed">
-                                        {{ Str::limit($service->description, 150) }}
-                                    </p>
-                                    
-                                    <!-- CTA Button with Arrow -->
-                                    <a href="{{ Str::contains($service->name, 'Audio-Visual') || Str::contains($service->name, 'Audio Visual') ? route('services.audio-visual') : route('services.show', $service->id) }}"
-                                       class="inline-flex items-center gap-2 bg-bytewave-gold hover:bg-yellow-600 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 group-hover:gap-4 group-hover:shadow-lg">
-                                        Learn More
-                                        <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                    @if($iconName === 'computer')
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                         </svg>
-                                    </a>
+                                    @elseif($iconName === 'video')
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                        </svg>
+                                    @elseif($iconName === 'code')
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+                                        </svg>
+                                    @else
+                                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                                        </svg>
+                                    @endif
+                                </div>
+                                <div class="text-left">
+                                    <h3 class="text-2xl font-bold text-white">{{ $category ?? 'Uncategorized' }}</h3>
+                                    <p class="text-blue-100 text-sm">{{ $categoryServices->count() }} {{ Str::plural('service', $categoryServices->count()) }}</p>
                                 </div>
                             </div>
+                            <svg 
+                                class="w-6 h-6 text-white transition-transform duration-300"
+                                :class="{ 'rotate-180': openCategory === '{{ $category }}' }"
+                                fill="none" 
+                                stroke="currentColor" 
+                                viewBox="0 0 24 24"
+                            >
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
 
-                            <!-- Bottom Accent Line -->
-                            <div class="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-bytewave-blue via-bytewave-gold to-bytewave-blue transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
+                        <!-- Accordion Content -->
+                        <div 
+                            x-show="openCategory === '{{ $category }}'"
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="opacity-0 max-h-0"
+                            x-transition:enter-end="opacity-100 max-h-screen"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 max-h-screen"
+                            x-transition:leave-end="opacity-0 max-h-0"
+                            class="overflow-hidden"
+                        >
+                            <div class="p-8 bg-gray-50">
+                                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                    @foreach($categoryServices as $service)
+                                        <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                                            <!-- Image -->
+                                            <div class="relative h-48 overflow-hidden">
+                                                <img src="{{ $service->image ? asset('storage/' . $service->image) : asset('css/img/bytewave_livestreaming.jpg') }}" 
+                                                     alt="{{ $service->name }}" 
+                                                     class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                            </div>
+                                            
+                                            <!-- Content -->
+                                            <div class="p-6">
+                                                <h4 class="text-xl font-bold text-gray-900 mb-3">{{ $service->name }}</h4>
+                                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ Str::limit($service->description, 120) }}</p>
+                                                
+                                                <a href="{{ Str::contains($service->name, 'Audio-Visual') || Str::contains($service->name, 'Audio Visual') ? route('services.audio-visual') : route('services.show', $service->id) }}"
+                                                   class="inline-flex items-center gap-2 text-bytewave-blue hover:text-blue-700 font-semibold transition-colors duration-300 group/link">
+                                                    Learn More
+                                                    <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+                                                    </svg>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-12">
+                    <div class="text-center py-12">
                         <div class="inline-block p-8 bg-white rounded-2xl shadow-lg">
                             <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
                             <p class="text-xl text-gray-600">No services available at the moment.</p>
@@ -184,11 +234,6 @@
     
     .service-card:nth-child(6) {
         animation-delay: 0.6s;
-    }
-
-    /* Smooth scroll behavior */
-    html {
-        scroll-behavior: smooth;
     }
 </style>
 @endsection

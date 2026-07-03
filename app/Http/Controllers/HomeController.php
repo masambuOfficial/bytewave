@@ -8,6 +8,7 @@ use App\Mail\ContactFormMail;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Portfolio;
 use App\Models\Blog;
+use App\Models\Testimonial;
 
 class HomeController extends Controller
 {
@@ -15,29 +16,20 @@ class HomeController extends Controller
     {
         $latestPortfolios = Portfolio::latest()->take(6)->get();
         
-        // Get blog articles for homepage
-        $heroArticle = Blog::published()
+        // Get latest published articles for the homepage "Latest News & Articles" grid
+        $recentArticles = Blog::published()
             ->with(['author', 'category'])
-            ->where('hero', true)
             ->latest()
-            ->first();
-            
-        // If no hero article, get the latest one
-        if (!$heroArticle) {
-            $heroArticle = Blog::published()
-                ->with(['author', 'category'])
-                ->latest()
-                ->first();
-        }
-        
-        $latestPosts = Blog::published()
-            ->with(['author', 'category'])
-            ->where('id', '!=', $heroArticle?->id)
-            ->latest()
-            ->take(4)
+            ->take(3)
             ->get();
-        
-        return view('home', compact('latestPortfolios', 'heroArticle', 'latestPosts'));
+
+        // Get approved testimonials
+        $testimonials = Testimonial::approved()
+            ->ordered()
+            ->take(5)
+            ->get();
+
+        return view('home', compact('latestPortfolios', 'recentArticles', 'testimonials'));
     }
 
     public function about()

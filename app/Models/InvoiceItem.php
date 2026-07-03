@@ -11,13 +11,19 @@ class InvoiceItem extends Model
 
     protected $fillable = [
         'invoice_id',
+        'position',
+        'description',
         'service_id',
         'quantity',
-        'rate'
+        'unit',
+        'rate',
+        'line_total'
     ];
 
     protected $casts = [
-        'rate' => 'decimal:2'
+        'quantity' => 'decimal:2',
+        'rate' => 'decimal:2',
+        'line_total' => 'decimal:2',
     ];
 
     public function invoice()

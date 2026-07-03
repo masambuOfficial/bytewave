@@ -21,13 +21,70 @@ class NewsApiService
     }
 
     /**
+     * Off-topic markers that show up in "top-headlines" for general-interest tech outlets
+     * even when scoped to tech sources (word-game columns, politics, etc.) — reject
+     * regardless of query match. Checked against title + description, case-insensitive.
+     */
+    protected $blocklist = [
+        'hints and answers', 'wordle', 'quordle', 'nyt connections', 'nyt strands', 'crossword',
+        'deportation', 'immigration', ' ice raid', ' ice arrest', 'embryo', 'abortion',
+        'senate', 'congress', 'election', 'supreme court', 'government shutdown',
+        'ceasefire', 'shooting', 'homicide', 'trial verdict', 'war in ',
+        'world cup', 'fifa', 'kick-off', 'kickoff', 'premier league', 'champions league',
+        'olympics', 'super bowl', 'nba finals', 'grand slam', 'how to watch', 'live stream',
+    ];
+
+    /**
+     * At least one of these must appear in title + description for an article to
+     * be considered on-topic for a tech/ICT company blog. "streaming" deliberately
+     * excluded — too easily matched by sports/TV "how to watch" guides.
+     */
+    protected $allowlist = [
+        'tech', 'software', 'app', 'ai', 'artificial intelligence', 'startup', 'cloud',
+        'cyber', 'data', 'device', 'gadget', 'internet', 'digital', 'hardware', 'chip',
+        'smartphone', 'computer', 'robot', 'code', 'developer', 'platform', 'api',
+        'gaming', 'console', 'wearable', 'social media', 'browser',
+        'operating system', 'processor', 'battery', 'camera', 'laptop', 'tablet',
+        'headphone', 'earbud', 'router', 'network', 'encryption', ' vr ', ' ar ',
+        'crypto', 'blockchain',
+    ];
+
+    /**
+     * Reject clearly off-topic articles (word-game columns, politics, etc.) that slip
+     * through NewsAPI's per-source "top-headlines" feed even when scoped to tech sources.
+     * Blocklist wins over allowlist (e.g. "startup" + "embryo" still gets rejected).
+     */
+    protected function isRelevant(array $article): bool
+    {
+        $haystack = strtolower(($article['title'] ?? '') . ' ' . ($article['description'] ?? ''));
+
+        foreach ($this->blocklist as $term) {
+            if (str_contains($haystack, $term)) {
+                return false;
+            }
+        }
+
+        foreach ($this->allowlist as $term) {
+            if (str_contains($haystack, $term)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Fetch articles from NewsAPI
      */
     public function fetchArticles($sources = null, $limit = 20)
     {
         try {
             $sources = $sources ?? config('services.newsapi.sources', 'techcrunch,the-verge,wired');
-            
+
+            // Note: NewsAPI's top-headlines endpoint returns zero results when a 'q' query
+            // is combined with a multi-source 'sources' filter (tested directly — totalResults
+            // drops from 80 to 0 with q added). Topic relevance is enforced entirely by
+            // isRelevant() below instead, after fetching the full unfiltered source feed.
             $response = Http::get("{$this->baseUrl}/top-headlines", [
                 'apiKey' => $this->apiKey,
                 'sources' => $sources,
@@ -54,10 +111,19 @@ class NewsApiService
     {
         $imported = 0;
         $skipped = 0;
-        $defaultAuthor = Author::first();
+        $filtered = 0;
+        $curatedAuthor = Author::firstOrCreate(
+            ['slug' => 'bytewave-tech-desk'],
+            [
+                'name' => 'ByteWave Tech Desk',
+                'email' => 'editorial@bytewave.com',
+                'bio' => 'Curated tech news roundups from around the web, with commentary from the ByteWave team.',
+                'avatar' => '/bytewave_icon.jpg',
+            ]
+        );
 
-        if (!$defaultAuthor) {
-            Log::error('No default author found. Please run BlogSystemSeeder first.');
+        if (!$curatedAuthor) {
+            Log::error('No curated author found. Please run BlogSystemSeeder first.');
             return 0;
         }
 
@@ -74,6 +140,14 @@ class NewsApiService
                 continue;
             }
 
+            // Skip off-topic articles (word-game columns, politics, etc.) — this is the
+            // only safety net now that imports auto-publish with no human review step.
+            if (!$this->isRelevant($article)) {
+                $filtered++;
+                Log::info('Skipping off-topic article', ['title' => $article['title']]);
+                continue;
+            }
+
             // Map source to category
             $category = $this->mapSourceToCategory($article['source']['name'] ?? 'Technology');
 
@@ -83,22 +157,34 @@ class NewsApiService
                 $coverImage = $this->downloadImage($article['urlToImage']);
             }
 
-            // Create blog post
+            // Build a short, original-style commentary instead of republishing the source's
+            // own text — avoids duplicate-content/ToS risk from mirroring full articles.
+            // strtr (not sprintf) since titles/descriptions may contain literal "%" characters.
+            $commentary = strtr("**ByteWave's take:** {source} reports on \"{title}.\"\n\n{description}\n\n*Read the full story at the source link below.*", [
+                '{source}' => $article['source']['name'] ?? 'a tech outlet',
+                '{title}' => $article['title'],
+                '{description}' => $article['description'],
+            ]);
+
+            // Create blog post as a published digest — auto-published per business decision,
+            // relying on the isRelevant() topic filter above as the only gate (no human
+            // review step). featured/hero stay false so auto-imports can't hijack the
+            // homepage hero/featured slots without human curation.
             $blog = Blog::create([
                 'title' => $article['title'],
                 'slug' => Str::slug($article['title']),
-                'content' => $article['content'] ?? $article['description'],
+                'content' => $commentary,
                 'excerpt' => Str::limit($article['description'], 100),
                 'cover_image' => $coverImage,
-                'author_id' => $defaultAuthor->id,
-                'author_name' => $article['author'] ?? $article['source']['name'],
+                'author_id' => $curatedAuthor->id,
+                'author_name' => $curatedAuthor->name,
                 'category_id' => $category->id,
                 'source_url' => $article['url'],
                 'source_name' => $article['source']['name'],
                 'published_at' => $article['publishedAt'] ?? now(),
                 'is_published' => true,
-                'featured' => $imported < 3, // First 3 are featured
-                'hero' => $imported === 0, // First one is hero
+                'featured' => false,
+                'hero' => false,
                 'views' => 0,
                 'meta_description' => Str::limit($article['description'], 160)
             ]);
@@ -116,6 +202,7 @@ class NewsApiService
         Log::info('Article import completed', [
             'imported' => $imported,
             'skipped' => $skipped,
+            'filtered_off_topic' => $filtered,
             'total_processed' => count($articles)
         ]);
 

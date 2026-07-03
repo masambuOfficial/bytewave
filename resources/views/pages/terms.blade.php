@@ -82,9 +82,9 @@
                             <h3 class="text-warning mb-4">Contact Information</h3>
                             <div class="bg-light p-4 rounded">
                                 <p class="mb-2">For questions about these Terms, please contact us:</p>
-                                <p class="mb-2"><i class="fas fa-envelope text-primary me-2"></i>Email: legal@bytewave.com</p>
-                                <p class="mb-2"><i class="fas fa-phone text-primary me-2"></i>Phone: +256 123 456 789</p>
-                                <p class="mb-0"><i class="fas fa-map-marker-alt text-primary me-2"></i>Address: Plot 123, Kampala Road, Kampala, Uganda</p>
+                                <p class="mb-2"><i class="fas fa-envelope text-primary me-2"></i>Email: {{ config('company.email') }}</p>
+                                <p class="mb-2"><i class="fas fa-phone text-primary me-2"></i>Phone: {{ config('company.phone') }}</p>
+                                <p class="mb-0"><i class="fas fa-map-marker-alt text-primary me-2"></i>Address: {{ config('company.address2') }}, {{ config('company.address3') }}, {{ config('company.address') }}</p>
                             </div>
                         </div>
                     </div>
