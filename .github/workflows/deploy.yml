@@ -24,11 +24,10 @@ jobs:
           npm ci
           npm run build
 
-      - name: Sync Dist/Build Folder to cPanel
+      - name: Sync App Folder to cPanel
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local-dir: ./dist/      # Folder containing output files (e.g., ./build/ or ./dist/)
-          server-dir: public_html/
+          server-dir: bytewave_app/                 # Uploads the repository directly into bytewave_app/
