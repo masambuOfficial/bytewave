@@ -66,7 +66,7 @@
     <!-- ✅ Structured Data for Google/AI engines (LocalBusiness Schema, sourced from config/company.php) -->
     <script type="application/ld+json">
     {
-      "@context": "https://schema.org",
+      "@@context": "https://schema.org",
       "@type": "LocalBusiness",
       "name": @json(config('company.name')),
       "url": "https://bytewaveinvestments.com/",
