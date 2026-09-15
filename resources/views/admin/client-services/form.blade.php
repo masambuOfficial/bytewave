@@ -103,10 +103,13 @@
                                        list="unit_suggestions"
                                        placeholder="e.g. day, project, hour">
                                 <datalist id="unit_suggestions">
-                                    <option value="hour"></option>
-                                    <option value="day"></option>
-                                    <option value="project"></option>
-                                    <option value="month"></option>
+                                    <option value="one-time">One-Time</option>
+                                    <option value="hour">Per Hour</option>
+                                    <option value="day">Per Day</option>
+                                    <option value="project">Per Project</option>
+                                    <option value="month">Monthly</option>
+                                    <option value="quarterly">Quarterly</option>
+                                    <option value="annually">Annually / Per Year</option>
                                     <option value="unit"></option>
                                     <option value="visit"></option>
                                     <option value="trip"></option>
