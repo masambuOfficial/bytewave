@@ -10,7 +10,7 @@
 @push('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": @json($blog->title),
     "description": @json($blog->meta_description ?: Str::limit(strip_tags($blog->content), 160)),

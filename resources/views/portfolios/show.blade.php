@@ -7,7 +7,7 @@
 @push('schema')
 <script type="application/ld+json">
 {
-    "@context": "https://schema.org",
+    "@@context": "https://schema.org",
     "@type": "CreativeWork",
     "name": @json($portfolio->title),
     "description": @json($portfolio->description),

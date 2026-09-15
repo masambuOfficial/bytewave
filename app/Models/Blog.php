@@ -112,7 +112,7 @@ class Blog extends Model
         if ($value) {
             return asset($value);
         }
-        return $this->image_url ? asset($this->image_url) : asset('images/blog-default.jpg');
+        return $this->image_url ? asset($this->image_url) : asset('ByteWave_Logo.png');
     }
 
     /**
