@@ -674,81 +674,47 @@
     @endif
 
     <!-- Client Logos Section -->
-    <section class="py-12 bg-blue-500 overflow-hidden">
-        <div class="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32">
-            <!-- Section Title -->
-            <h3 class="text-2xl md:text-3xl font-bold text-white text-center mb-8">Trusted by Leading Organizations</h3>
-            
-            <!-- Horizontal Scrolling Logos -->
-            <div class="relative overflow-hidden">
-                <div class="logo-ticker">
-                    <div class="logo-track">
-                        <!-- Client 1 - 11AEW9AEC -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC" class="w-full h-full object-contain">
-                        </div>
+    <section class="clients-showcase">
+        <div class="clients-showcase-grid">
+            <div class="clients-showcase-text">
+                <span class="clients-showcase-eyebrow">Our Clients/Projects</span>
+                <h2 class="clients-showcase-title">Trusted by Leading Organizations on Projects</h2>
+                <p class="clients-showcase-desc">We're proud to partner with organizations across sectors who trust us to deliver results.</p>
+            </div>
 
-                        <!-- Client 2 - Flourish Hub -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 3 - HESFB -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 4 - Kafu Prime Cuts -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 5 - Modiac -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 6 - IGAD -->
-                        <div class="logo-item">
-                            <img src="https://africa-knowledge-platform.ec.europa.eu/sites/default/files/styles/max_325x325/public/2024-01/IGAD_LOGO-01_pWTr1XF.png?itok=mFgrjoCu" alt="IGAD" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 7 - UIPE -->
-                        <div class="logo-item">
-                            <img src="https://uipe.co.ug/wp-content/uploads/2022/08/cropped-UIPE-logo-1.jpg" alt="UIPE" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Client 8 - UVTAB -->
-                        <div class="logo-item">
-                            <img src="https://uvtab.go.ug/static/media/uvtab-logo.b50d6a6eb1c4f6887a4c.png" alt="UVTAB" class="w-full h-full object-contain">
-                        </div>
-
-                        <!-- Duplicate logos for seamless loop -->
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/11AEW9AEC_2025-logo.png') }}" alt="11AEW9AEC" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Flourish_Hub-logo.png') }}" alt="Flourish Hub" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/HESFB_logo.png') }}" alt="HESFB" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Kafu_Prime_Cuts-logo.png') }}" alt="Kafu Prime Cuts" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="{{ asset('clients/Modiac-logo.png') }}" alt="Modiac" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="https://africa-knowledge-platform.ec.europa.eu/sites/default/files/styles/max_325x325/public/2024-01/IGAD_LOGO-01_pWTr1XF.png?itok=mFgrjoCu" alt="IGAD" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="https://uipe.co.ug/wp-content/uploads/2022/08/cropped-UIPE-logo-1.jpg" alt="UIPE" class="w-full h-full object-contain">
-                        </div>
-                        <div class="logo-item">
-                            <img src="https://uvtab.go.ug/static/media/uvtab-logo.b50d6a6eb1c4f6887a4c.png" alt="UVTAB" class="w-full h-full object-contain">
-                        </div>
-                    </div>
+            <div class="clients-showcase-logos">
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('ayad-logo.webp') }}" alt="AYAD Consults International">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('cropped-Likana-Safaris-logo.webp') }}" alt="Likana Safaris Uganda">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('e-betp_logo.png') }}" alt="e-BETP">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/11AEW9AEC_2025-logo-trimmed.png') }}" alt="11AEW9AEC">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/Flourish_Hub-logo-trimmed.png') }}" alt="Flourish Hub">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/HESFB_logo-trimmed.png') }}" alt="HESFB">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/Kafu_Prime_Cuts-logo-trimmed.png') }}" alt="Kafu Prime Cuts">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/Modiac-logo-trimmed.png') }}" alt="Modiac">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="https://africa-knowledge-platform.ec.europa.eu/sites/default/files/styles/max_325x325/public/2024-01/IGAD_LOGO-01_pWTr1XF.png?itok=mFgrjoCu" alt="IGAD">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="https://uipe.co.ug/wp-content/uploads/2022/08/cropped-UIPE-logo-1.jpg" alt="UIPE">
+                </div>
+                <div class="clients-showcase-logo-cell">
+                    <img src="{{ asset('clients/UVTAB-logo-trimmed.png') }}" alt="UVTAB">
                 </div>
             </div>
         </div>
@@ -784,66 +750,159 @@
     </section>
 
     <style>
-        /* Clients Grid Styling */
-        .clients-section {
-            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        /* Client Showcase Section */
+        .clients-showcase {
+            width: 100%;
+            min-height: 85vh;
+            background-color: #eff6ff;
+            display: flex;
         }
 
-        .client-card {
+        .clients-showcase-grid {
+            display: flex;
             width: 100%;
         }
 
-        .client-logo-wrapper {
+        .clients-showcase-text {
+            flex: 0 0 25%;
+            max-width: 25%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 3rem;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+        }
+
+        .clients-showcase-eyebrow {
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 1rem;
+        }
+
+        .clients-showcase-title {
+            font-size: 2rem;
+            line-height: 1.2;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 1rem;
+        }
+
+        .clients-showcase-desc {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #6b7280;
+        }
+
+        .clients-showcase-logos {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+        }
+
+        .clients-showcase-logo-cell {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100%;
-            text-decoration: none;
-            transition: all 0.3s ease;
+            min-height: 180px;
+            padding: 2.5rem;
+            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .client-logo-container {
-            width: 100%;
-            aspect-ratio: 4 / 3;
-            padding: 12px;
-            background-color: #f0f9ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border: 1px solid rgba(0, 0, 0, 0.05);
+        .clients-showcase-logo-cell:nth-child(4n) {
+            border-right: none;
         }
 
-        .client-logo {
-            max-width: 90%;
-            max-height: 90%;
+        .clients-showcase-logo-cell:nth-last-child(-n+4) {
+            border-bottom: none;
+        }
+
+        .clients-showcase-logo-cell:last-child {
+            border-right: none;
+        }
+
+        .clients-showcase-logo-cell img {
+            max-width: 100%;
+            max-height: 72px;
+            width: auto;
+            height: auto;
             object-fit: contain;
-            transition: all 0.3s ease;
+            filter: grayscale(100%);
+            opacity: 0.65;
+            transition: filter 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
         }
 
-        .client-logo-wrapper:hover .client-logo-container {
-            background-color: #ffffff;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-            border-color: rgba(59, 130, 246, 0.2);
+        .clients-showcase-logo-cell:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
             transform: scale(1.08);
         }
 
         /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .client-logo-container {
-                padding: 10px;
+        @media (max-width: 900px) {
+            .clients-showcase {
+                min-height: auto;
             }
 
-            .client-logo {
-                max-width: 85%;
-                max-height: 85%;
+            .clients-showcase-grid {
+                flex-direction: column;
+            }
+
+            .clients-showcase-text {
+                flex: 0 0 100%;
+                max-width: 100%;
+                border-right: none;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                padding: 3rem 1.5rem;
+                text-align: center;
+                align-items: center;
+            }
+
+            .clients-showcase-logos {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+            }
+
+            .clients-showcase-logo-cell {
+                min-height: 140px;
+                padding: 1.75rem;
+            }
+
+            .clients-showcase-logo-cell:nth-child(4n) {
+                border-right: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .clients-showcase-logo-cell:nth-child(2n) {
+                border-right: none;
+            }
+
+            .clients-showcase-logo-cell:nth-last-child(-n+4) {
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .clients-showcase-logo-cell:nth-last-child(-n+2) {
+                border-bottom: none;
             }
         }
 
-        @media (max-width: 640px) {
-            .client-logo-container {
-                padding: 8px;
+        @media (max-width: 480px) {
+            .clients-showcase-logos {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(11, 1fr);
+            }
+
+            .clients-showcase-logo-cell {
+                border-right: none !important;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+            }
+
+            .clients-showcase-logo-cell:last-child {
+                border-bottom: none;
             }
         }
     </style>
