@@ -684,13 +684,13 @@
 
             <div class="clients-showcase-logos">
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('ayad-logo.webp') }}" alt="AYAD Consults International">
+                    <img src="{{ asset('clients/ayad-logo.webp') }}" alt="AYAD Consults International">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('cropped-Likana-Safaris-logo.webp') }}" alt="Likana Safaris Uganda">
+                    <img src="{{ asset('clients/Likana-Safaris-logo.webp') }}" alt="Likana Safaris Uganda">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('e-betp_logo.png') }}" alt="e-BETP">
+                    <img src="{{ asset('clients/e-betp-logo.png') }}" alt="e-BETP">
                 </div>
                 <div class="clients-showcase-logo-cell">
                     <img src="{{ asset('clients/11AEW9AEC_2025-logo-trimmed.png') }}" alt="11AEW9AEC">
@@ -708,10 +708,10 @@
                     <img src="{{ asset('clients/Modiac-logo-trimmed.png') }}" alt="Modiac">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="https://africa-knowledge-platform.ec.europa.eu/sites/default/files/styles/max_325x325/public/2024-01/IGAD_LOGO-01_pWTr1XF.png?itok=mFgrjoCu" alt="IGAD">
+                    <img src="{{ asset('clients/IGAD-logo.png') }}" alt="IGAD">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="https://uipe.co.ug/wp-content/uploads/2022/08/cropped-UIPE-logo-1.jpg" alt="UIPE">
+                    <img src="{{ asset('clients/UIPE-logo.png') }}" alt="UIPE">
                 </div>
                 <div class="clients-showcase-logo-cell">
                     <img src="{{ asset('clients/UVTAB-logo-trimmed.png') }}" alt="UVTAB">
