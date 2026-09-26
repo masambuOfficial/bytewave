@@ -4,144 +4,335 @@
 
 @push('styles')
 <style>
+    .posts-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .posts-header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--bytewave-blue-dark);
+        margin-bottom: 0.25rem;
+    }
+
+    .posts-header p {
+        color: #6B7A85;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    .btn-add-post {
+        background: var(--bytewave-blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.65rem 1.25rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background 0.2s ease, transform 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .btn-add-post:hover {
+        background: var(--bytewave-blue-dark);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    .posts-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+        gap: 1.5rem;
+    }
+
     .post-card {
-        transition: transform 0.2s;
+        background: #fff;
+        border: 1px solid #EEF1F4;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
+
     .post-card:hover {
-        transform: translateY(-5px);
+        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        transform: translateY(-3px);
     }
+
+    .post-media {
+        position: relative;
+    }
+
     .post-image {
-        height: 200px;
+        height: 180px;
+        width: 100%;
         object-fit: cover;
-        border-top-left-radius: calc(0.375rem - 1px);
-        border-top-right-radius: calc(0.375rem - 1px);
+        display: block;
     }
-    .action-buttons {
-        transition: opacity 0.2s;
-        opacity: 0;
+
+    .post-image-placeholder {
+        height: 180px;
+        background: var(--bytewave-blue-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .post-card:hover .action-buttons {
-        opacity: 1;
+
+    .post-image-placeholder i {
+        font-size: 2.25rem;
+        color: var(--bytewave-blue);
+        opacity: 0.5;
     }
-    .status-badge {
+
+    .post-status-badge {
         position: absolute;
         top: 10px;
         right: 10px;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.875rem;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
     }
-    .status-badge.draft {
-        background: rgba(108, 117, 125, 0.9);
-        color: white;
+
+    .post-status-badge.draft {
+        background: rgba(255, 255, 255, 0.92);
+        color: #6B7A85;
     }
-    .status-badge.published {
-        background: rgba(25, 135, 84, 0.9);
-        color: white;
+
+    .post-status-badge.published {
+        background: rgba(30, 142, 79, 0.92);
+        color: #fff;
     }
-    .category-badge {
+
+    .post-category-badge {
         position: absolute;
         top: 10px;
         left: 10px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 20px;
+        background: rgba(4, 69, 110, 0.65);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .post-card-body {
+        padding: 1.25rem 1.35rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .post-card-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #1F2A33;
+        margin-bottom: 0.4rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .post-card-text {
+        color: #6B7A85;
         font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.9rem;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .post-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.9rem;
+        color: #8A97A0;
+        font-size: 0.78rem;
+        margin-bottom: 1rem;
+    }
+
+    .post-meta span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+
+    .post-card-actions {
+        display: flex;
+        gap: 0.5rem;
+        border-top: 1px solid #F1F3F5;
+        padding-top: 0.9rem;
+        margin-top: auto;
+    }
+
+    .post-action-btn {
+        flex: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        border: none;
+        border-radius: 9px;
+        padding: 0.5rem 0.6rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .post-action-btn.edit {
+        background: var(--bytewave-blue-light);
+        color: var(--bytewave-blue-dark);
+    }
+
+    .post-action-btn.edit:hover {
+        background: var(--bytewave-blue);
+        color: #fff;
+    }
+
+    .post-action-btn.view {
+        background: #F1F4F7;
+        color: #4B5A63;
+    }
+
+    .post-action-btn.view:hover {
+        background: #4B5A63;
+        color: #fff;
+    }
+
+    .post-action-btn.delete {
+        background: #FDEDEC;
+        color: #C0392B;
+    }
+
+    .post-action-btn.delete:hover {
+        background: #E74C3C;
+        color: #fff;
+    }
+
+    .post-action-form {
+        flex: 1;
+        display: flex;
+    }
+
+    .posts-empty {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: #fff;
+        border: 1px dashed #DCE3E8;
+        border-radius: 16px;
+    }
+
+    .posts-empty i {
+        font-size: 2.75rem;
+        color: var(--bytewave-blue);
+        opacity: 0.35;
+        margin-bottom: 1rem;
+    }
+
+    .posts-empty p {
+        color: #6B7A85;
+        margin-bottom: 1.25rem;
     }
 </style>
 @endpush
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Blog Posts</h1>
-        <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">
+    <div class="posts-header">
+        <div>
+            <h1>Blog Posts</h1>
+            <p>Write and manage articles published on your website.</p>
+        </div>
+        <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
             <i class="fas fa-plus"></i> Write New Post
         </a>
     </div>
 
     @if($posts->isEmpty())
-        <div class="text-center py-5">
-            <i class="fas fa-newspaper fa-4x text-muted mb-3"></i>
-            <p class="text-muted">No blog posts found.</p>
-            <a href="{{ route('admin.posts.create') }}" class="btn btn-primary">
+        <div class="posts-empty">
+            <i class="fas fa-newspaper"></i>
+            <p>No blog posts found.</p>
+            <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
                 Write your first post
             </a>
         </div>
     @else
-        <div class="row">
+        <div class="posts-grid">
             @foreach($posts as $post)
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow post-card h-100">
+                <div class="post-card">
+                    <div class="post-media">
                         @if($post->image)
-                            <img src="{{ asset('storage/' . $post->image) }}" 
-                                 alt="{{ $post->title }}" 
+                            <img src="{{ asset('storage/' . $post->image) }}"
+                                 alt="{{ $post->title }}"
                                  class="post-image">
                         @else
-                            <div class="post-image bg-light d-flex align-items-center justify-content-center">
-                                <i class="fas fa-newspaper fa-3x text-muted"></i>
+                            <div class="post-image-placeholder">
+                                <i class="fas fa-newspaper"></i>
                             </div>
                         @endif
-                        
-                        <div class="status-badge {{ $post->status }}">
+
+                        <div class="post-status-badge {{ $post->status }}">
                             {{ ucfirst($post->status) }}
                         </div>
 
                         @if($post->category)
-                            <div class="category-badge">
+                            <div class="post-category-badge">
                                 {{ $post->category }}
                             </div>
                         @endif
-                        
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $post->title }}</h5>
-                            <p class="card-text text-muted">
-                                {{ Str::limit($post->excerpt ?? $post->content, 100) }}
-                            </p>
-                            
-                            <div class="mb-3">
-                                <small class="text-muted">
-                                    <i class="fas fa-user"></i> {{ $post->author->name ?? 'Unknown Author' }}
-                                </small>
-                                <small class="text-muted ms-3">
-                                    <i class="fas fa-calendar"></i> {{ $post->created_at->format('M d, Y') }}
-                                </small>
-                                @if($post->comments_count)
-                                    <small class="text-muted ms-3">
-                                        <i class="fas fa-comments"></i> {{ $post->comments_count }}
-                                    </small>
-                                @endif
-                            </div>
-                            
-                            <div class="action-buttons">
-                                <hr>
-                                <div class="btn-group w-100">
-                                    <a href="{{ route('admin.posts.edit', $post) }}" 
-                                       class="btn btn-outline-primary" 
-                                       title="Edit">
-                                        <i class="fas fa-edit"></i> Edit
-                                    </a>
-                                    <a href="{{ route('blog.show', $post->slug) }}" 
-                                       class="btn btn-outline-info" 
-                                       title="View"
-                                       target="_blank">
-                                        <i class="fas fa-eye"></i> View
-                                    </a>
-                                    <form action="{{ route('admin.posts.destroy', $post) }}" 
-                                          method="POST" 
-                                          class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this post?');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" 
-                                                class="btn btn-outline-danger" 
-                                                title="Delete">
-                                            <i class="fas fa-trash"></i> Delete
-                                        </button>
-                                    </form>
-                                </div>
-                            </div>
+                    </div>
+
+                    <div class="post-card-body">
+                        <h5 class="post-card-title">{{ $post->title }}</h5>
+                        <p class="post-card-text">
+                            {{ Str::limit($post->excerpt ?? $post->content, 100) }}
+                        </p>
+
+                        <div class="post-meta">
+                            <span><i class="fas fa-user"></i> {{ $post->author->name ?? 'Unknown Author' }}</span>
+                            <span><i class="fas fa-calendar"></i> {{ $post->created_at->format('M d, Y') }}</span>
+                            @if($post->comments_count)
+                                <span><i class="fas fa-comments"></i> {{ $post->comments_count }}</span>
+                            @endif
+                        </div>
+
+                        <div class="post-card-actions">
+                            <a href="{{ route('admin.posts.edit', $post) }}"
+                               class="post-action-btn edit"
+                               title="Edit">
+                                <i class="fas fa-pen"></i> Edit
+                            </a>
+                            <a href="{{ route('blog.show', $post->slug) }}"
+                               class="post-action-btn view"
+                               title="View"
+                               target="_blank">
+                                <i class="fas fa-eye"></i> View
+                            </a>
+                            <form action="{{ route('admin.posts.destroy', $post) }}"
+                                  method="POST"
+                                  class="post-action-form"
+                                  onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="post-action-btn delete"
+                                        title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>

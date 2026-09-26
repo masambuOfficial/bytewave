@@ -4,190 +4,372 @@
 
 @push('styles')
 <style>
+    .portfolios-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 2rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .portfolios-header h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--bytewave-blue-dark);
+        margin-bottom: 0.25rem;
+    }
+
+    .portfolios-header p {
+        color: #6B7A85;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+    }
+
+    .btn-add-portfolio {
+        background: var(--bytewave-blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.65rem 1.25rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background 0.2s ease, transform 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .btn-add-portfolio:hover {
+        background: var(--bytewave-blue-dark);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    .portfolios-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
     .portfolio-card {
-        transition: transform 0.2s;
+        background: #fff;
+        border: 1px solid #EEF1F4;
+        border-radius: 16px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: box-shadow 0.25s ease, transform 0.25s ease;
     }
+
     .portfolio-card:hover {
-        transform: translateY(-5px);
+        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        transform: translateY(-3px);
     }
+
+    .portfolio-media {
+        position: relative;
+    }
+
     .portfolio-image {
-        height: 250px;
+        height: 200px;
+        width: 100%;
         object-fit: cover;
-        border-top-left-radius: calc(0.375rem - 1px);
-        border-top-right-radius: calc(0.375rem - 1px);
+        display: block;
     }
-    .action-buttons {
-        transition: opacity 0.2s;
-        opacity: 0;
+
+    .portfolio-image-placeholder {
+        height: 200px;
+        background: var(--bytewave-blue-light);
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
-    .portfolio-card:hover .action-buttons {
-        opacity: 1;
+
+    .portfolio-image-placeholder.dark {
+        background: #1F2A33;
     }
+
+    .portfolio-image-placeholder i {
+        font-size: 2.25rem;
+        color: var(--bytewave-blue);
+        opacity: 0.5;
+    }
+
+    .portfolio-image-placeholder.dark i {
+        color: #fff;
+        opacity: 0.6;
+    }
+
     .category-badge {
         position: absolute;
         top: 10px;
         left: 10px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.875rem;
-    }
-    .technology-badge {
-        display: inline-block;
-        background: #e9ecef;
-        padding: 2px 8px;
-        margin: 2px;
-        border-radius: 12px;
+        background: rgba(4, 69, 110, 0.65);
+        backdrop-filter: blur(4px);
+        color: #fff;
+        padding: 0.3rem 0.75rem;
+        border-radius: 999px;
         font-size: 0.75rem;
+        font-weight: 600;
     }
+
     .portfolio-preview {
         position: absolute;
         top: 10px;
         right: 10px;
-        background: rgba(0, 0, 0, 0.7);
-        color: white;
-        width: 35px;
-        height: 35px;
+        background: rgba(255, 255, 255, 0.9);
+        color: var(--bytewave-blue-dark);
+        width: 32px;
+        height: 32px;
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none;
-        transition: background 0.2s;
+        font-size: 0.8rem;
+        transition: background 0.2s ease, color 0.2s ease;
     }
+
     .portfolio-preview:hover {
-        background: rgba(0, 0, 0, 0.9);
-        color: white;
+        background: var(--bytewave-blue);
+        color: #fff;
+    }
+
+    .portfolio-card-body {
+        padding: 1.25rem 1.35rem 1.1rem;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    .portfolio-card-title-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .portfolio-card-title {
+        font-size: 1.05rem;
+        font-weight: 600;
+        color: #1F2A33;
+        margin: 0;
+    }
+
+    .portfolio-menu-btn {
+        background: none;
+        border: none;
+        color: #8A97A0;
+        width: 28px;
+        height: 28px;
+        border-radius: 8px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .portfolio-menu-btn:hover {
+        background: #F1F4F7;
+        color: var(--bytewave-blue-dark);
+    }
+
+    .portfolio-card-text {
+        color: #6B7A85;
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-bottom: 0.9rem;
+    }
+
+    .technology-badge {
+        display: inline-block;
+        background: var(--bytewave-blue-light);
+        color: var(--bytewave-blue-dark);
+        padding: 0.2rem 0.65rem;
+        margin: 0 0.3rem 0.3rem 0;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 600;
+    }
+
+    .portfolio-meta {
+        margin-top: auto;
+        padding-top: 0.9rem;
+        border-top: 1px solid #F1F3F5;
+    }
+
+    .portfolio-meta-row {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #8A97A0;
+        font-size: 0.82rem;
+        margin-bottom: 0.4rem;
+    }
+
+    .portfolio-meta-row:last-child {
+        margin-bottom: 0;
+    }
+
+    .portfolio-meta-row i {
+        width: 16px;
+        text-align: center;
+        color: var(--bytewave-blue);
+        opacity: 0.7;
+    }
+
+    .portfolios-empty {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: #fff;
+        border: 1px dashed #DCE3E8;
+        border-radius: 16px;
+    }
+
+    .portfolios-empty i {
+        font-size: 2.75rem;
+        color: var(--bytewave-blue);
+        opacity: 0.35;
+        margin-bottom: 1rem;
+    }
+
+    .portfolios-empty p {
+        color: #6B7A85;
+        margin-bottom: 1.25rem;
     }
 </style>
 @endpush
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">Portfolio</h1>
-        <a href="{{ route('admin.portfolios.create') }}" class="btn btn-primary">
+    <div class="portfolios-header">
+        <div>
+            <h1>Portfolio</h1>
+            <p>Manage the projects showcased on your website.</p>
+        </div>
+        <a href="{{ route('admin.portfolios.create') }}" class="btn-add-portfolio">
             <i class="fas fa-plus"></i> Add New Project
         </a>
     </div>
 
     @if($portfolios->isEmpty())
-        <div class="text-center py-5">
-            <i class="fas fa-project-diagram fa-4x text-muted mb-3"></i>
-            <p class="text-muted">No portfolio projects found.</p>
-            <a href="{{ route('admin.portfolios.create') }}" class="btn btn-primary">
+        <div class="portfolios-empty">
+            <i class="fas fa-project-diagram"></i>
+            <p>No portfolio projects found.</p>
+            <a href="{{ route('admin.portfolios.create') }}" class="btn-add-portfolio">
                 Add your first project
             </a>
         </div>
     @else
-        <div class="row">
+        <div class="portfolios-grid">
             @foreach($portfolios as $portfolio)
-                <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow portfolio-card h-100">
-                        <div class="position-relative">
-                            @php
-                                $type = $portfolio->getPrimaryMediaType();
-                                $src = $portfolio->primaryMediaPublicUrl();
-                                $embedSrc = $portfolio->primaryEmbedSrc();
-                                $embedThumb = $portfolio->primaryEmbedThumbnailUrl();
-                            @endphp
-                            @if($type === 'video' && $src)
-                                <video class="portfolio-image w-100" muted playsinline preload="metadata">
-                                    <source src="{{ $src }}" type="video/mp4">
-                                </video>
-                            @elseif($type === 'embed' && $embedThumb)
-                                <img src="{{ $embedThumb }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
-                            @elseif($type === 'embed' && $embedSrc)
-                                <div class="portfolio-image bg-dark d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-link fa-3x text-white"></i>
-                                </div>
-                            @elseif($src)
-                                <img src="{{ $src }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
-                            @elseif($portfolio->hasImage())
-                                <img src="{{ asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="portfolio-image w-100">
-                            @else
-                                <div class="portfolio-image bg-light d-flex align-items-center justify-content-center">
-                                    <i class="fas fa-project-diagram fa-3x text-muted"></i>
-                                </div>
-                            @endif
-                            
-                            @if($portfolio->category)
-                                <div class="category-badge">
-                                    <i class="fas fa-folder me-1"></i> {{ $portfolio->category }}
-                                </div>
-                            @endif
+                <div class="portfolio-card">
+                    <div class="portfolio-media">
+                        @php
+                            $type = $portfolio->getPrimaryMediaType();
+                            $src = $portfolio->primaryMediaPublicUrl();
+                            $embedSrc = $portfolio->primaryEmbedSrc();
+                            $embedThumb = $portfolio->primaryEmbedThumbnailUrl();
+                        @endphp
+                        @if($type === 'video' && $src)
+                            <video class="portfolio-image" muted playsinline preload="metadata">
+                                <source src="{{ $src }}" type="video/mp4">
+                            </video>
+                        @elseif($type === 'embed' && $embedThumb)
+                            <img src="{{ $embedThumb }}" alt="{{ $portfolio->title }}" class="portfolio-image">
+                        @elseif($type === 'embed' && $embedSrc)
+                            <div class="portfolio-image-placeholder dark">
+                                <i class="fas fa-link"></i>
+                            </div>
+                        @elseif($src)
+                            <img src="{{ $src }}" alt="{{ $portfolio->title }}" class="portfolio-image">
+                        @elseif($portfolio->hasImage())
+                            <img src="{{ asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="portfolio-image">
+                        @else
+                            <div class="portfolio-image-placeholder">
+                                <i class="fas fa-project-diagram"></i>
+                            </div>
+                        @endif
 
-                            @if($portfolio->project_url)
-                                <a href="{{ $portfolio->project_url }}" 
-                                   target="_blank"
-                                   class="portfolio-preview" 
-                                   title="View Project">
-                                    <i class="fas fa-external-link-alt"></i>
-                                </a>
-                            @endif
+                        @if($portfolio->category)
+                            <div class="category-badge">
+                                <i class="fas fa-folder me-1"></i> {{ $portfolio->category }}
+                            </div>
+                        @endif
+
+                        @if($portfolio->project_url)
+                            <a href="{{ $portfolio->project_url }}"
+                               target="_blank"
+                               class="portfolio-preview"
+                               title="View Project">
+                                <i class="fas fa-external-link-alt"></i>
+                            </a>
+                        @endif
+                    </div>
+
+                    <div class="portfolio-card-body">
+                        <div class="portfolio-card-title-row">
+                            <h5 class="portfolio-card-title">{{ $portfolio->title }}</h5>
+                            <div class="dropdown">
+                                <button class="portfolio-menu-btn" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('admin.portfolios.edit', $portfolio) }}">
+                                            <i class="fas fa-edit fa-fw me-1"></i> Edit
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('portfolios.show', $portfolio->slug) }}" target="_blank">
+                                            <i class="fas fa-eye fa-fw me-1"></i> View
+                                        </a>
+                                    </li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form action="{{ route('admin.portfolios.destroy', $portfolio) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Are you sure you want to delete this project?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="dropdown-item text-danger">
+                                                <i class="fas fa-trash fa-fw me-1"></i> Delete
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
-                        
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                <h5 class="card-title mb-0">{{ $portfolio->title }}</h5>
-                                <div class="dropdown">
-                                    <button class="btn btn-link text-dark p-0" type="button" data-bs-toggle="dropdown">
-                                        <i class="fas fa-ellipsis-v"></i>
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-end">
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('admin.portfolios.edit', $portfolio) }}">
-                                                <i class="fas fa-edit fa-fw me-1"></i> Edit
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="dropdown-item" href="{{ route('portfolios.show', $portfolio->slug) }}" target="_blank">
-                                                <i class="fas fa-eye fa-fw me-1"></i> View
-                                            </a>
-                                        </li>
-                                        <li><hr class="dropdown-divider"></li>
-                                        <li>
-                                            <form action="{{ route('admin.portfolios.destroy', $portfolio) }}" 
-                                                  method="POST"
-                                                  onsubmit="return confirm('Are you sure you want to delete this project?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="dropdown-item text-danger">
-                                                    <i class="fas fa-trash fa-fw me-1"></i> Delete
-                                                </button>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
 
-                            <p class="card-text text-muted mb-3">
-                                {{ Str::limit($portfolio->description, 100) }}
-                            </p>
-                            
-                            @if($portfolio->technologies)
-                                <div class="mb-3">
-                                    @foreach($portfolio->technologies as $tech)
-                                        <span class="technology-badge">{{ $tech }}</span>
-                                    @endforeach
+                        <p class="portfolio-card-text">
+                            {{ Str::limit($portfolio->description, 100) }}
+                        </p>
+
+                        @if($portfolio->technologies)
+                            <div class="mb-2">
+                                @foreach($portfolio->technologies as $tech)
+                                    <span class="technology-badge">{{ $tech }}</span>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        <div class="portfolio-meta">
+                            @if($portfolio->client)
+                                <div class="portfolio-meta-row">
+                                    <i class="fas fa-building"></i>
+                                    <span>{{ $portfolio->client }}</span>
                                 </div>
                             @endif
-
-                            <div class="mt-3 pt-3 border-top">
-                                @if($portfolio->client)
-                                    <div class="d-flex align-items-center mb-2">
-                                        <i class="fas fa-building text-muted fa-fw me-2"></i>
-                                        <span class="text-muted">{{ $portfolio->client }}</span>
-                                    </div>
-                                @endif
-                                @if($portfolio->completion_date)
-                                    <div class="d-flex align-items-center">
-                                        <i class="fas fa-calendar text-muted fa-fw me-2"></i>
-                                        <span class="text-muted">{{ $portfolio->completion_date->format('F Y') }}</span>
-                                    </div>
-                                @endif
-                            </div>
+                            @if($portfolio->completion_date)
+                                <div class="portfolio-meta-row">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>{{ $portfolio->completion_date->format('F Y') }}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>

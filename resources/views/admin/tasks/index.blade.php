@@ -4,85 +4,199 @@
 
 @push('styles')
 <style>
-    .bw-card {
-        border: 1px solid rgba(0, 0, 0, 0.06);
-        border-radius: 12px;
+    .tasks-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
-    .bw-card-header {
-        background: #fff;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-    }
-    .bw-title {
+
+    .tasks-header h1 {
         font-size: 1.5rem;
         font-weight: 700;
-        margin: 0;
+        color: var(--bytewave-blue-dark);
+        margin-bottom: 0.25rem;
     }
-    .bw-subtitle {
+
+    .tasks-header p {
+        color: #6B7A85;
         font-size: 0.9rem;
-        color: #6c757d;
-        margin-top: 0.25rem;
+        margin-bottom: 0;
     }
-    .bw-table {
-        min-width: 1100px;
-    }
-    .bw-table thead th {
-        font-size: 0.8rem;
-        letter-spacing: 0.02em;
-        color: #6c757d;
-        text-transform: uppercase;
-        background: #f8fafc;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-        padding: 0.85rem 0.9rem;
+
+    .btn-add-task {
+        background: var(--bytewave-blue);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: 0.65rem 1.25rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        transition: background 0.2s ease, transform 0.2s ease;
         white-space: nowrap;
     }
-    .bw-table tbody td {
-        padding: 0.85rem 0.9rem;
+
+    .btn-add-task:hover {
+        background: var(--bytewave-blue-dark);
+        color: #fff;
+        transform: translateY(-1px);
+    }
+
+    .tasks-card {
+        background: #fff;
+        border: 1px solid #EEF1F4;
+        border-radius: 16px;
+        overflow: hidden;
+    }
+
+    .tasks-table {
+        width: 100%;
+        margin-bottom: 0;
+        min-width: 1100px;
+    }
+
+    .tasks-table thead th {
+        background: #FAFBFC;
+        color: #8A97A0;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-bottom: 1px solid #EEF1F4;
+        padding: 0.9rem 1.1rem;
+        white-space: nowrap;
+    }
+
+    .tasks-table tbody td {
+        padding: 0.9rem 1.1rem;
+        border-bottom: 1px solid #F4F6F8;
         vertical-align: middle;
+        font-size: 0.88rem;
+        color: #1F2A33;
     }
-    .task-card {
-        transition: transform 0.2s;
+
+    .tasks-table tbody tr:last-child td {
+        border-bottom: none;
     }
-    .task-card:hover {
-        transform: translateY(-5px);
+
+    .tasks-table tbody tr:hover {
+        background: #FAFCFE;
     }
-    .status-badge {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.875rem;
+
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        white-space: nowrap;
     }
-    .priority-badge {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        padding: 5px 10px;
-        border-radius: 20px;
-        font-size: 0.875rem;
+
+    .status-untrackable { background: #FDEDEC; color: #C0392B; }
+    .status-submitted { background: rgba(251, 177, 69, 0.15); color: #92600C; }
+    .status-completed { background: #E9F9EF; color: #1E8E4F; }
+    .status-in-progress { background: var(--bytewave-blue-light); color: var(--bytewave-blue-dark); }
+
+    .priority-pill.bg-danger { background: #FDEDEC !important; color: #C0392B !important; }
+    .priority-pill.bg-warning { background: rgba(251, 177, 69, 0.15) !important; color: #92600C !important; }
+    .priority-pill.bg-success { background: #E9F9EF !important; color: #1E8E4F !important; }
+    .priority-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        white-space: nowrap;
     }
-    .action-buttons {
-        transition: opacity 0.2s;
-        opacity: 0;
+
+    .comments-link {
+        background: none;
+        border: none;
+        color: var(--bytewave-blue);
+        font-size: 0.82rem;
+        font-weight: 600;
+        padding: 0;
     }
-    .task-card:hover .action-buttons {
-        opacity: 1;
+
+    .comments-link:hover {
+        color: var(--bytewave-blue-dark);
     }
-    .status-untrackable { background-color: #dc3545 !important; color: white; }
-    .status-submitted { background-color: #fd7e14 !important; color: white; }
-    .status-completed { background-color: #198754 !important; color: white; }
-    .status-in-progress { background-color: #0dcaf0 !important; color: white; }
+
+    .task-actions {
+        display: flex;
+        gap: 0.35rem;
+    }
+
+    .task-action-btn {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.8rem;
+        transition: background 0.2s ease, color 0.2s ease;
+        flex-shrink: 0;
+    }
+
+    .task-action-btn.edit {
+        background: var(--bytewave-blue-light);
+        color: var(--bytewave-blue-dark);
+    }
+
+    .task-action-btn.edit:hover {
+        background: var(--bytewave-blue);
+        color: #fff;
+    }
+
+    .task-action-btn.delete {
+        background: #FDEDEC;
+        color: #C0392B;
+    }
+
+    .task-action-btn.delete:hover {
+        background: #E74C3C;
+        color: #fff;
+    }
+
+    .tasks-empty {
+        text-align: center;
+        padding: 4rem 1rem;
+        background: #fff;
+        border: 1px dashed #DCE3E8;
+        border-radius: 16px;
+    }
+
+    .tasks-empty i {
+        font-size: 2.75rem;
+        color: var(--bytewave-blue);
+        opacity: 0.35;
+        margin-bottom: 1rem;
+    }
+
+    .tasks-empty p {
+        color: #6B7A85;
+        margin-bottom: 1.25rem;
+    }
 </style>
 @endpush
 
 @section('content')
 <div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-start mb-4">
+    <div class="tasks-header">
         <div>
-            <h1 class="bw-title">Task Management</h1>
-            <div class="bw-subtitle">Track tasks, assignees, priorities and due dates.</div>
+            <h1>Task Management</h1>
+            <p>Track tasks, assignees, priorities and due dates.</p>
         </div>
-        <a href="{{ route('admin.tasks.create') }}" class="btn btn-primary">
+        <a href="{{ route('admin.tasks.create') }}" class="btn-add-task">
             <i class="fas fa-plus"></i> New Task
         </a>
     </div>
@@ -95,87 +209,81 @@
     @endif
 
     @if($tasks->isEmpty())
-        <div class="text-center py-5">
-            <i class="fas fa-tasks fa-4x text-muted mb-3"></i>
-            <p class="text-muted">No tasks found.</p>
-            <a href="{{ route('admin.tasks.create') }}" class="btn btn-primary">
+        <div class="tasks-empty">
+            <i class="fas fa-tasks"></i>
+            <p>No tasks found.</p>
+            <a href="{{ route('admin.tasks.create') }}" class="btn-add-task">
                 Create your first task
             </a>
         </div>
     @else
-        <div class="card shadow-sm bw-card mb-4">
-            <div class="card-header bw-card-header py-3">
-                <div class="fw-semibold">All Tasks</div>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0 bw-table">
-                        <thead>
+        <div class="tasks-card mb-4">
+            <div class="table-responsive">
+                <table class="tasks-table">
+                    <thead>
+                        <tr>
+                            <th>Task ID</th>
+                            <th>Description</th>
+                            <th>Assignee</th>
+                            <th>Status</th>
+                            <th>Start Date</th>
+                            <th>Due Date</th>
+                            <th>Priority</th>
+                            <th>Comments</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($tasks as $task)
                             <tr>
-                                <th>Task ID</th>
-                                <th>Description</th>
-                                <th>Assignee</th>
-                                <th>Status</th>
-                                <th>Start Date</th>
-                                <th>Due Date</th>
-                                <th>Priority</th>
-                                <th>Comments</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($tasks as $task)
-                                <tr>
-                                    <td>{{ $task->task_id }}</td>
-                                    <td>{{ $task->description }}</td>
-                                    <td>{{ $task->assignee }}</td>
-                                    <td>
-                                        <span class="badge status-{{ $task->status }}">
-                                            {{ ucfirst($task->status) }}
-                                        </span>
-                                    </td>
-                                    <td>{{ $task->start_date ? $task->start_date->format('d/m/Y') : '-' }}</td>
-                                    <td>{{ $task->due_date ? $task->due_date->format('d/m/Y') : '-' }}</td>
-                                    <td>
-                                        <span class="badge bg-{{ $task->getPriorityBadgeClass() }}">
-                                            {{ ucfirst($task->priority) }}
-                                        </span>
-                                    </td>
-                                    <td>
-                                        @if($task->comments)
-                                            <button type="button" 
-                                                    class="btn btn-sm btn-link" 
-                                                    data-bs-toggle="popover" 
-                                                    data-bs-content="{{ $task->comments }}">
-                                                View Comments
+                                <td>{{ $task->task_id }}</td>
+                                <td>{{ $task->description }}</td>
+                                <td>{{ $task->assignee }}</td>
+                                <td>
+                                    <span class="status-pill status-{{ $task->status }}">
+                                        {{ ucfirst($task->status) }}
+                                    </span>
+                                </td>
+                                <td>{{ $task->start_date ? $task->start_date->format('d/m/Y') : '-' }}</td>
+                                <td>{{ $task->due_date ? $task->due_date->format('d/m/Y') : '-' }}</td>
+                                <td>
+                                    <span class="priority-pill bg-{{ $task->getPriorityBadgeClass() }}">
+                                        {{ ucfirst($task->priority) }}
+                                    </span>
+                                </td>
+                                <td>
+                                    @if($task->comments)
+                                        <button type="button"
+                                                class="comments-link"
+                                                data-bs-toggle="popover"
+                                                data-bs-content="{{ $task->comments }}">
+                                            View Comments
+                                        </button>
+                                    @else
+                                        -
+                                    @endif
+                                </td>
+                                <td>
+                                    <div class="task-actions">
+                                        <a href="{{ route('admin.tasks.edit', $task) }}"
+                                           class="task-action-btn edit" title="Edit">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        <form action="{{ route('admin.tasks.destroy', $task) }}"
+                                              method="POST"
+                                              onsubmit="return confirm('Are you sure you want to delete this task?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="task-action-btn delete" title="Delete">
+                                                <i class="fas fa-trash"></i>
                                             </button>
-                                        @else
-                                            -
-                                        @endif
-                                    </td>
-                                    <td>
-                                        <div class="btn-group">
-                                            <a href="{{ route('admin.tasks.edit', $task) }}" 
-                                               class="btn btn-sm btn-outline-primary">
-                                                <i class="fas fa-edit"></i>
-                                            </a>
-                                            <form action="{{ route('admin.tasks.destroy', $task) }}" 
-                                                  method="POST" 
-                                                  class="d-inline"
-                                                  onsubmit="return confirm('Are you sure you want to delete this task?');">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-outline-danger">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
 
