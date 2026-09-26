@@ -246,6 +246,38 @@
         color: #6B7A85;
         margin-bottom: 1.25rem;
     }
+
+    .status-tabs {
+        display: flex;
+        gap: 0.4rem;
+        background: #F1F4F7;
+        padding: 0.35rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        width: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .status-tab {
+        padding: 0.5rem 1rem;
+        border-radius: 9px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6B7A85;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .status-tab:hover {
+        color: var(--bytewave-blue-dark);
+    }
+
+    .status-tab.active {
+        background: #fff;
+        color: var(--bytewave-blue-dark);
+        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+    }
 </style>
 @endpush
 
@@ -261,13 +293,27 @@
         </a>
     </div>
 
+    <div class="status-tabs">
+        <a class="status-tab {{ $status === '' ? 'active' : '' }}" href="{{ route('admin.posts.index') }}">
+            All ({{ \App\Models\Post::count() }})
+        </a>
+        <a class="status-tab {{ $status === 'draft' ? 'active' : '' }}" href="{{ route('admin.posts.index', ['status' => 'draft']) }}">
+            Draft ({{ \App\Models\Post::where('status', 'draft')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'published' ? 'active' : '' }}" href="{{ route('admin.posts.index', ['status' => 'published']) }}">
+            Published ({{ \App\Models\Post::where('status', 'published')->count() }})
+        </a>
+    </div>
+
     @if($posts->isEmpty())
         <div class="posts-empty">
             <i class="fas fa-newspaper"></i>
-            <p>No blog posts found.</p>
-            <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
-                Write your first post
-            </a>
+            <p>{{ $status !== '' ? 'No blog posts match this filter.' : 'No blog posts found.' }}</p>
+            @if($status === '')
+                <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
+                    Write your first post
+                </a>
+            @endif
         </div>
     @else
         <div class="posts-grid">

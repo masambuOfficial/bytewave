@@ -162,6 +162,38 @@
         color: #6B7A85;
         margin-bottom: 1.25rem;
     }
+
+    .status-tabs {
+        display: flex;
+        gap: 0.4rem;
+        background: #F1F4F7;
+        padding: 0.35rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        width: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .status-tab {
+        padding: 0.5rem 1rem;
+        border-radius: 9px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6B7A85;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .status-tab:hover {
+        color: var(--bytewave-blue-dark);
+    }
+
+    .status-tab.active {
+        background: #fff;
+        color: var(--bytewave-blue-dark);
+        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+    }
 </style>
 @endpush
 
@@ -177,14 +209,34 @@
         </a>
     </div>
 
+    <div class="status-tabs">
+        <a class="status-tab {{ $status === '' ? 'active' : '' }}" href="{{ route('admin.quotations.index') }}">
+            All ({{ \App\Models\Quotation::count() }})
+        </a>
+        <a class="status-tab {{ $status === 'draft' ? 'active' : '' }}" href="{{ route('admin.quotations.index', ['status' => 'draft']) }}">
+            Draft ({{ \App\Models\Quotation::where('status', 'draft')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'sent' ? 'active' : '' }}" href="{{ route('admin.quotations.index', ['status' => 'sent']) }}">
+            Sent ({{ \App\Models\Quotation::where('status', 'sent')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'accepted' ? 'active' : '' }}" href="{{ route('admin.quotations.index', ['status' => 'accepted']) }}">
+            Accepted ({{ \App\Models\Quotation::where('status', 'accepted')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'rejected' ? 'active' : '' }}" href="{{ route('admin.quotations.index', ['status' => 'rejected']) }}">
+            Rejected ({{ \App\Models\Quotation::where('status', 'rejected')->count() }})
+        </a>
+    </div>
+
     <div class="quotations-card">
         @if($quotations->isEmpty())
             <div class="quotations-empty">
                 <i class="fas fa-file-invoice"></i>
-                <p>No quotations found.</p>
-                <a href="{{ route('admin.quotations.create') }}" class="btn-add-quotation">
-                    Create your first quotation
-                </a>
+                <p>{{ $status !== '' ? 'No quotations match this filter.' : 'No quotations found.' }}</p>
+                @if($status === '')
+                    <a href="{{ route('admin.quotations.create') }}" class="btn-add-quotation">
+                        Create your first quotation
+                    </a>
+                @endif
             </div>
         @else
             <div class="table-responsive">

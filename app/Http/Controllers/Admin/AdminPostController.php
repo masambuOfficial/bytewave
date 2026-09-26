@@ -9,13 +9,19 @@ use Illuminate\Http\Request;
 
 class AdminPostController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::with(['author'])  // Eager load author relationship
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-            
-        return view('admin.posts.index', compact('posts'));
+        $status = $request->string('status')->trim()->toString();
+
+        $postsQuery = Post::with(['author'])->orderBy('created_at', 'desc');
+
+        if ($status !== '') {
+            $postsQuery->where('status', $status);
+        }
+
+        $posts = $postsQuery->paginate(10)->withQueryString();
+
+        return view('admin.posts.index', compact('posts', 'status'));
     }
 
     public function create()

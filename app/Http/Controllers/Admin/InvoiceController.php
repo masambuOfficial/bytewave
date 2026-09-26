@@ -17,10 +17,19 @@ use App\Mail\ReceiptMail;
 
 class InvoiceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::with('client')->latest()->paginate(10);
-        return view('admin.invoices.index', compact('invoices'));
+        $status = $request->string('status')->trim()->toString();
+
+        $invoicesQuery = Invoice::with('client')->latest();
+
+        if ($status !== '') {
+            $invoicesQuery->where('status', $status);
+        }
+
+        $invoices = $invoicesQuery->paginate(10)->withQueryString();
+
+        return view('admin.invoices.index', compact('invoices', 'status'));
     }
 
     public function create()

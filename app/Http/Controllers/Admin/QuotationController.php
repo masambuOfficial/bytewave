@@ -17,10 +17,19 @@ use App\Mail\QuotationMail;
 
 class QuotationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $quotations = Quotation::with(['client', 'invoice'])->latest()->paginate(10);
-        return view('admin.quotations.index', compact('quotations'));
+        $status = $request->string('status')->trim()->toString();
+
+        $quotationsQuery = Quotation::with(['client', 'invoice'])->latest();
+
+        if ($status !== '') {
+            $quotationsQuery->where('status', $status);
+        }
+
+        $quotations = $quotationsQuery->paginate(10)->withQueryString();
+
+        return view('admin.quotations.index', compact('quotations', 'status'));
     }
 
     public function create()

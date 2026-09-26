@@ -154,6 +154,38 @@
         color: #8A97A0;
         padding: 3rem 1rem !important;
     }
+
+    .status-tabs {
+        display: flex;
+        gap: 0.4rem;
+        background: #F1F4F7;
+        padding: 0.35rem;
+        border-radius: 12px;
+        margin-bottom: 1.5rem;
+        width: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .status-tab {
+        padding: 0.5rem 1rem;
+        border-radius: 9px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #6B7A85;
+        text-decoration: none;
+        transition: background 0.2s ease, color 0.2s ease;
+        white-space: nowrap;
+    }
+
+    .status-tab:hover {
+        color: var(--bytewave-blue-dark);
+    }
+
+    .status-tab.active {
+        background: #fff;
+        color: var(--bytewave-blue-dark);
+        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+    }
 </style>
 @endpush
 
@@ -166,6 +198,30 @@
         </div>
         <a href="{{ route('admin.invoices.create') }}" class="btn-add-invoice">
             <i class="fas fa-plus"></i> New Invoice
+        </a>
+    </div>
+
+    <div class="status-tabs">
+        <a class="status-tab {{ $status === '' ? 'active' : '' }}" href="{{ route('admin.invoices.index') }}">
+            All ({{ \App\Models\Invoice::count() }})
+        </a>
+        <a class="status-tab {{ $status === 'draft' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'draft']) }}">
+            Draft ({{ \App\Models\Invoice::where('status', 'draft')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'issued' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'issued']) }}">
+            Issued ({{ \App\Models\Invoice::where('status', 'issued')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'partially_paid' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'partially_paid']) }}">
+            Partially Paid ({{ \App\Models\Invoice::where('status', 'partially_paid')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'paid' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'paid']) }}">
+            Paid ({{ \App\Models\Invoice::where('status', 'paid')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'overdue' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'overdue']) }}">
+            Overdue ({{ \App\Models\Invoice::where('status', 'overdue')->count() }})
+        </a>
+        <a class="status-tab {{ $status === 'void' ? 'active' : '' }}" href="{{ route('admin.invoices.index', ['status' => 'void']) }}">
+            Void ({{ \App\Models\Invoice::where('status', 'void')->count() }})
         </a>
     </div>
 
@@ -252,7 +308,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="7" class="invoices-empty-row">No invoices found</td>
+                        <td colspan="7" class="invoices-empty-row">{{ $status !== '' ? 'No invoices match this filter.' : 'No invoices found.' }}</td>
                     </tr>
                     @endforelse
                 </tbody>

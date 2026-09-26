@@ -4,195 +4,160 @@
 
 @push('styles')
 <style>
-    /* Modern Dashboard Styling with BYTEWAVE Colors */
-    :root {
-        --bytewave-blue: #0773B8;
-        --bytewave-blue-dark: #04456E;
-        --bytewave-gold: #FBB145;
-        --bytewave-light: #E6F3FB;
+    .dash-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 1.75rem;
+        gap: 1rem;
+        flex-wrap: wrap;
     }
 
-    .dashboard-header {
-        background: linear-gradient(135deg, var(--bytewave-blue) 0%, #055C93 100%);
-        color: white;
-        padding: 2rem;
-        border-radius: 12px;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 20px rgba(7, 115, 184, 0.15);
-    }
-
-    .dashboard-header h1 {
-        font-size: 2rem;
+    .dash-header h1 {
+        font-size: 1.5rem;
         font-weight: 700;
-        margin: 0;
+        color: var(--bytewave-blue-dark);
+        margin-bottom: 0.25rem;
     }
 
-    .dashboard-header .date-info {
-        font-size: 0.95rem;
-        opacity: 0.9;
-        margin-top: 0.5rem;
+    .dash-header p {
+        color: #6B7A85;
+        font-size: 0.9rem;
+        margin-bottom: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    /* Stat Cards */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.25rem;
+        margin-bottom: 1.75rem;
     }
 
     .stat-card {
-        border: none;
-        border-radius: 12px;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        background: white;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    }
-
-    .stat-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 4px;
-    }
-
-    .stat-card.stat-blue::before {
-        background: linear-gradient(90deg, var(--bytewave-blue) 0%, #339FDF 100%);
-    }
-
-    .stat-card.stat-gold::before {
-        background: linear-gradient(90deg, var(--bytewave-gold) 0%, #FCC372 100%);
-    }
-
-    .stat-card.stat-teal::before {
-        background: linear-gradient(90deg, #06B6D4 0%, #14B8A6 100%);
-    }
-
-    .stat-card.stat-purple::before {
-        background: linear-gradient(90deg, #A855F7 0%, #EC4899 100%);
+        background: #fff;
+        border: 1px solid #EEF1F4;
+        border-radius: 16px;
+        padding: 1.25rem 1.35rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        text-decoration: none;
+        transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
     }
 
     .stat-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 12px 24px rgba(7, 115, 184, 0.15);
+        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        transform: translateY(-3px);
+        border-color: var(--bytewave-blue-light);
     }
 
-    .stat-card-body {
-        padding: 1.5rem;
+    .stat-icon-box {
+        width: 46px;
+        height: 46px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.15rem;
+        flex-shrink: 0;
     }
 
-    .stat-icon {
-        font-size: 2.5rem;
-        opacity: 0.15;
-        margin-bottom: 0.5rem;
-    }
+    .stat-icon-box.blue { background: var(--bytewave-blue-light); color: var(--bytewave-blue-dark); }
+    .stat-icon-box.gold { background: rgba(251, 177, 69, 0.15); color: #92600C; }
+    .stat-icon-box.green { background: #E9F9EF; color: #1E8E4F; }
+    .stat-icon-box.purple { background: #F3E8FF; color: #7C3AED; }
 
     .stat-label {
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        color: #6B7280;
+        color: #8A97A0;
+        margin-bottom: 0.2rem;
     }
 
     .stat-value {
-        font-size: 1.8rem;
+        font-size: 1.4rem;
         font-weight: 700;
-        color: var(--bytewave-blue-dark);
-        margin-top: 0.5rem;
+        color: #1F2A33;
     }
 
-    .stat-card.stat-blue .stat-label {
-        color: var(--bytewave-blue);
+    /* Section Cards */
+    .dash-card {
+        background: #fff;
+        border: 1px solid #EEF1F4;
+        border-radius: 16px;
+        overflow: hidden;
+        height: 100%;
     }
 
-    .stat-card.stat-gold .stat-label {
-        color: #B8860B;
-    }
-
-    .stat-card.stat-teal .stat-label {
-        color: #0D9488;
-    }
-
-    .stat-card.stat-purple .stat-label {
-        color: #9F1239;
-    }
-
-    /* Section Headers */
-    .section-header {
-        background: white;
-        padding: 1.25rem 1.5rem;
-        border-bottom: 2px solid var(--bytewave-blue);
+    .dash-card-header {
         display: flex;
         align-items: center;
-        gap: 0.75rem;
+        gap: 0.6rem;
+        padding: 1.1rem 1.35rem;
+        border-bottom: 1px solid #F1F3F5;
     }
 
-    .section-header h6 {
+    .dash-card-header i {
+        color: var(--bytewave-blue);
+        font-size: 1rem;
+    }
+
+    .dash-card-header h6 {
         margin: 0;
         font-weight: 700;
-        color: var(--bytewave-blue);
-        font-size: 1.1rem;
+        font-size: 0.95rem;
+        color: #1F2A33;
     }
 
-    .section-header-icon {
-        font-size: 1.2rem;
-        color: var(--bytewave-blue);
+    .dash-card-body {
+        padding: 1.35rem;
     }
 
     /* Quick Actions */
-    .quick-action-card {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding: 1.5rem;
-        border: 2px solid #E5E7EB;
-        border-radius: 12px;
-        text-decoration: none;
-        color: inherit;
-        transition: all 0.3s ease;
-        background: white;
-        position: relative;
-        overflow: hidden;
+    .quick-actions-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.9rem;
     }
 
-    .quick-action-card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 3px;
-        background: var(--bytewave-blue);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.3s ease;
+    .quick-action-card {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.9rem 1rem;
+        border: 1px solid #EEF1F4;
+        border-radius: 12px;
+        text-decoration: none;
+        transition: border-color 0.2s ease, background 0.2s ease;
     }
 
     .quick-action-card:hover {
         border-color: var(--bytewave-blue);
-        background: var(--bytewave-light);
-        transform: translateY(-4px);
-        box-shadow: 0 8px 16px rgba(7, 115, 184, 0.1);
-    }
-
-    .quick-action-card:hover::before {
-        transform: scaleX(1);
+        background: var(--bytewave-blue-light);
     }
 
     .quick-action-icon {
-        font-size: 2rem;
-        margin-bottom: 0.75rem;
-        color: var(--bytewave-blue);
-        transition: color 0.3s ease;
-    }
-
-    .quick-action-card:hover .quick-action-icon {
-        color: var(--bytewave-gold);
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: var(--bytewave-blue-light);
+        color: var(--bytewave-blue-dark);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.95rem;
+        flex-shrink: 0;
     }
 
     .quick-action-title {
         font-weight: 600;
-        text-align: center;
-        font-size: 0.95rem;
-        color: var(--bytewave-blue-dark);
+        font-size: 0.85rem;
+        color: #1F2A33;
+        margin: 0;
     }
 
     /* Activity List */
@@ -203,179 +168,161 @@
     }
 
     .activity-item {
-        padding: 1rem 0;
-        border-bottom: 1px solid #F3F4F6;
-        transition: background-color 0.2s ease;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.85rem 0;
+        border-bottom: 1px solid #F4F6F8;
     }
 
     .activity-item:last-child {
         border-bottom: none;
+        padding-bottom: 0;
     }
 
-    .activity-item:hover {
-        background-color: var(--bytewave-light);
-        padding: 1rem;
-        margin: 0 -1.5rem;
-        padding: 1rem 1.5rem;
+    .activity-item:first-child {
+        padding-top: 0;
     }
 
     .activity-title {
         font-weight: 600;
-        color: var(--bytewave-blue-dark);
-        margin-bottom: 0.25rem;
+        color: #1F2A33;
+        font-size: 0.88rem;
+        margin-bottom: 0.15rem;
     }
 
     .activity-description {
-        font-size: 0.9rem;
-        color: #6B7280;
-        margin-bottom: 0.25rem;
+        font-size: 0.8rem;
+        color: #8A97A0;
     }
 
     .activity-time {
-        font-size: 0.8rem;
-        color: #9CA3AF;
-    }
-
-    .activity-badge {
-        display: inline-block;
-        padding: 0.25rem 0.75rem;
-        border-radius: 9999px;
         font-size: 0.75rem;
-        font-weight: 600;
-        margin-top: 0.5rem;
+        color: #B0BAC2;
+        white-space: nowrap;
     }
 
-    .badge-sent {
-        background: linear-gradient(135deg, var(--bytewave-blue-100) 0%, var(--bytewave-blue-50) 100%);
-        color: var(--bytewave-blue);
+    .status-pill {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.7rem;
+        border-radius: 999px;
+        font-size: 0.72rem;
+        font-weight: 700;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
-    .badge-pending {
-        background: linear-gradient(135deg, #FEF5E7 0%, #FEEBD0 100%);
-        color: #B8860B;
-    }
+    .status-pill.bg-secondary { background: #F1F4F7 !important; color: #6B7A85 !important; }
+    .status-pill.bg-info { background: var(--bytewave-blue-light) !important; color: var(--bytewave-blue-dark) !important; }
+    .status-pill.bg-primary { background: var(--bytewave-blue-light) !important; color: var(--bytewave-blue-dark) !important; }
+    .status-pill.bg-success { background: #E9F9EF !important; color: #1E8E4F !important; }
+    .status-pill.bg-danger { background: #FDEDEC !important; color: #C0392B !important; }
+    .status-pill.bg-dark { background: #E7E9EC !important; color: #33393D !important; }
 
-    .badge-overdue {
-        background: linear-gradient(135deg, #FEE2E2 0%, #FECACA 100%);
-        color: #DC2626;
-    }
-
-    .badge-draft {
-        background: linear-gradient(135deg, #F3E8FF 0%, #EDE9FE 100%);
-        color: #7C3AED;
-    }
-
-    /* Card Container */
-    .dashboard-card {
-        border: none;
-        border-radius: 12px;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-        background: white;
-        margin-bottom: 1.5rem;
-    }
-
-    .dashboard-card-body {
-        padding: 1.5rem;
+    .activity-empty {
+        color: #8A97A0;
+        font-size: 0.85rem;
+        text-align: center;
+        padding: 1.5rem 0;
     }
 </style>
 @endpush
 
 @section('content')
-<div class="container-fluid" style="padding: 1.5rem;">
-    <!-- Welcome Section -->
-    <div class="dashboard-header">
-        <h1>Welcome back, {{ Auth::user()->name }}! 👋</h1>
-        <div class="date-info">
-            <i class="fas fa-calendar-alt" style="margin-right: 0.5rem;"></i>
-            {{ now()->format('l, F j, Y') }}
+<div class="container-fluid">
+    <div class="dash-header">
+        <div>
+            <h1>Welcome back, {{ Auth::user()->name }}</h1>
+            <p><i class="fas fa-calendar-alt"></i> {{ now()->format('l, F j, Y') }}</p>
         </div>
     </div>
 
+    @php
+        $activity = App\Models\Invoice::with('client')->latest()->take(3)->get()
+            ->map(fn ($invoice) => [
+                'title' => 'Invoice #' . $invoice->invoice_number,
+                'client' => $invoice->client->name ?? 'Unknown Client',
+                'time' => $invoice->created_at,
+                'status' => ucwords(str_replace('_', ' ', $invoice->status)),
+                'color' => $invoice->status_color,
+            ])
+            ->concat(
+                App\Models\Quotation::with('client')->latest()->take(3)->get()
+                    ->map(fn ($quotation) => [
+                        'title' => 'Quotation #' . $quotation->quote_number,
+                        'client' => $quotation->client->name ?? 'Unknown Client',
+                        'time' => $quotation->created_at,
+                        'status' => ucfirst($quotation->status),
+                        'color' => $quotation->status_color,
+                    ])
+            )
+            ->sortByDesc('time')
+            ->take(5);
+    @endphp
+
     <!-- Statistics Cards -->
-    <div class="row">
-        <!-- Quotations Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card stat-blue">
-                <div class="stat-card-body">
-                    <div class="stat-label">
-                        <i class="fas fa-file-invoice" style="margin-right: 0.5rem;"></i>Active Quotations
-                    </div>
-                    <div class="stat-value">{{ App\Models\Quotation::where('status', 'sent')->count() }}</div>
-                </div>
+    <div class="stats-grid">
+        <a href="{{ route('admin.quotations.index', ['status' => 'sent']) }}" class="stat-card">
+            <div class="stat-icon-box blue"><i class="fas fa-file-invoice"></i></div>
+            <div>
+                <div class="stat-label">Active Quotations</div>
+                <div class="stat-value">{{ App\Models\Quotation::where('status', 'sent')->count() }}</div>
             </div>
-        </div>
+        </a>
 
-        <!-- Invoices Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card stat-gold">
-                <div class="stat-card-body">
-                    <div class="stat-label">
-                        <i class="fas fa-file-invoice-dollar" style="margin-right: 0.5rem;"></i>Pending Invoices
-                    </div>
-                    <div class="stat-value">{{ App\Models\Invoice::whereIn('status', ['sent', 'overdue'])->count() }}</div>
-                </div>
+        <a href="{{ route('admin.invoices.index', ['status' => 'issued']) }}" class="stat-card">
+            <div class="stat-icon-box gold"><i class="fas fa-file-invoice-dollar"></i></div>
+            <div>
+                <div class="stat-label">Pending Invoices</div>
+                <div class="stat-value">{{ App\Models\Invoice::whereIn('status', ['issued', 'partially_paid', 'overdue'])->count() }}</div>
             </div>
-        </div>
+        </a>
 
-        <!-- Services Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card stat-teal">
-                <div class="stat-card-body">
-                    <div class="stat-label">
-                        <i class="fas fa-cogs" style="margin-right: 0.5rem;"></i>Active Services
-                    </div>
-                    <div class="stat-value">{{ App\Models\ClientService::count() }}</div>
-                </div>
+        <a href="{{ route('admin.client-services.index', ['status' => 'active']) }}" class="stat-card">
+            <div class="stat-icon-box green"><i class="fas fa-cogs"></i></div>
+            <div>
+                <div class="stat-label">Active Services</div>
+                <div class="stat-value">{{ App\Models\ClientService::where('status', 'active')->count() }}</div>
             </div>
-        </div>
+        </a>
 
-        <!-- Blog Posts Card -->
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="stat-card stat-purple">
-                <div class="stat-card-body">
-                    <div class="stat-label">
-                        <i class="fas fa-blog" style="margin-right: 0.5rem;"></i>Published Posts
-                    </div>
-                    <div class="stat-value">{{ App\Models\Post::count() }}</div>
-                </div>
+        <a href="{{ route('admin.posts.index', ['status' => 'published']) }}" class="stat-card">
+            <div class="stat-icon-box purple"><i class="fas fa-blog"></i></div>
+            <div>
+                <div class="stat-label">Published Posts</div>
+                <div class="stat-value">{{ App\Models\Post::where('status', 'published')->count() }}</div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="row">
         <!-- Quick Actions -->
         <div class="col-lg-6 mb-4">
-            <div class="dashboard-card">
-                <div class="section-header">
-                    <i class="fas fa-zap section-header-icon"></i>
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <i class="fas fa-bolt"></i>
                     <h6>Quick Actions</h6>
                 </div>
-                <div class="dashboard-card-body">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <a href="{{ route('admin.quotations.create') }}" class="quick-action-card">
-                                <i class="fas fa-file-invoice quick-action-icon"></i>
-                                <h5 class="quick-action-title">New Quotation</h5>
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="{{ route('admin.invoices.create') }}" class="quick-action-card">
-                                <i class="fas fa-file-invoice-dollar quick-action-icon"></i>
-                                <h5 class="quick-action-title">New Invoice</h5>
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="{{ route('admin.client-services.create') }}" class="quick-action-card">
-                                <i class="fas fa-cog quick-action-icon"></i>
-                                <h5 class="quick-action-title">Add Service</h5>
-                            </a>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <a href="{{ route('admin.posts.create') }}" class="quick-action-card">
-                                <i class="fas fa-pen quick-action-icon"></i>
-                                <h5 class="quick-action-title">New Post</h5>
-                            </a>
-                        </div>
+                <div class="dash-card-body">
+                    <div class="quick-actions-grid">
+                        <a href="{{ route('admin.quotations.create') }}" class="quick-action-card">
+                            <div class="quick-action-icon"><i class="fas fa-file-invoice"></i></div>
+                            <p class="quick-action-title">New Quotation</p>
+                        </a>
+                        <a href="{{ route('admin.invoices.create') }}" class="quick-action-card">
+                            <div class="quick-action-icon"><i class="fas fa-file-invoice-dollar"></i></div>
+                            <p class="quick-action-title">New Invoice</p>
+                        </a>
+                        <a href="{{ route('admin.client-services.create') }}" class="quick-action-card">
+                            <div class="quick-action-icon"><i class="fas fa-cog"></i></div>
+                            <p class="quick-action-title">Add Service</p>
+                        </a>
+                        <a href="{{ route('admin.posts.create') }}" class="quick-action-card">
+                            <div class="quick-action-icon"><i class="fas fa-pen"></i></div>
+                            <p class="quick-action-title">New Post</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -383,35 +330,28 @@
 
         <!-- Recent Activity -->
         <div class="col-lg-6 mb-4">
-            <div class="dashboard-card">
-                <div class="section-header">
-                    <i class="fas fa-history section-header-icon"></i>
+            <div class="dash-card">
+                <div class="dash-card-header">
+                    <i class="fas fa-history"></i>
                     <h6>Recent Activity</h6>
                 </div>
-                <div class="dashboard-card-body">
-                    <ul class="activity-list">
-                        @foreach(App\Models\Invoice::latest()->take(3)->get() as $invoice)
-                            <li class="activity-item">
-                                <div class="activity-title">Invoice #{{ $invoice->invoice_number }}</div>
-                                <div class="activity-description">{{ $invoice->client->name ?? 'Unknown Client' }}</div>
-                                <div class="activity-time">
-                                    <i class="fas fa-clock" style="margin-right: 0.25rem;"></i>{{ $invoice->created_at->diffForHumans() }}
-                                </div>
-                                <span class="activity-badge badge-{{ $invoice->status }}">{{ ucfirst($invoice->status) }}</span>
-                            </li>
-                        @endforeach
-
-                        @foreach(App\Models\Quotation::latest()->take(3)->get() as $quotation)
-                            <li class="activity-item">
-                                <div class="activity-title">Quotation #{{ $quotation->quote_number }}</div>
-                                <div class="activity-description">{{ $quotation->client->name ?? 'Unknown Client' }}</div>
-                                <div class="activity-time">
-                                    <i class="fas fa-clock" style="margin-right: 0.25rem;"></i>{{ $quotation->created_at->diffForHumans() }}
-                                </div>
-                                <span class="activity-badge badge-{{ $quotation->status }}">{{ ucfirst($quotation->status) }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
+                <div class="dash-card-body">
+                    @if($activity->isEmpty())
+                        <div class="activity-empty">No recent activity yet.</div>
+                    @else
+                        <ul class="activity-list">
+                            @foreach($activity as $item)
+                                <li class="activity-item">
+                                    <div>
+                                        <div class="activity-title">{{ $item['title'] }}</div>
+                                        <div class="activity-description">{{ $item['client'] }}</div>
+                                        <div class="activity-time"><i class="fas fa-clock"></i> {{ $item['time']->diffForHumans() }}</div>
+                                    </div>
+                                    <span class="status-pill bg-{{ $item['color'] }}">{{ $item['status'] }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
         </div>
