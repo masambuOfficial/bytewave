@@ -674,15 +674,44 @@
     @endif
 
     <!-- Client Logos Section -->
-    <section class="clients-showcase">
+    <section class="clients-showcase" x-data="{
+        atStart: true,
+        atEnd: false,
+        updateEdges() {
+            const el = this.$refs.clientLogos;
+            if (!el) return;
+            this.atStart = el.scrollLeft <= 0;
+            this.atEnd = el.scrollLeft + el.clientWidth >= el.scrollWidth - 1;
+        },
+        scrollLogos(direction) {
+            const el = this.$refs.clientLogos;
+            if (!el) return;
+            const amount = el.clientWidth * 0.8 * (direction === 'next' ? 1 : -1);
+            el.scrollBy({ left: amount, behavior: 'smooth' });
+        }
+    }" x-init="$nextTick(() => updateEdges())">
         <div class="clients-showcase-grid">
             <div class="clients-showcase-text">
                 <span class="clients-showcase-eyebrow">Our Clients/Projects</span>
                 <h2 class="clients-showcase-title">Trusted by Leading Organizations on Projects</h2>
                 <p class="clients-showcase-desc">We're proud to partner with organizations across sectors who trust us to deliver results.</p>
+
+                <!-- Mobile/Tablet Nav Arrows -->
+                <div class="clients-showcase-nav">
+                    <button type="button" @click="scrollLogos('prev')" :disabled="atStart" :class="atStart ? 'is-disabled' : ''" class="clients-showcase-nav-btn" aria-label="Previous clients">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                        </svg>
+                    </button>
+                    <button type="button" @click="scrollLogos('next')" :disabled="atEnd" :class="atEnd ? 'is-disabled' : ''" class="clients-showcase-nav-btn" aria-label="Next clients">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="clients-showcase-logos">
+            <div class="clients-showcase-logos" x-ref="clientLogos" @scroll.debounce.100ms="updateEdges()">
                 <div class="clients-showcase-logo-cell">
                     <img src="{{ asset('clients/ayad-logo.webp') }}" alt="AYAD Consults International">
                 </div>
@@ -744,10 +773,6 @@
         </div>
     </section>
     @endif
-    
-    
-        </div>
-    </section>
 
     <style>
         /* Client Showcase Section */
@@ -784,7 +809,7 @@
         }
 
         .clients-showcase-title {
-            font-size: 2rem;
+            font-size: clamp(1.375rem, 1rem + 2vw, 2rem);
             line-height: 1.2;
             font-weight: 700;
             color: #111827;
@@ -797,11 +822,41 @@
             color: #6b7280;
         }
 
+        .clients-showcase-nav {
+            display: none;
+        }
+
+        .clients-showcase-nav-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            border: 2px solid #d1d5db;
+            background-color: transparent;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4b5563;
+            cursor: pointer;
+            transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .clients-showcase-nav-btn:hover:not(.is-disabled) {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .clients-showcase-nav-btn.is-disabled {
+            opacity: 0.4;
+            cursor: default;
+        }
+
         .clients-showcase-logos {
             flex: 1;
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(3, 1fr);
+            gap: 1px;
+            background-color: rgba(0, 0, 0, 0.08);
         }
 
         .clients-showcase-logo-cell {
@@ -810,20 +865,7 @@
             justify-content: center;
             min-height: 180px;
             padding: 2.5rem;
-            border-right: 1px solid rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-        }
-
-        .clients-showcase-logo-cell:nth-child(4n) {
-            border-right: none;
-        }
-
-        .clients-showcase-logo-cell:nth-last-child(-n+4) {
-            border-bottom: none;
-        }
-
-        .clients-showcase-logo-cell:last-child {
-            border-right: none;
+            background-color: #eff6ff;
         }
 
         .clients-showcase-logo-cell img {
@@ -846,11 +888,13 @@
         /* Responsive adjustments */
         @media (max-width: 900px) {
             .clients-showcase {
+                display: block;
                 min-height: auto;
+                overflow: hidden;
             }
 
             .clients-showcase-grid {
-                flex-direction: column;
+                display: block;
             }
 
             .clients-showcase-text {
@@ -858,51 +902,77 @@
                 max-width: 100%;
                 border-right: none;
                 border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-                padding: 3rem 1.5rem;
+                padding: 2.5rem 1.5rem;
                 text-align: center;
                 align-items: center;
             }
 
+            .clients-showcase-nav {
+                display: flex;
+                gap: 0.75rem;
+                justify-content: center;
+                margin-top: 1.5rem;
+            }
+
+            /* Sliding carousel instead of a grid on mobile/tablet */
             .clients-showcase-logos {
-                grid-template-columns: repeat(2, 1fr);
-                grid-template-rows: repeat(6, 1fr);
+                width: 100%;
+                min-height: 130px;
+                display: flex;
+                overflow-x: auto;
+                overflow-y: hidden;
+                gap: 1px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+                -ms-overflow-style: none;
+            }
+
+            .clients-showcase-logos::-webkit-scrollbar {
+                display: none;
             }
 
             .clients-showcase-logo-cell {
-                min-height: 140px;
-                padding: 1.75rem;
-            }
-
-            .clients-showcase-logo-cell:nth-child(4n) {
-                border-right: 1px solid rgba(0, 0, 0, 0.08);
-            }
-
-            .clients-showcase-logo-cell:nth-child(2n) {
-                border-right: none;
-            }
-
-            .clients-showcase-logo-cell:nth-last-child(-n+4) {
-                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-            }
-
-            .clients-showcase-logo-cell:nth-last-child(-n+2) {
-                border-bottom: none;
+                flex: 0 0 33.333%;
+                scroll-snap-align: start;
+                min-height: 130px;
+                padding: 1.5rem;
             }
         }
 
-        @media (max-width: 480px) {
+        @media (max-width: 640px) {
             .clients-showcase-logos {
-                grid-template-columns: 1fr;
-                grid-template-rows: repeat(11, 1fr);
+                min-height: 110px;
             }
 
             .clients-showcase-logo-cell {
-                border-right: none !important;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                flex: 0 0 42%;
+                min-height: 110px;
+                padding: 1.25rem;
             }
 
-            .clients-showcase-logo-cell:last-child {
-                border-bottom: none;
+            .clients-showcase-logo-cell img {
+                max-height: 56px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .clients-showcase-text {
+                padding: 2rem 1rem;
+            }
+
+            .clients-showcase-logos {
+                min-height: 90px;
+            }
+
+            .clients-showcase-logo-cell {
+                flex: 0 0 48%;
+                min-height: 90px;
+                padding: 1rem;
+            }
+
+            .clients-showcase-logo-cell img {
+                max-height: 44px;
             }
         }
     </style>
