@@ -4,16 +4,22 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="w-full py-20 bg-cover bg-center bg-no-repeat relative" style="background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}');">
-        <div class="max-w-7xl mx-auto px-4 text-center py-12">
-            <p class="text-5xl md:text-6xl text-yellow-500 mb-6 font-bold animate-fade-in-down">Our Portfolio</p>
-            <nav aria-label="breadcrumb" class="animate-fade-in-down">
-                <ol class="flex justify-center items-center space-x-2 text-white">
-                    <li><a class="text-white hover:text-yellow-500 transition-colors" href="{{ url('/') }}">Home</a></li>
-                    <li class="before:content-['/'] before:mx-2">Portfolio</li>
-                </ol>
-            </nav>
-        </div>
+    <div class="w-full bg-gray-200 relative">
+        <h1 class="sr-only">Our Portfolio</h1>
+        <img src="{{ asset('images/bytewave_portfolio.webp') }}"
+             alt="Refine Portfolio - Built with Heart"
+             width="592" height="178"
+             class="w-full h-auto md:max-h-[340px] object-cover object-center block">
+        {{-- Slate-gray overlay (#1F2937 → #4B5563), deepest at the bottom where the breadcrumb sits.
+             Inline style so it doesn't depend on a Tailwind rebuild. --}}
+        <div class="absolute inset-0 pointer-events-none"
+             style="background: linear-gradient(to top, rgba(31, 41, 55, 0.92) 0%, rgba(31, 41, 55, 0.72) 45%, rgba(75, 85, 99, 0.55) 100%);"></div>
+        <nav aria-label="breadcrumb" class="absolute inset-x-0 bottom-0 pb-3 md:pb-5 animate-fade-in-down">
+            <ol class="flex justify-center items-center space-x-2 text-white text-sm md:text-base">
+                <li><a class="text-white hover:text-yellow-500 transition-colors" href="{{ url('/') }}">Home</a></li>
+                <li class="before:content-['/'] before:mx-2">Portfolio</li>
+            </ol>
+        </nav>
     </div>
     <!-- Page Header End -->
 
