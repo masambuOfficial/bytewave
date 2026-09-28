@@ -298,10 +298,10 @@
             All ({{ \App\Models\Post::count() }})
         </a>
         <a class="status-tab {{ $status === 'draft' ? 'active' : '' }}" href="{{ route('admin.posts.index', ['status' => 'draft']) }}">
-            Draft ({{ \App\Models\Post::where('status', 'draft')->count() }})
+            Draft ({{ \App\Models\Post::draft()->count() }})
         </a>
         <a class="status-tab {{ $status === 'published' ? 'active' : '' }}" href="{{ route('admin.posts.index', ['status' => 'published']) }}">
-            Published ({{ \App\Models\Post::where('status', 'published')->count() }})
+            Published ({{ \App\Models\Post::published()->count() }})
         </a>
     </div>
 

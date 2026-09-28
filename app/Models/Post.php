@@ -50,6 +50,14 @@ class Post extends Model
         return $query->where('published_at', '<=', now());
     }
 
+    // Counterpart of scopePublished(): unscheduled or future-dated posts
+    public function scopeDraft($query)
+    {
+        return $query->where(function ($q) {
+            $q->whereNull('published_at')->orWhere('published_at', '>', now());
+        });
+    }
+
     // Model boot method
     protected static function boot()
     {

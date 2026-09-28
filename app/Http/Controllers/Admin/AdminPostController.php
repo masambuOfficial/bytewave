@@ -15,8 +15,11 @@ class AdminPostController extends Controller
 
         $postsQuery = Post::with(['author'])->orderBy('created_at', 'desc');
 
-        if ($status !== '') {
-            $postsQuery->where('status', $status);
+        // "status" is a computed attribute on Post (derived from published_at), not a column
+        if ($status === 'published') {
+            $postsQuery->published();
+        } elseif ($status === 'draft') {
+            $postsQuery->draft();
         }
 
         $posts = $postsQuery->paginate(10)->withQueryString();

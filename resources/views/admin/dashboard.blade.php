@@ -292,7 +292,7 @@
             <div class="stat-icon-box purple"><i class="fas fa-blog"></i></div>
             <div>
                 <div class="stat-label">Published Posts</div>
-                <div class="stat-value">{{ App\Models\Post::where('status', 'published')->count() }}</div>
+                <div class="stat-value">{{ App\Models\Post::published()->count() }}</div>
             </div>
         </a>
     </div>
