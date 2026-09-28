@@ -43,7 +43,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 portfolio-container">
                 @forelse($portfolios as $portfolio)
                     <div class="portfolio-item {{ Str::slug($portfolio->category) }} group">
-                        <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                        <div class="h-full flex flex-col overflow-hidden rounded-xl bg-gray-50 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                             <div class="relative overflow-hidden">
                                 @php
                                     $type = $portfolio->getPrimaryMediaType();
@@ -77,17 +77,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="p-6 bg-gray-50">
-                                <h4 class="text-2xl font-bold mb-2">{{ $portfolio->title }}</h4>
-                                <p class="text-gray-600 mb-4">{{ Str::limit($portfolio->description, 100) }}</p>
-                                @if($portfolio->technologies)
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        @foreach($portfolio->technologies as $tech)
-                                            <span class="bg-blue-600 text-white text-xs px-3 py-1 rounded-full">{{ $tech }}</span>
-                                        @endforeach
-                                    </div>
-                                @endif
-                                <div class="flex justify-between items-center">
+                            <div class="p-6 flex flex-1 flex-col">
+                                <h4 class="text-xl leading-7 font-bold mb-2 line-clamp-2 min-h-14" title="{{ $portfolio->title }}">{{ $portfolio->title }}</h4>
+                                <p class="text-gray-600 leading-6 mb-4 line-clamp-3 min-h-18">{{ Str::limit($portfolio->description, 220) }}</p>
+                                {{-- One reserved row for technology chips; extra chips are clipped so every card keeps the same height --}}
+                                <div class="flex flex-wrap gap-2 mb-5 h-7 overflow-hidden">
+                                    @foreach(collect($portfolio->technologies ?? [])->take(3) as $tech)
+                                        <span class="bg-blue-600 text-white text-xs leading-5 px-3 py-1 rounded-full whitespace-nowrap">{{ $tech }}</span>
+                                    @endforeach
+                                    @if(count($portfolio->technologies ?? []) > 3)
+                                        <span class="bg-gray-200 text-gray-700 text-xs leading-5 px-3 py-1 rounded-full whitespace-nowrap">+{{ count($portfolio->technologies) - 3 }}</span>
+                                    @endif
+                                </div>
+                                <div class="mt-auto pt-4 border-t border-gray-200 flex justify-between items-center">
                                     <span class="text-gray-500 text-sm">
                                         <i class="fas fa-calendar-alt mr-1"></i>
                                         {{ $portfolio->completion_date->format('M Y') }}
