@@ -1,6 +1,6 @@
 @props(['href', 'text' => 'Get a quote', 'bgColor' => 'bg-bytewave-blue', 'hoverBgColor' => 'hover:bg-blue-700', 'textColor' => 'text-white', 'fullWidthMobile' => false, 'arrowBgColor' => 'bg-bytewave-gold', 'arrowColor' => 'text-white'])
 
-<a href="{{ $href }}" class="{{ $bgColor }} {{ $hoverBgColor }} {{ $textColor }} font-semibold transition-all duration-300 {{ $fullWidthMobile ? 'flex md:inline-flex w-full md:w-auto' : 'inline-flex' }} items-center gap-3 group overflow-hidden" style="height: 60px; padding: 8px 8px 8px 24px; border-radius: 8px 8px 20px 8px;">
+<a href="{{ $href }}" {{ $attributes }} class="{{ $bgColor }} {{ $hoverBgColor }} {{ $textColor }} font-semibold transition-all duration-300 {{ $fullWidthMobile ? 'flex md:inline-flex w-full md:w-auto' : 'inline-flex' }} items-center gap-3 group overflow-hidden" style="height: 60px; padding: 8px 8px 8px 24px; border-radius: 8px 8px 20px 8px;">
     <span class="text-base whitespace-nowrap relative overflow-hidden inline-block" style="height: 24px;">
         <span class="inline-block transition-transform duration-300 group-hover:-translate-y-full">{{ $text }}</span>
         <span class="inline-block absolute left-0 top-full transition-transform duration-300 group-hover:-translate-y-full">{{ $text }}</span>

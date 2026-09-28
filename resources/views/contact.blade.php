@@ -53,7 +53,7 @@
                     </div>
                     <h4 class="text-xl font-semibold mb-4">Email Us</h4>
                     <p class="text-gray-600 mb-2">For General Inquiries</p>
-                    <a href="mailto:info@bytewave.com" class="text-bytewave-blue hover:text-bytewave-gold transition-colors">info@bytewave.com</a>
+                    <a href="mailto:info@bytewaveinvestments.com" class="text-bytewave-blue hover:text-bytewave-gold transition-colors">info@bytewaveinvestments.com</a>
                 </div>
             </div>
 

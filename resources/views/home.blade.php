@@ -375,8 +375,10 @@
                             
                             <!-- CTA Button -->
                             <div class="relative z-10">
-                                <x-cta-button 
-                                    href="{{ url('/contact') }}" 
+                                <x-cta-button
+                                    href="https://wa.me/256782440907?text=Hello!%20I%20would%20like%20to%20schedule%20a%20consultation."
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     text="Schedule consultation"
                                     bgColor="bg-white"
                                     hoverBgColor="hover:bg-gray-100"
