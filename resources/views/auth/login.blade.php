@@ -12,7 +12,7 @@
     <div class="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
         <!-- Brand Header -->
         <div class="bg-blue-600 py-8 px-8 text-center">
-            <img src="{{ asset('css/img/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE" class="h-7 mx-auto mb-3">
+            <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE" class="h-7 mx-auto mb-3">
             <p class="text-blue-100 text-sm">Sign in to manage your account</p>
         </div>
 

@@ -118,7 +118,7 @@ class NewsApiService
                 'name' => 'ByteWave Tech Desk',
                 'email' => 'editorial@bytewave.com',
                 'bio' => 'Curated tech news roundups from around the web, with commentary from the ByteWave team.',
-                'avatar' => '/bytewave_icon.jpg',
+                'avatar' => '/images/bytewave_icon.jpg',
             ]
         );
 

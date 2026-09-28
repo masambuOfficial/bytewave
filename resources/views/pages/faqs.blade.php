@@ -83,7 +83,7 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="w-full bg-cover bg-center bg-no-repeat relative flex items-center justify-center wow fadeIn" data-wow-delay="0.1s" style="min-height: 450px; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('css/img/bg-1.jpg') }}');">
+    <div class="w-full bg-cover bg-center bg-no-repeat relative flex items-center justify-center wow fadeIn" data-wow-delay="0.1s" style="min-height: 450px; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}');">
         <div class="max-w-7xl mx-auto px-4 text-center py-20">
             <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-yellow-400 mb-6 animated slideInDown">FAQs</h1>
             <nav aria-label="breadcrumb" class="animated slideInDown">

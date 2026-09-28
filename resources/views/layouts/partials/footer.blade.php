@@ -4,7 +4,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="wow fadeInUp" data-wow-delay="0.1s">
                 <a href="{{ url('/') }}" class="inline-block mb-4 overflow-hidden">
-                    <img src="{{ asset('css/img/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE Logo" class="w-64 -ml-4">
+                    <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE Logo" class="w-64 -ml-4">
                 </a>
                 <p class="mt-4 text-gray-200">Your trusted technology partner, delivering innovative solutions and driving digital transformation for businesses across Uganda and East Africa.</p>
                 <div class="flex gap-2 mt-4">
@@ -45,20 +45,23 @@
             <div class="wow fadeInUp" data-wow-delay="0.5s">
                 <h3 class="text-bytewave-gold mb-4 text-xl font-semibold">Our Services</h3>
                 <div class="flex flex-col space-y-2">
-                    <a href="{{ url('/services#web-development') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                    <a href="{{ url('/services') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Software Engineering
+                    </a>
+                    <a href="{{ url('/services') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
                         <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Web Development
                     </a>
-                    <a href="{{ url('/services#mobile-apps') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
-                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Mobile Apps
+                    <a href="{{ route('services.audio-visual') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Livestreaming
                     </a>
-                    <a href="{{ url('/services#cloud-solutions') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
-                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Cloud Solutions
+                    <a href="{{ route('services.audio-visual') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Photography
                     </a>
-                    <a href="{{ url('/services#digital-marketing') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
-                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>Digital Marketing
+                    <a href="{{ route('services.audio-visual') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>AV Production
                     </a>
-                    <a href="{{ url('/services#it-consulting') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
-                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>IT Consulting
+                    <a href="{{ url('/services') }}" class="text-white hover:text-bytewave-gold transition-colors duration-300">
+                        <i class="fas fa-angle-right text-bytewave-gold mr-2"></i>ICT Supply
                     </a>
                 </div>
             </div>

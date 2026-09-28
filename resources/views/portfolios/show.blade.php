@@ -29,7 +29,7 @@
         } elseif ($portfolio->hasImage()) {
             $heroImage = asset($portfolio->image_url);
         }
-        $heroImage = $heroImage ?: asset('css/img/bg-1.jpg');
+        $heroImage = $heroImage ?: asset('images/bg-1.jpg');
     @endphp
     <!-- Page Header Start -->
     <div class="w-full py-16 bg-cover bg-center bg-no-repeat relative" style="background-image: linear-gradient(rgba(15, 23, 42, 0.85), rgba(15, 23, 42, 0.85)), url('{{ $heroImage }}');">

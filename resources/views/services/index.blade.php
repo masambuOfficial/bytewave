@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('css/img/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
             <p class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">Services</p>
             <nav aria-label="breadcrumb" class="animate-fadeInDown">
@@ -121,7 +121,7 @@
                                         <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden group">
                                             <!-- Image -->
                                             <div class="relative h-48 overflow-hidden">
-                                                <img src="{{ $service->image ? asset('storage/' . $service->image) : asset('css/img/bytewave_livestreaming.jpg') }}" 
+                                                <img src="{{ $service->image ? asset('storage/' . $service->image) : asset('images/bytewave_livestreaming.jpg') }}" 
                                                      alt="{{ $service->name }}" 
                                                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

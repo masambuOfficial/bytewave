@@ -104,7 +104,7 @@ $balance  = max(0, (float) $invoice->total_amount - $amtPaid);
 $words    = $numToWords((int) round($amtPaid))
           . ($cur === 'UGX' ? ' Uganda Shillings' : ' US Dollars');
 $lastDate = $invoice->payments->sortByDesc('paid_at')->first()?->paid_at;
-$logo     = public_path(config('company.logo', 'css/img/BYTEWAVE_INVESTMENTS-LOGO.png'));
+$logo     = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png'));
 @endphp
 
 <div class="page">

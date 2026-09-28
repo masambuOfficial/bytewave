@@ -79,7 +79,7 @@
 @section('styles')
 <style>
     .page-header {
-        background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ asset('css/img/bg-1.jpg') }}') center center no-repeat;
+        background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat;
         background-size: cover;
     }
 

@@ -73,7 +73,7 @@ $cur   = $quotation->currency ?? 'UGX';
 $fmt   = fn($n) => $cur === 'UGX' ? 'UGX '.number_format($n, 0) : 'USD '.number_format($n, 2);
 $words = $numToWords((int) round($quotation->total_amount))
        . ($cur === 'UGX' ? ' Uganda Shillings' : ' US Dollars');
-$logo  = public_path(config('company.logo', 'css/img/BYTEWAVE_INVESTMENTS-LOGO.png'));
+$logo  = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png'));
 @endphp
 
 <div class="page">

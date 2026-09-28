@@ -4,7 +4,7 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('css/img/bg-1.jpg') }}') center center no-repeat; background-size: cover;">
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat; background-size: cover;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
             <p class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">Our Products</p>
            <nav aria-label="breadcrumb" class="animate-fadeInDown">

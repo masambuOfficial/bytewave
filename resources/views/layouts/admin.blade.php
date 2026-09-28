@@ -319,7 +319,7 @@
     <!-- Top Bar -->
     <nav class="admin-topbar">
         <a href="{{ route('admin.dashboard') }}" class="topbar-logo">
-            <img src="{{ asset('css/img/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE">
+            <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE">
         </a>
 
         <div class="topbar-spacer"></div>

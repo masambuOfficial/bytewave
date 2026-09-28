@@ -13,5 +13,5 @@ return [
     'bank_account_number' => '0151001071086',
     'bank_account_name'   => 'ByteWave Investments SMC LTD',
     'bank_branch'         => 'DFCU Bank – Kireka Branch',
-    'logo'                => 'ByteWave_Logo.png',
+    'logo'                => 'images/ByteWave_Logo.png',
 ];

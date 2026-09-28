@@ -8,18 +8,31 @@
     <div x-data="{
         currentSlide: 0,
         slides: [
-            '{{ asset('css/img/bytewave_computer_repair_and_maintenance.jpg') }}',
-            '{{ asset('css/img/gavin_in_the_field-01.jpg') }}'
-        ],
-        phrases: [
-            'innovative ideas',
-            'creative concepts'
+            {
+                image: '{{ asset('images/ebetp_digital_skills_training_and_onboarding.jpg') }}',
+                phrase: 'digital skills',
+                tail: 'to global markets',
+                featured: true
+            },
+            {
+                image: '{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}',
+                phrase: 'innovative ideas',
+                tail: 'to finished solutions',
+                featured: false
+            },
+            {
+                image: '{{ asset('images/gavin_in_the_field-01.jpg') }}',
+                phrase: 'creative concepts',
+                tail: 'to finished solutions',
+                featured: false
+            }
         ],
         autoplayInterval: null,
         init() {
             this.startAutoplay();
         },
         startAutoplay() {
+            this.stopAutoplay();
             this.autoplayInterval = setInterval(() => {
                 this.currentSlide = (this.currentSlide + 1) % this.slides.length;
             }, 5000);
@@ -28,8 +41,10 @@
             clearInterval(this.autoplayInterval);
         }
     }" 
+    @mouseenter="stopAutoplay()"
+    @mouseleave="startAutoplay()"
     class="relative overflow-hidden h-screen min-h-[600px]">
-        
+
         <!-- Background Image Slides -->
         <template x-for="(slide, index) in slides" :key="index">
             <div x-show="currentSlide === index"
@@ -40,7 +55,7 @@
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0"
                  class="absolute inset-0">
-                <div class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${slide}')`"></div>
+                <div class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${slide.image}')`"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
             </div>
         </template>
@@ -63,31 +78,55 @@
                                 <!-- Invisible placeholder to maintain height -->
                                 <span class="invisible">innovative ideas</span>
                                 <!-- Phrases synced with slides (instant cut, no transition) -->
-                                <template x-for="(phrase, index) in phrases" :key="index">
+                                <template x-for="(slide, index) in slides" :key="index">
                                     <span x-show="currentSlide === index"
                                           class="absolute left-0 top-0"
-                                          x-text="phrase"></span>
+                                          x-text="slide.phrase"></span>
                                 </template>
                             </span><br>
-                            to finished solutions
+                            <span x-text="slides[currentSlide].tail">to global markets</span>
                         </h1>
                     </div>
                     
                     <!-- Right Column -->
-                    <div class="space-y-6">
+                    <!-- Featured slide: e-BETP (current project) -->
+                    <div class="space-y-6" x-show="slides[currentSlide].featured">
+                        <div class="text-bytewave-gold text-sm md:text-base font-semibold">
+                            <p>// CURRENT PROJECT //</p>
+                        </div>
+
+                        <p class="text-white/90 text-base md:text-lg leading-relaxed">
+                            Digital skills training and onboarding for 200+ artisans, homestays, and community tourism enterprises from Bwindi and Kibale, bringing them onto the e-BETP ecommerce platform.
+                        </p>
+
+                        <!-- CTA Button -->
+                        <x-cta-button
+                            href="https://ebetp.africa"
+                            target="_blank"
+                            rel="noopener"
+                            text="Visit ebetp.africa"
+                            bgColor="bg-blue-500"
+                            hoverBgColor="hover:bg-blue-600"
+                            arrowBgColor="bg-white"
+                            arrowColor="text-blue-500"
+                        />
+                    </div>
+
+                    <!-- Default slides -->
+                    <div class="space-y-6" style="display: none;" x-show="!slides[currentSlide].featured">
                         <div class="text-bytewave-gold text-sm md:text-base font-semibold">
                             <p>// SINCE 2020 //</p>
                         </div>
-                        
+
                         <p class="text-white/90 text-base md:text-lg leading-relaxed">
                             We deliver end-to-end ICT and multimedia solutions from concept to deployment, engineered for quality, efficiency, and on-time delivery.
                         </p>
-                        
+
                         <!-- CTA Button -->
-                        <x-cta-button 
-                            href="{{ url('/services') }}" 
-                            text="Explore our capabilities" 
-                            bgColor="bg-blue-500" 
+                        <x-cta-button
+                            href="{{ url('/services') }}"
+                            text="Explore our capabilities"
+                            bgColor="bg-blue-500"
                             hoverBgColor="hover:bg-blue-600"
                             arrowBgColor="bg-white"
                             arrowColor="text-blue-500"
@@ -141,43 +180,11 @@
                 <div class="lg:pr-8">
                     <span class="inline-block text-bytewave-blue font-semibold mb-4 uppercase tracking-wider text-base">Why Choose Us</span>
                     <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">We're Here To Grow Your Business Exponentially</h2>
-                    <p class="text-gray-600 mb-8 leading-relaxed">We combine technical expertise with business acumen to deliver solutions that drive real results. Our team of experts is passionate about helping businesses succeed in the digital age.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Digital Strategy</span>
-                                <span class="font-semibold text-bytewave-blue">95%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="progress-bar bg-bytewave-blue h-full rounded-full transition-all duration-1000 ease-out" style="width: 0" data-width="95%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Technical Excellence</span>
-                                <span class="font-semibold text-bytewave-blue">90%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="progress-bar bg-bytewave-blue h-full rounded-full transition-all duration-1000 ease-out" style="width: 0" data-width="90%"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="skill-item">
-                            <div class="flex justify-between mb-2">
-                                <span class="font-medium text-gray-700">Project Success Rate</span>
-                                <span class="font-semibold text-bytewave-blue">95%</span>
-                            </div>
-                            <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
-                                <div class="progress-bar bg-bytewave-blue h-full rounded-full transition-all duration-1000 ease-out" style="width: 0" data-width="95%"></div>
-                            </div>
-                        </div>
-                    </div>
+                    <p class="text-gray-600 leading-relaxed">We combine technical expertise with business acumen to deliver solutions that drive real results. Our team of experts is passionate about helping businesses succeed in the digital age.</p>
                 </div>
                 <div class="relative">
                     <div class="relative rounded-lg overflow-hidden shadow-2xl">
-                        <img src="{{ asset('css/img/bytewave_livestreaming.jpg') }}" alt="Why Choose Us" class="w-full h-auto rounded-lg">
+                        <img src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Why Choose Us" class="w-full h-auto rounded-lg">
                         <div class="absolute inset-0 bg-gradient-to-b from-bytewave-blue/10 to-bytewave-blue/30"></div>
                     </div>
                 </div>
@@ -185,12 +192,15 @@
         </div>
     </section>
 
+    <!-- Proof In Numbers -->
+    <x-about.stats-band />
+
     <!-- Scalable Capabilities Section -->
     <section class="py-16 md:py-24 bg-white" x-data="{ 
         services: [
             {
                 icon: 'computer',
-                image: '{{ asset('css/img/bytewave_computer_repair_and_maintenance.jpg') }}',
+                image: '{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}',
                 title: 'ICT Solutions & Support',
                 features: [
                     'Computer repair & maintenance',
@@ -201,7 +211,7 @@
             },
             {
                 icon: 'video',
-                image: '{{ asset('css/img/bytewave_livestreaming.jpg') }}',
+                image: '{{ asset('images/bytewave_livestreaming.jpg') }}',
                 title: 'Multimedia Production',
                 features: [
                     'Live streaming services',
@@ -212,7 +222,7 @@
             },
             {
                 icon: 'code',
-                image: '{{ asset('css/img/gavin_in_the_field-01.jpg') }}',
+                image: '{{ asset('images/gavin_in_the_field-01.jpg') }}',
                 title: 'Web & Software Development',
                 features: [
                     'Custom web applications',
@@ -223,7 +233,7 @@
             },
             {
                 icon: 'chart',
-                image: '{{ asset('css/img/bytewave_computer_repair_and_maintenance.jpg') }}',
+                image: '{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}',
                 title: 'Digital Marketing',
                 features: [
                     'Social media management',
@@ -513,8 +523,8 @@
                 <div class="flex items-center gap-4">
                     <!-- Avatar Images -->
                     <div class="flex -space-x-3">
-                        <img src="{{ asset('hhiqAWN8uopSow2Pn5F5PWR0lNM.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
-                        <img src="{{ asset('0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <img src="{{ asset('images/hhiqAWN8uopSow2Pn5F5PWR0lNM.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <img src="{{ asset('images/0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
                     </div>
                     <div>
                         <h4 class="text-xl font-bold text-white">Open a conversation</h4>
@@ -546,7 +556,7 @@
                 name: '{{ $testimonial->name }}',
                 title: '{{ $testimonial->title }}',
                 company: '{{ $testimonial->company }}',
-                image: '{{ $testimonial->avatar ? asset('storage/' . $testimonial->avatar) : asset('0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}',
+                image: '{{ $testimonial->avatar ? asset('storage/' . $testimonial->avatar) : asset('images/0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}',
                 rating: {{ $testimonial->rating }},
                 text: '{{ addslashes($testimonial->testimonial) }}'
             }{{ !$loop->last ? ',' : '' }}
@@ -614,11 +624,11 @@
                     <!-- Top Card: Company Logo with Background -->
                     <div class="relative bg-gray-900 rounded-lg overflow-hidden" style="min-height: 280px;">
                         <div class="absolute inset-0 opacity-30">
-                            <img src="{{ asset('css/img/bytewave_livestreaming.jpg') }}" alt="Background" class="w-full h-full object-cover">
+                            <img src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Background" class="w-full h-full object-cover">
                         </div>
                         <div class="relative z-10 flex flex-col items-center justify-center h-full p-8">
                             <p class="text-white text-sm mb-4">// 2024-2026 //</p>
-                            <img src="{{ asset('css/img/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="ByteWave Logo" class="h-12">
+                            <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="ByteWave Logo" class="h-12">
                         </div>
                     </div>
 
@@ -1017,23 +1027,6 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Animate progress bars when scrolled into view
-        const animateProgressBars = () => {
-            const progressBars = document.querySelectorAll('.progress-bar');
-            
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const width = entry.target.getAttribute('data-width');
-                        entry.target.style.width = width;
-                        observer.unobserve(entry.target);
-                    }
-                });
-            }, { threshold: 0.5 });
-            
-            progressBars.forEach(bar => observer.observe(bar));
-        };
-        
         // Initialize lightbox for portfolio images
         const initLightbox = () => {
             if (typeof lightbox !== 'undefined') {
@@ -1065,7 +1058,6 @@
         };
         
         // Initialize all functions
-        animateProgressBars();
         initLightbox();
         smoothScroll();
         

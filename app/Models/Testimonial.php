@@ -60,6 +60,6 @@ class Testimonial extends Model
         if ($this->avatar) {
             return asset('storage/' . $this->avatar);
         }
-        return asset('css/img/default-avatar.jpg');
+        return asset('images/default-avatar.jpg');
     }
 }

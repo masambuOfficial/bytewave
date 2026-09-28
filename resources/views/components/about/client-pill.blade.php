@@ -1,0 +1,1 @@
+<li {{ $attributes->merge(['class' => 'reveal bg-white border border-bytewave-blue-100 text-bytewave-blue-700 font-medium rounded-full px-5 py-2.5 shadow-sm hover:bg-bytewave-blue hover:text-white hover:border-bytewave-blue transition-colors duration-300']) }}>{{ $slot }}</li>

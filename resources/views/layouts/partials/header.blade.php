@@ -5,7 +5,7 @@
             <div class="flex items-center justify-between">
                 <!-- Logo (Left) -->
                 <a href="{{ url('/') }}" class="flex items-center flex-shrink-0">
-                    <img src="{{ asset('css/img/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE Logo" class="h-10">
+                    <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="BYTEWAVE Logo" class="h-10">
                 </a>
 
                 <!-- Desktop Navigation (Center) -->
