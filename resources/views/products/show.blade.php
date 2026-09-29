@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $product->name . ' - BYTEWAVE')
-@section('meta_description', Str::limit($product->description, 160))
+@section('meta_description', $product->meta_description ?: Str::limit(strip_tags($product->description), 160))
 @section('og_type', 'website')
 @section('og_image', asset($product->image_url))
 
@@ -21,6 +21,11 @@
     }
 }
 </script>
+    <x-breadcrumb-schema :items="[
+        'Home' => route('home'),
+        'Products' => route('products.index'),
+        $product->name => url()->current(),
+    ]" />
 @endpush
 
 @section('content')
@@ -112,7 +117,7 @@
                     <div class="animate-fadeIn hover:transform hover:-translate-y-2 transition-all duration-500">
                         <div class="bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 h-full overflow-hidden">
                             <div class="relative">
-                                <img src="{{ asset($relatedProduct->image_url) }}" 
+                                <img loading="lazy" decoding="async" src="{{ asset($relatedProduct->image_url) }}" 
                                      class="w-full h-64 object-cover"
                                      alt="{{ $relatedProduct->name }}">
                             </div>

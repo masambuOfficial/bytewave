@@ -57,12 +57,6 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     
-    <!-- Lenis Smooth Scroll -->
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-    
-    <!-- Framer Motion (via CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/framer-motion@11/dist/framer-motion.js"></script>
-    
     <!-- Alpine.js with Collapse Plugin -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -232,7 +226,8 @@
         document.addEventListener('DOMContentLoaded', initWow);
     </script>
 
-    <!-- Initialize Lenis Smooth Scroll -->
+    <!-- Lenis Smooth Scroll (loaded at end of body so it does not block first paint) -->
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
     <script>
         // Initialize Lenis
         const lenis = new Lenis({

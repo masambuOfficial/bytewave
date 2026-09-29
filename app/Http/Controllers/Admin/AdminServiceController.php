@@ -25,6 +25,7 @@ class AdminServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'icon' => 'nullable|string|max:50',
             'image' => 'nullable|image|max:2048'
         ]);
@@ -56,6 +57,7 @@ class AdminServiceController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'icon' => 'nullable|string|max:50',
             'image' => 'nullable|image|max:2048'
         ]);

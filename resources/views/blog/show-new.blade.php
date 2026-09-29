@@ -33,6 +33,11 @@
     }
 }
 </script>
+    <x-breadcrumb-schema :items="[
+        'Home' => route('home'),
+        'Blog' => route('blog.index'),
+        $blog->title => url()->current(),
+    ]" />
 @endpush
 
 @section('content')
@@ -140,7 +145,7 @@
         @if($blog->author && $blog->author->bio)
             <div class="bg-gray-50 rounded-lg p-6 mb-12">
                 <div class="flex items-start space-x-4">
-                    <img 
+                    <img loading="lazy" decoding="async" 
                         src="{{ $blog->author->avatar }}" 
                         alt="{{ $blog->author->name }}"
                         class="w-16 h-16 rounded-full flex-shrink-0"

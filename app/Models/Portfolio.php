@@ -14,6 +14,7 @@ class Portfolio extends Model
         'title',
         'slug',
         'description',
+        'meta_description',
         'work_done',
         'client',
         'completion_date',

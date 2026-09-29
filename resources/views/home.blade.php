@@ -507,7 +507,7 @@
                             @elseif($type === 'embed' && $embedSrc)
                                 <iframe class="w-full h-full" src="{{ $embedSrc }}" title="{{ $portfolio->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
                             @else
-                                <img src="{{ $src ? $src : asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover">
+                                <img loading="lazy" decoding="async" src="{{ $src ? $src : asset($portfolio->image_url) }}" alt="{{ $portfolio->title }}" class="w-full h-full object-cover">
                             @endif
                         </div>
                     @endforeach
@@ -524,8 +524,8 @@
                 <div class="flex items-center gap-4">
                     <!-- Avatar Images -->
                     <div class="flex -space-x-3">
-                        <img src="{{ asset('images/hhiqAWN8uopSow2Pn5F5PWR0lNM.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
-                        <img src="{{ asset('images/0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <img loading="lazy" decoding="async" src="{{ asset('images/hhiqAWN8uopSow2Pn5F5PWR0lNM.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
+                        <img loading="lazy" decoding="async" src="{{ asset('images/0jxLgyu1KT3iisfQG2TUjYiR02E.avif') }}" alt="Team member" class="w-12 h-12 rounded-full border-2 border-white object-cover">
                     </div>
                     <div>
                         <h4 class="text-xl font-bold text-white">Open a conversation</h4>
@@ -593,7 +593,7 @@
                                 class="w-12 h-12 rounded-full border-2 transition-all duration-300"
                                 :class="currentTestimonial === index ? 'border-orange-500 opacity-100' : 'border-white opacity-40'"
                             >
-                                <img :src="testimonial.image" :alt="testimonial.name" class="w-full h-full rounded-full object-cover">
+                                <img loading="lazy" decoding="async" :src="testimonial.image" :alt="testimonial.name" class="w-full h-full rounded-full object-cover">
                             </button>
                         </template>
                     </div>
@@ -625,11 +625,11 @@
                     <!-- Top Card: Company Logo with Background -->
                     <div class="relative bg-gray-900 rounded-lg overflow-hidden" style="min-height: 280px;">
                         <div class="absolute inset-0 opacity-30">
-                            <img src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Background" class="w-full h-full object-cover">
+                            <img loading="lazy" decoding="async" src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Background" class="w-full h-full object-cover">
                         </div>
                         <div class="relative z-10 flex flex-col items-center justify-center h-full p-8">
                             <p class="text-white text-sm mb-4">// 2024-2026 //</p>
-                            <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="ByteWave Logo" class="h-12">
+                            <img loading="lazy" decoding="async" src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="ByteWave Logo" class="h-12">
                         </div>
                     </div>
 
@@ -658,7 +658,7 @@
                     <div class="relative z-10 flex flex-col justify-between h-full">
                         <!-- Icon -->
                         <div class="w-16 h-16">
-                            <img src="{{ asset('contact.svg') }}" alt="Contact Icon" class="w-full h-full">
+                            <img loading="lazy" decoding="async" src="{{ asset('contact.svg') }}" alt="Contact Icon" class="w-full h-full">
                         </div>
 
                         <!-- Content -->
@@ -726,37 +726,37 @@
 
             <div class="clients-showcase-logos" x-ref="clientLogos" @scroll.debounce.100ms="updateEdges()">
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/ayad-logo.webp') }}" alt="AYAD Consults International">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/ayad-logo.webp') }}" alt="AYAD Consults International">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/Likana-Safaris-logo.webp') }}" alt="Likana Safaris Uganda">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/Likana-Safaris-logo.webp') }}" alt="Likana Safaris Uganda">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/e-betp-logo.png') }}" alt="e-BETP">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/e-betp-logo.png') }}" alt="e-BETP">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/11AEW9AEC_2025-logo-trimmed.png') }}" alt="11AEW9AEC">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/11AEW9AEC_2025-logo-trimmed.png') }}" alt="11AEW9AEC">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/Flourish_Hub-logo-trimmed.png') }}" alt="Flourish Hub">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/Flourish_Hub-logo-trimmed.png') }}" alt="Flourish Hub">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/HESFB_logo-trimmed.png') }}" alt="HESFB">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/HESFB_logo-trimmed.png') }}" alt="HESFB">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/Kafu_Prime_Cuts-logo-trimmed.png') }}" alt="Kafu Prime Cuts">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/Kafu_Prime_Cuts-logo-trimmed.png') }}" alt="Kafu Prime Cuts">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/Modiac-logo-trimmed.png') }}" alt="Modiac">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/Modiac-logo-trimmed.png') }}" alt="Modiac">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/IGAD-logo.png') }}" alt="IGAD">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/IGAD-logo.png') }}" alt="IGAD">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/UIPE-logo.png') }}" alt="UIPE">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/UIPE-logo.png') }}" alt="UIPE">
                 </div>
                 <div class="clients-showcase-logo-cell">
-                    <img src="{{ asset('clients/UVTAB-logo-trimmed.png') }}" alt="UVTAB">
+                    <img loading="lazy" decoding="async" src="{{ asset('clients/UVTAB-logo-trimmed.png') }}" alt="UVTAB">
                 </div>
             </div>
         </div>

@@ -25,6 +25,7 @@ class AdminProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'price' => 'required|numeric|min:0',
             'currency' => 'nullable|string|in:USD,UGX',
             'billing_cycle' => 'required|string|in:one_time,monthly,annual',
@@ -65,6 +66,7 @@ class AdminProductController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'price' => 'required|numeric|min:0',
             'currency' => 'nullable|string|in:USD,UGX',
             'billing_cycle' => 'required|string|in:one_time,monthly,annual',

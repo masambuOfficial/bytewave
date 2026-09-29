@@ -3,6 +3,10 @@
 @section('title', 'Software Products – SACCO, Healthcare & POS Systems | ByteWave')
 @section('meta_description', 'Discover ByteWave software products including FinSphere SACCO management, FinHealth healthcare management and FinPOS point-of-sale systems built for African businesses.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'Products' => url()->current()]" />
+@endpush
+
 @section('content')
     <!-- Page Header Start -->
     <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat; background-size: cover;">
@@ -64,7 +68,7 @@
                             
                             <!-- Image Section - Top Half -->
                             <div class="relative h-64 overflow-hidden rounded-t-2xl">
-                                <img src="{{ asset('storage/' . $product->image_url) }}" 
+                                <img loading="lazy" decoding="async" src="{{ asset('storage/' . $product->image_url) }}" 
                                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                      alt="{{ $product->name }}">
                                 <div class="absolute inset-0 bg-bytewave-blue/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>

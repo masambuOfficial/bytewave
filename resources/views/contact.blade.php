@@ -3,6 +3,10 @@
 @section('title', 'Contact ByteWave Investments – Kampala, Uganda')
 @section('meta_description', 'Get in touch with ByteWave Investments in Kampala for web development, software systems, IT support and audio-visual production. Call, email or send us a message.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'Contact' => url()->current()]" />
+@endpush
+
 @section('content')
     <!-- Page Header Start -->
     <div class="relative bg-cover bg-center py-20 mb-12" style="background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url('{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">

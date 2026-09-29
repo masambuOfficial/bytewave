@@ -3,7 +3,7 @@
 <article class="{{ $featured ? 'md:col-span-2' : '' }} group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:-translate-y-1">
     <a href="{{ route('blog.show', $article->slug) }}" class="block">
         <div class="relative overflow-hidden {{ $featured ? 'h-80' : 'h-52' }} bg-gray-100">
-            <img
+            <img loading="lazy" decoding="async"
                 src="{{ $article->cover_image }}"
                 alt="{{ $article->title }}"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
@@ -29,7 +29,7 @@
             <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
                 <div class="flex items-center gap-2">
                     @if($article->author)
-                        <img
+                        <img loading="lazy" decoding="async"
                             src="{{ $article->author->avatar }}"
                             alt="{{ $article->author->name }}"
                             class="w-6 h-6 rounded-full object-cover"

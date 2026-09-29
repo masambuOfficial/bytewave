@@ -107,6 +107,20 @@
                                     @enderror
                                 </div>
 
+                                <!-- Meta Description (SEO) -->
+                                <div class="mb-3">
+                                    <label for="meta_description" class="form-label">Meta Description (SEO)</label>
+                                    <textarea class="form-control @error('meta_description') is-invalid @enderror"
+                                              id="meta_description"
+                                              name="meta_description"
+                                              rows="2"
+                                              maxlength="320"
+                                              placeholder="Shown in Google search results. Aim for 120-160 characters. Leave blank to use the start of the description.">{{ old('meta_description', $portfolio->meta_description ?? '') }}</textarea>
+                                    @error('meta_description')
+                                        <div class="invalid-feedback">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
                                 <!-- Work Done -->
                                 <div class="mb-3">
                                     <label for="work_done" class="form-label">Work Done</label>

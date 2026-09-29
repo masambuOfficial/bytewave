@@ -3,6 +3,10 @@
 @section('title', 'About ByteWave Investments – ICT Company in Kampala, Uganda')
 @section('meta_description', 'Learn about ByteWave Investments, a Kampala-based ICT company empowering MSMEs with affordable software, web development, digital skills training and multimedia solutions.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'About' => url()->current()]" />
+@endpush
+
 @section('content')
 
     <!-- Page Header Start -->

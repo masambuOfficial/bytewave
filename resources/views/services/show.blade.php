@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $service->name . ' - BYTEWAVE')
-@section('meta_description', Str::limit($service->description, 160))
+@section('meta_description', $service->meta_description ?: Str::limit(strip_tags($service->description), 160))
 @section('og_type', 'website')
 @if($service->image)
     @section('og_image', asset('storage/' . $service->image))
@@ -20,6 +20,11 @@
     }
 }
 </script>
+    <x-breadcrumb-schema :items="[
+        'Home' => route('home'),
+        'Services' => route('services.index'),
+        $service->name => url()->current(),
+    ]" />
 @endpush
 
 @section('content')

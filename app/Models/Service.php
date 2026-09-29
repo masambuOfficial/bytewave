@@ -14,6 +14,7 @@ class Service extends Model
         'name',
         'category',
         'description',
+        'meta_description',
         'icon',
         'image',
         'slug'

@@ -29,6 +29,7 @@ class AdminPortfolioController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'work_done' => 'nullable|string',
             'client' => 'nullable|string|max:255',
             'completion_date' => 'nullable|date',
@@ -152,6 +153,7 @@ class AdminPortfolioController extends Controller
         $validated = $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'meta_description' => 'nullable|string|max:320',
             'work_done' => 'nullable|string',
             'client' => 'nullable|string|max:255',
             'completion_date' => 'nullable|date',

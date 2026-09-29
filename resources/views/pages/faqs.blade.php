@@ -81,6 +81,10 @@
 </script>
 @endpush
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'FAQs' => url()->current()]" />
+@endpush
+
 @section('content')
     <!-- Page Header Start -->
     <div class="w-full bg-cover bg-center bg-no-repeat relative flex items-center justify-center wow fadeIn" data-wow-delay="0.1s" style="min-height: 450px; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}');">

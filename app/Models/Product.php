@@ -14,6 +14,7 @@ class Product extends Model
         'name',
         'slug',
         'description',
+        'meta_description',
         'price',
         'currency',
         'billing_cycle',

@@ -3,6 +3,10 @@
 @section('title', 'Tech Blog – Insights on Technology & Digital Growth | ByteWave')
 @section('meta_description', 'Insights, updates, and perspectives on technology and digital growth from the BYTEWAVE team.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'Blog' => url()->current()]" />
+@endpush
+
 @section('content')
 <div x-data="{ replyTo: null }">
     <!-- Page Header Start -->

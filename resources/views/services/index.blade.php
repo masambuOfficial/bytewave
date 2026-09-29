@@ -3,6 +3,10 @@
 @section('title', 'Our Services – Web, Software & Digital Solutions | ByteWave')
 @section('meta_description', 'Explore ByteWave services: website design, custom software, management systems, IT support, digital marketing and audio-visual production for businesses in Uganda.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'Services' => url()->current()]" />
+@endpush
+
 @section('content')
     <!-- Page Header Start -->
     <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
@@ -122,7 +126,7 @@
                                         <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden group">
                                             <!-- Image -->
                                             <div class="relative h-48 overflow-hidden">
-                                                <img src="{{ $service->image ? asset('storage/' . $service->image) : asset('images/bytewave_livestreaming.jpg') }}" 
+                                                <img loading="lazy" decoding="async" src="{{ $service->image ? asset('storage/' . $service->image) : asset('images/bytewave_livestreaming.jpg') }}" 
                                                      alt="{{ $service->name }}" 
                                                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                                                 <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>

@@ -1,153 +1,38 @@
-# cPanel SSH Deployment (GitHub)
+cd ~/bytewave_app
 
-This is a quick reference for deploying the latest code to a cPanel-hosted Laravel project via SSH + Git.
+# backups (do these if you haven't already)
+cp public/.htaccess ~/htaccess.server.bak
+cp public/sitemap.xml ~/sitemap.server.bak
 
-## Current Server Layout (this project)
+# discard the local edits so the pull can proceed
+git checkout -- public/.htaccess public/sitemap.xml
 
-- Laravel project root: `/home/bytewave/bytewave_app` (this folder contains `artisan`)
-- Web document root: usually `~/public_html`
-- Recommended document root for Laravel: `/home/bytewave/bytewave_app/public`
-
-## 1) SSH into your server
-
-```bash
-ssh USERNAME@YOUR_DOMAIN_OR_SERVER_IP
-```
-
-If your host uses a custom SSH port:
-
-```bash
-ssh -p 2222 USERNAME@YOUR_DOMAIN_OR_SERVER_IP
-```
-
-## 2) Go to your web root
-
-Most cPanel accounts serve your domain from:
-
-```bash
-cd ~/public_html
-```
-
-NOTE: `public_html` often does NOT contain the Laravel `artisan` file. Laravel commands must be run from the Laravel project root (where `artisan` exists).
-
-## 2b) Go to the Laravel project root (where `artisan` is)
-
-For this project:
-
-```bash
-cd /home/bytewave/bytewave_app
-```
-
-## 3) Pull the latest code
-
-If the repo is already set up in this folder:
-
-```bash
+# pull, then restore the cPanel block immediately
 git pull origin main
-```
+cat >> public/.htaccess <<'EOF'
 
-If your default branch is `master`, use:
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit
+EOF
 
-```bash
-git pull origin master
-```
+# rest of the deploy
+composer install --no-dev --optimize-autoloader && php artisan migrate --force && php artisan optimize:clear && php artisan config:cache && php artisan route:cache && php artisan view:cache
+php artisan sitemap:generate
 
-## 4) Install/update PHP dependencies (if needed)
+Then verify:
 
-From your project root (where `composer.json` is):
+tail -12 public/.htaccess
+curl -I http://www.bytewaveinvestments.com
+curl -I https://bytewaveinvestments.com/sitemap.xml
 
-```bash
-composer install --no-dev --optimize-autoloader
-```
+- .htaccess: the end of the file should show the new HTTPS/www rules near the top and your cPanel block at the bottom.
+- The www curl: it should return a 301 to https://bytewaveinvestments.com/.
+- The sitemap curl: it should return 200.
 
-If `composer` is not available as a command, try:
-
-```bash
-which composer
-php -v
-```
-
-If your server requires calling a specific PHP binary, you may need something like:
-
-```bash
-php -d detect_unicode=0 $(which composer) install --no-dev --optimize-autoloader
-```
-
-(Exact command depends on your host.)
-
-## 5) Run database migrations (production)
-
-```bash
-php artisan migrate --force
-```
-
-## 6) Clear/cache Laravel
-
-```bash
-php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-## One-shot Deploy Sequence (recommended)
-
-```bash
-cd /home/bytewave/bytewave_app
-git pull origin main
-composer install --no-dev --optimize-autoloader
-php artisan migrate --force
-php artisan optimize:clear
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
-```
-
-## 7) File permissions (common cPanel issue)
-
-If storage/logs or cache fails:
-
-```bash
-chmod -R 775 storage bootstrap/cache
-```
-
-(Your host may require different ownership/permissions.)
-
----
-
-# Recommended Production Layout (More Secure)
-
-Instead of putting the entire Laravel project inside `public_html`, a common pattern is:
-
-- Project root: `~/project`
-- Public web root: `~/public_html`
-
-Then you either:
-
-- Point the domain document root to `~/project/public` (best if cPanel allows it), OR
-- Copy/symlink the contents of `~/project/public` into `~/public_html` and ensure `index.php` points to the correct paths.
-
-For this project, the equivalent would be:
-
-- Project root: `/home/bytewave/bytewave_app`
-- Document root: `/home/bytewave/bytewave_app/public`
-
----
-
-# First-time setup (if repo is NOT cloned yet)
-
-## Option A: Clone into `public_html` (simple, less ideal)
-
-```bash
-cd ~/public_html
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git .
-```
-
-## Option B: Clone outside web root (recommended)
-
-```bash
-cd ~
-git clone https://github.com/YOUR_USERNAME/YOUR_REPO.git project
-```
-
-Then configure your domain to serve `~/project/public`.
+Two notes:
+- Local edits: after this, .htaccess will show as locally modified on the server again. That's fine. Future pulls only fail if a commit changes .htaccess again. If that happens, repeat this same restore step.
+- cPanel changes: if you change the PHP version in cPanel, it rewrites that block on the server, so leave it out of the repo.

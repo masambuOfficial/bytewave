@@ -3,6 +3,10 @@
 @section('title', 'Our Portfolio – Websites, Systems & Media Projects | ByteWave')
 @section('meta_description', 'See websites, management systems, livestreams and design projects delivered by ByteWave Investments for clients across Uganda.')
 
+@push('schema')
+    <x-breadcrumb-schema :items="['Home' => route('home'), 'Portfolio' => url()->current()]" />
+@endpush
+
 @section('content')
     <!-- Page Header Start -->
     <div class="w-full bg-gray-200 relative">
@@ -66,7 +70,7 @@
                                         <iframe class="w-full h-64" src="{{ $embedSrc }}" title="{{ $portfolio->title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
                                     </div>
                                 @else
-                                    <img src="{{ $src ? $src : asset($portfolio->image_url) }}"
+                                    <img loading="lazy" decoding="async" src="{{ $src ? $src : asset($portfolio->image_url) }}"
                                          class="w-full h-64 object-cover"
                                          alt="{{ $portfolio->title }}">
                                 @endif

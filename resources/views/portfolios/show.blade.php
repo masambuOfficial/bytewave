@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title', $portfolio->title . ' - BYTEWAVE')
-@section('meta_description', Str::limit($portfolio->description, 160))
+@section('meta_description', $portfolio->meta_description ?: Str::limit(strip_tags($portfolio->description), 160))
 @section('og_type', 'website')
 
 @push('schema')
@@ -17,6 +17,11 @@
     }
 }
 </script>
+    <x-breadcrumb-schema :items="[
+        'Home' => route('home'),
+        'Portfolio' => route('portfolios.index'),
+        $portfolio->title => url()->current(),
+    ]" />
 @endpush
 
 @section('content')
@@ -142,7 +147,7 @@
                         <div class="group w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm">
                             <div class="transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl rounded-lg overflow-hidden shadow-sm border border-gray-100">
                                 <div class="relative overflow-hidden">
-                                    <img src="{{ asset($relatedPortfolio->image_url) }}"
+                                    <img loading="lazy" decoding="async" src="{{ asset($relatedPortfolio->image_url) }}"
                                          class="w-full h-64 object-cover"
                                          alt="{{ $relatedPortfolio->title }}">
                                     <div class="absolute inset-0 bg-black bg-opacity-70 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center px-4">
@@ -184,7 +189,7 @@
                             @elseif($mType === 'embed' && $mEmbed)
                                 <iframe class="w-full h-64" src="{{ $mEmbed }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
                             @else
-                                <img src="{{ $mSrc }}" class="w-full h-64 object-cover" alt="{{ $portfolio->title }}">
+                                <img loading="lazy" decoding="async" src="{{ $mSrc }}" class="w-full h-64 object-cover" alt="{{ $portfolio->title }}">
                             @endif
                         </div>
                     @endforeach
