@@ -10,30 +10,21 @@
     --font-sans: 'Mona Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
     
-    /* BYTEWAVE Brand Colors */
-    --color-bytewave-blue: #0773B8;
-    --color-bytewave-blue-50: #E6F3FB;
-    --color-bytewave-blue-100: #CCE7F7;
-    --color-bytewave-blue-200: #99CFEF;
-    --color-bytewave-blue-300: #66B7E7;
-    --color-bytewave-blue-400: #339FDF;
-    --color-bytewave-blue-500: #0773B8;
-    --color-bytewave-blue-600: #055C93;
-    --color-bytewave-blue-700: #04456E;
-    --color-bytewave-blue-800: #032E49;
-    --color-bytewave-blue-900: #011724;
-    
-    --color-bytewave-gold: #FBB145;
-    --color-bytewave-gold-50: #FEF5E7;
-    --color-bytewave-gold-100: #FEEBD0;
-    --color-bytewave-gold-200: #FDD7A1;
-    --color-bytewave-gold-300: #FCC372;
-    --color-bytewave-gold-400: #FBB145;
-    --color-bytewave-gold-500: #F9A62C;
-    --color-bytewave-gold-600: #E88F0F;
-    --color-bytewave-gold-700: #B76F0C;
-    --color-bytewave-gold-800: #865008;
-    --color-bytewave-gold-900: #553105;
+    /* BYTEWAVE brand: Blue, White, Ink. See BRAND.md.
+       Lighter strengths use opacity, e.g. bg-bytewave-blue/5, border-bytewave-blue/20, text-bytewave-ink/70 */
+    --color-bytewave-blue: #0773B9;
+    --color-bytewave-ink: #0B1F33;
+
+    /* Gold: tiny graphic sprinkles only (menu marker, footer icons and bars, section-label squares, stats bars, and the few others listed in BRAND.md). Never text, buttons or backgrounds. New uses need the owner's OK. */
+    --color-bytewave-gold: #F1C442;
+
+    /* Status: functional only (state badges, errors), never decorative */
+    --color-bytewave-success: #17703F;
+    --color-bytewave-success-bg: #E3F5EA;
+    --color-bytewave-danger: #C0392B;
+    --color-bytewave-danger-bg: #FDEDEC;
+    --color-bytewave-warning: #92600C;
+    --color-bytewave-warning-bg: #FFF1D1;
 }
 
 /* Prevent horizontal scroll */

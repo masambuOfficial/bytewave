@@ -38,7 +38,7 @@
         ],
         [
             'title' => 'Technical Questions',
-            'color' => 'text-[#0773B8]',
+            'color' => 'text-bytewave-blue',
             'delay' => '0.3s',
             'items' => [
                 [
@@ -87,14 +87,14 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="w-full bg-cover bg-center bg-no-repeat relative flex items-center justify-center wow fadeIn" data-wow-delay="0.1s" style="min-height: 450px; background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}');">
+    <div class="w-full bg-cover bg-center bg-no-repeat relative flex items-center justify-center wow fadeIn" data-wow-delay="0.1s" style="min-height: 450px; background-image: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}'); background-color: #0B1F33;">
         <div class="max-w-7xl mx-auto px-4 text-center py-20">
-            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-yellow-400 mb-6 animated slideInDown">FAQs</h1>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-6 animated slideInDown">FAQs</h1>
             <nav aria-label="breadcrumb" class="animated slideInDown">
                 <ol class="flex items-center justify-center gap-2 text-white text-lg">
-                    <li><a href="{{ url('/') }}" class="hover:text-yellow-400 transition-colors duration-300">Home</a></li>
-                    <li class="text-gray-400">/</li>
-                    <li class="text-yellow-400" aria-current="page">FAQs</li>
+                    <li><a href="{{ url('/') }}" class="hover:underline transition-colors duration-300">Home</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li class="text-white" aria-current="page">FAQs</li>
                 </ol>
             </nav>
         </div>
@@ -102,7 +102,8 @@
     <!-- Page Header End -->
 
     <!-- FAQs Start -->
-    <div class="py-16 md:py-20 bg-gray-100">
+    <div class="relative isolate py-16 md:py-20 bg-bytewave-blue/5">
+        <x-bg-art layout="tint" />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                 @foreach($faqCategories as $category)
@@ -111,15 +112,15 @@
                             <h2 class="text-3xl md:text-4xl font-bold {{ $category['color'] }} mb-6">{{ $category['title'] }}</h2>
                             <div class="flex flex-col gap-3">
                                 @foreach($category['items'] as $index => $item)
-                                    <div x-data="{ open: {{ $index === 0 ? 'true' : 'false' }} }" class="border border-gray-300 rounded-lg bg-white shadow-sm">
-                                        <button @click="open = !open" class="w-full p-3 text-left flex items-center justify-between bg-transparent border-0 cursor-pointer text-base font-semibold text-gray-800 hover:bg-gray-50 transition-colors">
+                                    <div x-data="{ open: {{ $index === 0 ? 'true' : 'false' }} }" class="border border-bytewave-ink/50 rounded-lg bg-white shadow-sm">
+                                        <button @click="open = !open" class="w-full p-3 text-left flex items-center justify-between bg-transparent border-0 cursor-pointer text-base font-semibold text-bytewave-ink hover:bg-bytewave-blue/5 transition-colors">
                                             <span>{{ $item['q'] }}</span>
-                                            <svg :class="open ? 'rotate-180' : ''" class="w-6 h-6 text-yellow-400 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                            <svg :class="open ? 'rotate-180' : ''" class="w-6 h-6 text-bytewave-blue transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"></path>
                                             </svg>
                                         </button>
-                                        <div x-show="open" x-transition class="px-5 pb-5 border-t border-gray-300 bg-gray-50">
-                                            <p class="text-gray-800 leading-relaxed mt-4">
+                                        <div x-show="open" x-transition class="px-5 pb-5 border-t border-bytewave-ink/50 bg-bytewave-blue/5">
+                                            <p class="text-bytewave-ink leading-relaxed mt-4">
                                                 {{ $item['a'] }}
                                             </p>
                                         </div>
@@ -132,29 +133,19 @@
             </div>
             <!-- Contact Section -->
             <div class="wow fadeInUp mt-12" data-wow-delay="0.5s">
-                <div class="relative bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 rounded-2xl p-8 md:p-12 overflow-hidden shadow-2xl">
+                <div class="relative bg-bytewave-blue rounded-2xl p-8 md:p-12 overflow-hidden shadow-2xl">
                     <!-- Decorative Elements -->
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400 opacity-10 rounded-full -mr-32 -mt-32"></div>
-                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-yellow-400 opacity-10 rounded-full -ml-24 -mb-24"></div>
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-white opacity-10 rounded-full -mr-32 -mt-32"></div>
+                    <div class="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-10 rounded-full -ml-24 -mb-24"></div>
 
                     <div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
                         <div class="w-full md:w-1/2 md:text-left">
                             <h3 class="text-3xl md:text-4xl font-bold text-white mb-4">Still Have Questions?</h3>
-                            <p class="text-blue-100 text-lg leading-relaxed">Can't find the answer you're looking for? Please contact our friendly team and we'll be happy to help.</p>
+                            <p class="text-white text-lg leading-relaxed">Can't find the answer you're looking for? Please contact our friendly team and we'll be happy to help.</p>
                         </div>
                         <div class="w-full md:w-1/2 flex flex-col sm:flex-row gap-4 justify-center md:justify-end">
-                            <a href="{{ url('/contact') }}" class="inline-flex items-center justify-center bg-yellow-400 text-gray-900 font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-yellow-300 hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                                <span>Contact Us</span>
-                                <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
-                                </svg>
-                            </a>
-                            <a href="tel:{{ str_replace(' ', '', config('company.phone')) }}" class="inline-flex items-center justify-center bg-white text-blue-700 font-bold px-6 py-3 rounded-lg shadow-lg hover:bg-gray-50 hover:shadow-2xl hover:scale-105 transition-all duration-300">
-                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                                </svg>
-                                <span>Call Now</span>
-                            </a>
+                            <x-cta-button :href="url('/contact')" text="Contact Us" variant="light" />
+                            <x-cta-button :href="'tel:' . str_replace(' ', '', config('company.phone'))" text="Call Now" variant="light" />
                         </div>
                     </div>
                 </div>

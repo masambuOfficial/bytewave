@@ -21,7 +21,7 @@
     }
 
     .tasks-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -49,7 +49,7 @@
 
     .tasks-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
     }
@@ -61,23 +61,23 @@
     }
 
     .tasks-table thead th {
-        background: #FAFBFC;
-        color: #8A97A0;
+        background: #F3F8FC;
+        color: #546270;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid #EEF1F4;
+        border-bottom: 1px solid #CDE3F1;
         padding: 0.9rem 1.1rem;
         white-space: nowrap;
     }
 
     .tasks-table tbody td {
         padding: 0.9rem 1.1rem;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
         vertical-align: middle;
         font-size: 0.88rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .tasks-table tbody tr:last-child td {
@@ -85,7 +85,7 @@
     }
 
     .tasks-table tbody tr:hover {
-        background: #FAFCFE;
+        background: #F3F8FC;
     }
 
     .status-pill {
@@ -99,13 +99,13 @@
     }
 
     .status-untrackable { background: #FDEDEC; color: #C0392B; }
-    .status-submitted { background: rgba(251, 177, 69, 0.15); color: #92600C; }
-    .status-completed { background: #E9F9EF; color: #1E8E4F; }
+    .status-submitted { background: #FFF1D1; color: #92600C; }
+    .status-completed { background: #E3F5EA; color: #17703F; }
     .status-in-progress { background: var(--bytewave-blue-light); color: var(--bytewave-blue-dark); }
 
     .priority-pill.bg-danger { background: #FDEDEC !important; color: #C0392B !important; }
-    .priority-pill.bg-warning { background: rgba(251, 177, 69, 0.15) !important; color: #92600C !important; }
-    .priority-pill.bg-success { background: #E9F9EF !important; color: #1E8E4F !important; }
+    .priority-pill.bg-warning { background: #FFF1D1 !important; color: #92600C !important; }
+    .priority-pill.bg-success { background: #E3F5EA !important; color: #17703F !important; }
     .priority-pill {
         display: inline-flex;
         align-items: center;
@@ -163,7 +163,7 @@
     }
 
     .task-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
@@ -171,7 +171,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -183,7 +183,7 @@
     }
 
     .tasks-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 </style>
@@ -196,9 +196,7 @@
             <h1>Task Management</h1>
             <p>Track tasks, assignees, priorities and due dates.</p>
         </div>
-        <a href="{{ route('admin.tasks.create') }}" class="btn-add-task">
-            <i class="fas fa-plus"></i> New Task
-        </a>
+        <x-admin.button href="{{ route('admin.tasks.create') }}">New Task</x-admin.button>
     </div>
 
     @if(session('success'))
@@ -212,9 +210,7 @@
         <div class="tasks-empty">
             <i class="fas fa-tasks"></i>
             <p>No tasks found.</p>
-            <a href="{{ route('admin.tasks.create') }}" class="btn-add-task">
-                Create your first task
-            </a>
+            <x-admin.button href="{{ route('admin.tasks.create') }}">Create your first task</x-admin.button>
         </div>
     @else
         <div class="tasks-card mb-4">

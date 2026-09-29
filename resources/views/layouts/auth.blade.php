@@ -20,11 +20,11 @@
     <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0773B9">
 
     @yield('styles')
 </head>
-<body class="font-sans" style="background-color: #F6F6F6;">
+<body class="font-sans bg-white text-bytewave-ink">
     @yield('content')
 
     @yield('scripts')

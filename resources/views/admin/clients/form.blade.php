@@ -4,9 +4,7 @@
 <div class="container-fluid px-4">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="mt-4">{{ isset($client) ? 'Edit Client' : 'Create New Client' }}</h1>
-        <a href="{{ route('admin.clients.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to Clients
-        </a>
+        <x-admin.button href="{{ route('admin.clients.index') }}" variant="secondary">Back to Clients</x-admin.button>
     </div>
 
     <div class="card mb-4">
@@ -94,10 +92,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end mt-4">
-                    <button type="submit" class="btn btn-primary">
-                        <i class="fas fa-save me-1"></i>
-                        {{ isset($client) ? 'Update Client' : 'Create Client' }}
-                    </button>
+                    <x-admin.button type="submit">{{ isset($client) ? 'Update Client' : 'Create Client' }}</x-admin.button>
                 </div>
             </form>
         </div>

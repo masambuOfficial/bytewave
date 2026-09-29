@@ -5,37 +5,37 @@
 <title>Invoice #{{ $invoice->invoice_number }}</title>
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 9.5pt; color: #1a1a1a; background: #fff; }
+body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 9.5pt; color: #0B1F33; background: #fff; }
 .page { padding: 24px 28px 70px; }
 
 /* ── Header ─────────────────────────── */
 .header-tbl { width: 100%; border-collapse: collapse; }
 .header-tbl td { vertical-align: top; padding: 0; border: none; }
-.tagline { color: #1565C0; font-style: italic; font-size: 8.5pt; margin-top: 4px; }
-.company-meta { text-align: right; font-size: 8.5pt; line-height: 1.6; color: #333; }
-.company-meta strong { font-size: 10.5pt; color: #1a1a1a; display: block; margin-bottom: 2px; }
+.tagline { color: #0773B9; font-style: italic; font-size: 8.5pt; margin-top: 4px; }
+.company-meta { text-align: right; font-size: 8.5pt; line-height: 1.6; color: #0B1F33; }
+.company-meta strong { font-size: 10.5pt; color: #0B1F33; display: block; margin-bottom: 2px; }
 
 /* ── Rule & Title ───────────────────── */
-.rule-top { border: none; border-top: 2.5px solid #1565C0; margin: 10px 0 4px; }
-.doc-title { text-align: right; font-size: 22pt; font-weight: bold; letter-spacing: 2px; color: #1a1a1a; margin-bottom: 10px; }
+.rule-top { border: none; border-top: 3px solid #0773B9; margin: 10px 0 4px; }
+.doc-title { text-align: right; font-size: 22pt; font-weight: bold; letter-spacing: 2px; color: #0B1F33; margin-bottom: 10px; }
 
 /* ── Info block ─────────────────────── */
-.info-outer { width: 100%; border-collapse: collapse; border: 1px solid #bbb; margin-bottom: 8px; }
-.info-outer td { border: 1px solid #bbb; padding: 6px 8px; vertical-align: top; font-size: 9pt; }
+.info-outer { width: 100%; border-collapse: collapse; border: 1px solid #CDE3F1; margin-bottom: 8px; }
+.info-outer td { border: 1px solid #CDE3F1; padding: 6px 8px; vertical-align: top; font-size: 9pt; }
 .client-cell { width: 42%; }
-.client-label { font-weight: bold; color: #444; font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
+.client-label { font-weight: bold; color: #546270; font-size: 8pt; text-transform: uppercase; margin-bottom: 3px; }
 .ref-tbl { width: 100%; border-collapse: collapse; font-size: 8.5pt; }
 .ref-tbl td { padding: 1px 3px; border: none; }
-.ref-tbl td:first-child { font-weight: bold; white-space: nowrap; color: #444; }
+.ref-tbl td:first-child { font-weight: bold; white-space: nowrap; color: #546270; }
 .section-full { width: 100%; font-size: 9pt; }
 
 /* ── Items table ────────────────────── */
 .items-tbl { width: 100%; border-collapse: collapse; margin-top: 4px; }
-.items-tbl th { background: #1565C0; color: #fff; padding: 7px 8px; font-size: 9pt; text-transform: uppercase; border: 1px solid #1565C0; }
-.items-tbl td { border: 1px solid #ccc; padding: 7px 8px; font-size: 9pt; vertical-align: top; }
-.items-tbl tr.subtotal-row td { background: #f0f0f0; font-weight: bold; }
-.items-tbl tr.total-row td { background: #1565C0; color: #fff; font-weight: bold; font-size: 10pt; }
-.items-tbl tr.words-row td { font-style: italic; background: #f8f8f8; font-size: 8.5pt; color: #333; }
+.items-tbl th { background: #0773B9; color: #fff; padding: 7px 8px; font-size: 9pt; text-transform: uppercase; border: 1px solid #0773B9; }
+.items-tbl td { border: 1px solid #CDE3F1; padding: 7px 8px; font-size: 9pt; vertical-align: top; }
+.items-tbl tr.subtotal-row td { background: #F3F8FC; font-weight: bold; }
+.items-tbl tr.total-row td { background: #0773B9; color: #fff; font-weight: bold; font-size: 10pt; }
+.items-tbl tr.words-row td { font-style: italic; background: #F3F8FC; font-size: 8.5pt; color: #0B1F33; }
 .r { text-align: right; }
 .c { text-align: center; }
 
@@ -45,14 +45,14 @@ body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 9.5pt; color: #1a
     bottom: 0; left: 0; right: 0;
     text-align: center;
     font-size: 8.5pt;
-    color: #444;
+    color: #546270;
     line-height: 1.7;
     background: #fff;
-    border-top: 1px solid #ddd;
+    border-top: 1px solid #CDE3F1;
     padding: 6px 28px 8px;
 }
 .no-print { position: fixed; top: 16px; right: 16px; z-index: 99; }
-.no-print button { padding: 8px 20px; background: #1565C0; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 9pt; }
+.no-print button { padding: 8px 20px; background: #0773B9; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 9pt; }
 @media print { .no-print { display: none; } }
 </style>
 </head>
@@ -120,7 +120,7 @@ $logo = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png
             <td>Number:</td>
             <td>{{ $invoice->invoice_number }}</td>
             <td style="width:12px"></td>
-            <td style="font-weight:bold;color:#444">Date:</td>
+            <td style="font-weight:bold;color:#546270">Date:</td>
             <td>{{ $invoice->date->format('d M Y') }}</td>
           </tr>
           <tr>
@@ -133,7 +133,7 @@ $logo = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png
             <td colspan="4">{{ $invoice->quotation->subject }}</td>
           </tr>
           @endif
-          <tr><td colspan="5" style="padding-top:6px;padding-bottom:2px"><hr style="border:none;border-top:1px solid #ddd"></td></tr>
+          <tr><td colspan="5" style="padding-top:6px;padding-bottom:2px"><hr style="border:none;border-top:1px solid #CDE3F1"></td></tr>
           <tr>
             <td>Account No:</td>
             <td colspan="4">{{ config('company.bank_account_number') }}</td>
@@ -212,7 +212,7 @@ $logo = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png
 
   {{-- ── NOTES ────────────────────────────────── --}}
   @if($invoice->notes || $invoice->payment_details)
-  <div style="margin-top:10px;font-size:8.5pt;color:#444;line-height:1.6">
+  <div style="margin-top:10px;font-size:8.5pt;color:#546270;line-height:1.6">
     @if($invoice->payment_details)<strong>Payment Instructions:</strong> {!! nl2br(e($invoice->payment_details)) !!}<br>@endif
     @if($invoice->notes)<strong>Notes:</strong> {!! nl2br(e($invoice->notes)) !!}@endif
   </div>

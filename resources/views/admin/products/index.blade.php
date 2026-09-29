@@ -21,7 +21,7 @@
     }
 
     .products-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -55,7 +55,7 @@
 
     .product-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
         display: flex;
@@ -64,7 +64,7 @@
     }
 
     .product-card:hover {
-        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 12px 28px rgba(11, 31, 51, 0.1);
         transform: translateY(-3px);
     }
 
@@ -97,13 +97,13 @@
         position: absolute;
         top: 12px;
         right: 12px;
-        background: var(--bytewave-gold);
-        color: #4A3300;
+        background: #FFFFFF;
+        color: var(--bytewave-blue);
         padding: 0.35rem 0.75rem;
         border-radius: 999px;
         font-weight: 700;
         font-size: 0.85rem;
-        box-shadow: 0 6px 16px rgba(251, 177, 69, 0.35);
+        box-shadow: 0 6px 16px rgba(11, 31, 51, 0.25);
     }
 
     .billing-badge {
@@ -136,11 +136,11 @@
     .product-card-title {
         font-size: 1.05rem;
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .product-card-category {
-        color: #8A97A0;
+        color: #546270;
         font-size: 0.78rem;
         font-weight: 600;
         white-space: nowrap;
@@ -148,7 +148,7 @@
     }
 
     .product-card-text {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.875rem;
         line-height: 1.5;
         margin-bottom: 1.1rem;
@@ -160,12 +160,12 @@
     }
 
     .low-stock-banner {
-        background: rgba(251, 177, 69, 0.12);
+        background: #FFF1D1;
         color: #92600C;
         font-size: 0.8rem;
         font-weight: 600;
         padding: 0.6rem 1.35rem;
-        border-top: 1px solid rgba(251, 177, 69, 0.25);
+        border-top: 1px solid rgba(146, 96, 12, 0.25);
         display: flex;
         align-items: center;
         gap: 0.4rem;
@@ -174,7 +174,7 @@
     .product-card-actions {
         display: flex;
         gap: 0.5rem;
-        border-top: 1px solid #F1F3F5;
+        border-top: 1px solid #CDE3F1;
         padding-top: 0.9rem;
         margin-top: auto;
     }
@@ -209,7 +209,7 @@
     }
 
     .product-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
@@ -222,7 +222,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -234,7 +234,7 @@
     }
 
     .products-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 </style>
@@ -247,18 +247,14 @@
             <h1>Products</h1>
             <p>Manage the products available on your website.</p>
         </div>
-        <a href="{{ route('admin.products.create') }}" class="btn-add-product">
-            <i class="fas fa-plus"></i> Add New Product
-        </a>
+        <x-admin.button href="{{ route('admin.products.create') }}">Add New Product</x-admin.button>
     </div>
 
     @if($products->isEmpty())
         <div class="products-empty">
             <i class="fas fa-box-open"></i>
             <p>No products found.</p>
-            <a href="{{ route('admin.products.create') }}" class="btn-add-product">
-                Add your first product
-            </a>
+            <x-admin.button href="{{ route('admin.products.create') }}">Add your first product</x-admin.button>
         </div>
     @else
         <div class="products-grid">

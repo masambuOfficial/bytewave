@@ -4,21 +4,21 @@
 
 @push('styles')
 <style>
-    .bw-card { border: 1px solid rgba(0,0,0,0.06); border-radius: 12px; }
-    .bw-card-header { background: #fff; border-bottom: 1px solid rgba(0,0,0,0.06); }
+    .bw-card { border: 1px solid rgba(11, 31, 51,0.06); border-radius: 12px; }
+    .bw-card-header { background: #fff; border-bottom: 1px solid rgba(11, 31, 51,0.06); }
     .bw-title { font-size: 1.5rem; font-weight: 700; margin: 0; }
-    .bw-subtitle { font-size: 0.9rem; color: #6c757d; margin-top: 0.25rem; }
+    .bw-subtitle { font-size: 0.9rem; color: #546270; margin-top: 0.25rem; }
     .bw-table thead th {
-        font-size: 0.8rem; letter-spacing: 0.02em; color: #6c757d;
-        text-transform: uppercase; background: #f8fafc;
-        border-bottom: 1px solid rgba(0,0,0,0.06);
+        font-size: 0.8rem; letter-spacing: 0.02em; color: #546270;
+        text-transform: uppercase; background: #F3F8FC;
+        border-bottom: 1px solid rgba(11, 31, 51,0.06);
         padding: 0.85rem 0.9rem; white-space: nowrap;
     }
     .bw-table tbody td { padding: 0.85rem 0.9rem; vertical-align: middle; }
-    .balance-due { font-size: 1.3rem; font-weight: 700; color: #dc3545; }
-    .balance-zero { font-size: 1.3rem; font-weight: 700; color: #198754; }
+    .balance-due { font-size: 1.3rem; font-weight: 700; color: #C0392B; }
+    .balance-zero { font-size: 1.3rem; font-weight: 700; color: #17703F; }
     .summary-row { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
-    .summary-row .label { color: #6c757d; font-size: 0.9rem; }
+    .summary-row .label { color: #546270; font-size: 0.9rem; }
 </style>
 @endpush
 
@@ -37,12 +37,8 @@
             </div>
         </div>
         <div class="d-flex gap-2 flex-wrap">
-            <a href="{{ route('admin.invoices.edit', $invoice) }}" class="btn btn-warning btn-sm">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a href="{{ route('admin.invoices.print', $invoice) }}" class="btn btn-secondary btn-sm" target="_blank">
-                <i class="fas fa-print"></i> Print
-            </a>
+            <x-admin.button href="{{ route('admin.invoices.edit', $invoice) }}" size="sm">Edit</x-admin.button>
+            <x-admin.button href="{{ route('admin.invoices.print', $invoice) }}" target="_blank" variant="secondary" size="sm">Print</x-admin.button>
             <a href="{{ route('admin.invoices.pdf', $invoice) }}" class="btn btn-dark btn-sm" target="_blank">
                 <i class="fas fa-file-pdf"></i> PDF
             </a>
@@ -54,9 +50,7 @@
                 <i class="fas fa-file-pdf"></i> Receipt PDF
             </a>
             @endif
-            <a href="{{ route('admin.invoices.index') }}" class="btn btn-outline-secondary btn-sm">
-                <i class="fas fa-arrow-left"></i> Back
-            </a>
+            <x-admin.button href="{{ route('admin.invoices.index') }}" variant="secondary" size="sm">Back</x-admin.button>
         </div>
     </div>
 
@@ -129,9 +123,7 @@
                 <div class="card-header bw-card-header py-3 d-flex justify-content-between align-items-center">
                     <div class="fw-semibold">Payment History</div>
                     @if(!in_array($invoice->status, ['paid', 'void']))
-                    <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#recordPaymentModal">
-                        <i class="fas fa-plus"></i> Record Payment
-                    </button>
+                    <x-admin.button data-bs-toggle="modal" data-bs-target="#recordPaymentModal" type="button" size="sm">Record Payment</x-admin.button>
                     @endif
                 </div>
                 <div class="card-body p-0">
@@ -141,9 +133,7 @@
                         No payments recorded yet.
                         @if(!in_array($invoice->status, ['paid', 'void']))
                         <div class="mt-2">
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#recordPaymentModal">
-                                Record First Payment
-                            </button>
+                            <x-admin.button data-bs-toggle="modal" data-bs-target="#recordPaymentModal" type="button" size="sm">Record First Payment</x-admin.button>
                         </div>
                         @endif
                     </div>
@@ -317,8 +307,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Save Payment</button>
+                    <x-admin.button type="button" data-bs-dismiss="modal" variant="secondary">Cancel</x-admin.button>
+                    <x-admin.button type="submit">Save Payment</x-admin.button>
                 </div>
             </form>
         </div>

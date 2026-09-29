@@ -9,7 +9,7 @@
     ];
 @endphp
 
-<section data-stats-band {{ $attributes->merge(['class' => 'bg-bytewave-gold py-12 md:py-16 relative overflow-hidden']) }} aria-label="BYTEWAVE in numbers">
+<section data-stats-band {{ $attributes->merge(['class' => 'bg-bytewave-blue py-12 md:py-16 relative overflow-hidden']) }} aria-label="BYTEWAVE in numbers">
     <!-- Animated Background Particles -->
     <div class="stats-band-particles absolute inset-0 pointer-events-none" aria-hidden="true"></div>
 
@@ -17,10 +17,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             @foreach ($stats as $stat)
                 <div class="stats-band-item flex flex-col items-start text-left gap-2">
+                    <span class="block w-8 h-[3px] bg-bytewave-gold" aria-hidden="true"></span>
                     @isset($stat['target'])
-                        <p class="text-5xl md:text-6xl font-bold text-bytewave-blue" data-stats-counter data-target="{{ $stat['target'] }}" data-suffix="{{ $stat['suffix'] ?? '' }}">0{{ $stat['suffix'] ?? '' }}</p>
+                        <p class="text-5xl md:text-6xl font-bold text-white" data-stats-counter data-target="{{ $stat['target'] }}" data-suffix="{{ $stat['suffix'] ?? '' }}">0{{ $stat['suffix'] ?? '' }}</p>
                     @else
-                        <p class="text-5xl md:text-6xl font-bold text-bytewave-blue">{{ $stat['text'] }}</p>
+                        <p class="text-5xl md:text-6xl font-bold text-white">{{ $stat['text'] }}</p>
                     @endisset
                     <p class="text-white text-base font-medium leading-tight">{{ $stat['label'] }}</p>
                 </div>
@@ -32,8 +33,7 @@
 @once
     <style>
         .stats-band-particles {
-            background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
+            background: none;
         }
 
         @keyframes stats-band-float {

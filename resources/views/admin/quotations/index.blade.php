@@ -21,7 +21,7 @@
     }
 
     .quotations-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -49,7 +49,7 @@
 
     .quotations-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
     }
@@ -61,23 +61,23 @@
     }
 
     .quotations-table thead th {
-        background: #FAFBFC;
-        color: #8A97A0;
+        background: #F3F8FC;
+        color: #546270;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid #EEF1F4;
+        border-bottom: 1px solid #CDE3F1;
         padding: 0.9rem 1.1rem;
         white-space: nowrap;
     }
 
     .quotations-table tbody td {
         padding: 0.9rem 1.1rem;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
         vertical-align: middle;
         font-size: 0.88rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .quotations-table tbody tr:last-child td {
@@ -85,7 +85,7 @@
     }
 
     .quotations-table tbody tr:hover {
-        background: #FAFCFE;
+        background: #F3F8FC;
     }
 
     .status-pill {
@@ -98,9 +98,9 @@
         white-space: nowrap;
     }
 
-    .status-pill.bg-secondary { background: #F1F4F7 !important; color: #6B7A85 !important; }
+    .status-pill.bg-secondary { background: #F3F8FC !important; color: #546270 !important; }
     .status-pill.bg-info { background: var(--bytewave-blue-light) !important; color: var(--bytewave-blue-dark) !important; }
-    .status-pill.bg-success { background: #E9F9EF !important; color: #1E8E4F !important; }
+    .status-pill.bg-success { background: #E3F5EA !important; color: #17703F !important; }
     .status-pill.bg-danger { background: #FDEDEC !important; color: #C0392B !important; }
 
     .amount-cell {
@@ -134,17 +134,15 @@
     .row-action-btn.blue { background: var(--bytewave-blue-light); color: var(--bytewave-blue-dark); }
     .row-action-btn.blue:hover { background: var(--bytewave-blue); color: #fff; }
 
-    .row-action-btn.green { background: #E9F9EF; color: #1E8E4F; }
-    .row-action-btn.green:hover { background: #1E8E4F; color: #fff; }
+    .row-action-btn.green { background: #E3F5EA; color: #17703F; }
+    .row-action-btn.green:hover { background: #17703F; color: #fff; }
 
-    .row-action-btn.gold { background: rgba(251, 177, 69, 0.15); color: #92600C; }
-    .row-action-btn.gold:hover { background: #92600C; color: #fff; }
 
-    .row-action-btn.gray { background: #F1F4F7; color: #4B5A63; }
-    .row-action-btn.gray:hover { background: #4B5A63; color: #fff; }
+    .row-action-btn.gray { background: #F3F8FC; color: #546270; }
+    .row-action-btn.gray:hover { background: #546270; color: #fff; }
 
     .row-action-btn.red { background: #FDEDEC; color: #C0392B; }
-    .row-action-btn.red:hover { background: #E74C3C; color: #fff; }
+    .row-action-btn.red:hover { background: #C0392B; color: #fff; }
 
     .quotations-empty {
         text-align: center;
@@ -159,14 +157,14 @@
     }
 
     .quotations-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 
     .status-tabs {
         display: flex;
         gap: 0.4rem;
-        background: #F1F4F7;
+        background: #F3F8FC;
         padding: 0.35rem;
         border-radius: 12px;
         margin-bottom: 1.5rem;
@@ -179,7 +177,7 @@
         border-radius: 9px;
         font-size: 0.85rem;
         font-weight: 600;
-        color: #6B7A85;
+        color: #546270;
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
         white-space: nowrap;
@@ -192,7 +190,7 @@
     .status-tab.active {
         background: #fff;
         color: var(--bytewave-blue-dark);
-        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 2px 6px rgba(11, 31, 51, 0.1);
     }
 </style>
 @endpush
@@ -204,9 +202,7 @@
             <h1>Quotations</h1>
             <p>Manage quotations and export for print/PDF.</p>
         </div>
-        <a href="{{ route('admin.quotations.create') }}" class="btn-add-quotation">
-            <i class="fas fa-plus"></i> New Quotation
-        </a>
+        <x-admin.button href="{{ route('admin.quotations.create') }}">New Quotation</x-admin.button>
     </div>
 
     <div class="status-tabs">
@@ -233,9 +229,7 @@
                 <i class="fas fa-file-invoice"></i>
                 <p>{{ $status !== '' ? 'No quotations match this filter.' : 'No quotations found.' }}</p>
                 @if($status === '')
-                    <a href="{{ route('admin.quotations.create') }}" class="btn-add-quotation">
-                        Create your first quotation
-                    </a>
+                    <x-admin.button href="{{ route('admin.quotations.create') }}">Create your first quotation</x-admin.button>
                 @endif
             </div>
         @else
@@ -311,7 +305,7 @@
                                         </a>
                                         @if($quotation->client->email)
                                         <button type="button"
-                                                class="row-action-btn gold"
+                                                class="row-action-btn blue"
                                                 title="Send to Client"
                                                 data-send-modal
                                                 data-title="Send Quotation {{ $quotation->quote_number }}"

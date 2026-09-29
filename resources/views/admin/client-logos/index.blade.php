@@ -6,9 +6,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0 text-gray-800">Client Logos</h1>
-        <a href="{{ route('admin.client-logos.create') }}" class="btn btn-primary">
-            <i class="fas fa-plus"></i> Add New Logo
-        </a>
+        <x-admin.button href="{{ route('admin.client-logos.create') }}">Add New Logo</x-admin.button>
     </div>
 
     @if(session('success'))
@@ -24,9 +22,7 @@
         <div class="text-center py-5">
             <i class="fas fa-image fa-4x text-muted mb-3"></i>
             <p class="text-muted">No client logos found.</p>
-            <a href="{{ route('admin.client-logos.create') }}" class="btn btn-primary">
-                Add your first logo
-            </a>
+            <x-admin.button href="{{ route('admin.client-logos.create') }}">Add your first logo</x-admin.button>
         </div>
     @else
         <div class="card shadow">

@@ -18,24 +18,123 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Outfit Font -->
+    <!-- Mona Sans: the same font as the public site -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+
     <style>
         * {
-            font-family: 'Outfit', ui-sans-serif, system-ui, sans-serif;
+            font-family: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
         }
     </style>
-    
+
     <style>
+        /* Brand palette (BRAND.md): Blue, White, Ink. The old variable names are kept so page CSS keeps working:
+           --bytewave-blue-dark is now Ink, --bytewave-blue-light is Blue at 10%. */
         :root {
-            --bytewave-blue: #0773B8;
-            --bytewave-blue-dark: #04456E;
-            --bytewave-blue-light: #E6F3FB;
-            --bytewave-gold: #FBB145;
+            --bytewave-blue: #0773B9;
+            --bytewave-blue-dark: #0B1F33;
+            --bytewave-blue-light: #E6F1F8;
+
+            /* Bootstrap, pointed at the brand palette */
+            --bs-primary: #0773B9;
+            --bs-primary-rgb: 7, 115, 185;
+            --bs-secondary: #546270;
+            --bs-secondary-rgb: 84, 98, 112;
+            --bs-success: #17703F;
+            --bs-success-rgb: 23, 112, 63;
+            --bs-danger: #C0392B;
+            --bs-danger-rgb: 192, 57, 43;
+            --bs-warning: #92600C;
+            --bs-warning-rgb: 146, 96, 12;
+            --bs-info: #0773B9;
+            --bs-info-rgb: 7, 115, 185;
+            --bs-light: #F3F8FC;
+            --bs-light-rgb: 243, 248, 252;
+            --bs-dark: #0B1F33;
+            --bs-dark-rgb: 11, 31, 51;
+            --bs-body-color: #0B1F33;
+            --bs-body-color-rgb: 11, 31, 51;
+            --bs-secondary-color: #546270;
+            --bs-border-color: #CDE3F1;
+            --bs-link-color: #0773B9;
+            --bs-link-color-rgb: 7, 115, 185;
+            --bs-link-hover-color: #0B1F33;
+            --bs-link-hover-color-rgb: 11, 31, 51;
+            --bs-body-font-family: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
         }
+
+        /* Buttons: Blue, hover Ink (BRAND.md 6.1) */
+        .btn-primary {
+            --bs-btn-bg: #0773B9; --bs-btn-border-color: #0773B9;
+            --bs-btn-hover-bg: #0B1F33; --bs-btn-hover-border-color: #0B1F33;
+            --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33;
+            --bs-btn-disabled-bg: #0773B9; --bs-btn-disabled-border-color: #0773B9;
+            --bs-btn-focus-shadow-rgb: 7, 115, 185;
+        }
+        .btn-outline-primary {
+            --bs-btn-color: #0773B9; --bs-btn-border-color: #0773B9;
+            --bs-btn-hover-bg: #0773B9; --bs-btn-hover-border-color: #0773B9;
+            --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33;
+            --bs-btn-focus-shadow-rgb: 7, 115, 185;
+        }
+        .btn-secondary, .btn-outline-secondary {
+            --bs-btn-color: #546270; --bs-btn-border-color: #546270;
+            --bs-btn-hover-bg: #546270; --bs-btn-hover-border-color: #546270;
+            --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33;
+        }
+        .btn-secondary { --bs-btn-color: #FFFFFF; --bs-btn-bg: #546270; }
+        .btn-danger { --bs-btn-bg: #C0392B; --bs-btn-border-color: #C0392B; --bs-btn-hover-bg: #0B1F33; --bs-btn-hover-border-color: #0B1F33; --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33; }
+        .btn-outline-danger { --bs-btn-color: #C0392B; --bs-btn-border-color: #C0392B; --bs-btn-hover-bg: #C0392B; --bs-btn-hover-border-color: #C0392B; --bs-btn-active-bg: #C0392B; --bs-btn-active-border-color: #C0392B; }
+        .btn-success { --bs-btn-bg: #17703F; --bs-btn-border-color: #17703F; --bs-btn-hover-bg: #0B1F33; --bs-btn-hover-border-color: #0B1F33; --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33; }
+        .btn-outline-success { --bs-btn-color: #17703F; --bs-btn-border-color: #17703F; --bs-btn-hover-bg: #17703F; --bs-btn-hover-border-color: #17703F; --bs-btn-active-bg: #17703F; --bs-btn-active-border-color: #17703F; }
+        .btn-warning { --bs-btn-color: #FFFFFF; --bs-btn-bg: #92600C; --bs-btn-border-color: #92600C; --bs-btn-hover-color: #FFFFFF; --bs-btn-hover-bg: #0B1F33; --bs-btn-hover-border-color: #0B1F33; --bs-btn-active-color: #FFFFFF; --bs-btn-active-bg: #0B1F33; --bs-btn-active-border-color: #0B1F33; }
+        .btn-dark { --bs-btn-bg: #0B1F33; --bs-btn-border-color: #0B1F33; --bs-btn-hover-bg: #0773B9; --bs-btn-hover-border-color: #0773B9; --bs-btn-active-bg: #0773B9; --bs-btn-active-border-color: #0773B9; }
+        .alert-info { --bs-alert-color: #0B1F33; --bs-alert-bg: #E6F1F8; --bs-alert-border-color: #CDE3F1; }
+        .btn-light { --bs-btn-bg: #F3F8FC; --bs-btn-border-color: #CDE3F1; --bs-btn-color: #0B1F33; --bs-btn-hover-bg: #E6F1F8; --bs-btn-hover-border-color: #CDE3F1; --bs-btn-hover-color: #0B1F33; }
+
+        /* The ByteWave button (the admin.button component): same format as the public site's call-to-action */
+        .bw-btn {
+            --bw-bg: #0773B9; --bw-fg: #FFFFFF; --bw-hover: #0B1F33; --bw-arrow-bg: #FFFFFF; --bw-arrow-fg: #0773B9; --bw-move: 28px;
+            display: inline-flex; align-items: center; gap: 0.75rem;
+            height: 48px; padding: 6px 6px 6px 20px;
+            border: 0; border-radius: 8px 8px 16px 8px;
+            background: var(--bw-bg); color: var(--bw-fg);
+            font-size: 0.9rem; font-weight: 600; line-height: 1; white-space: nowrap;
+            text-decoration: none; cursor: pointer; overflow: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .bw-btn:hover { background: var(--bw-hover); color: var(--bw-fg); text-decoration: none; }
+        .bw-btn:focus-visible { outline: 3px solid #0773B9; outline-offset: 2px; }
+        .bw-btn:disabled, .bw-btn.disabled { opacity: 0.6; cursor: not-allowed; }
+        .bw-btn__label { position: relative; display: inline-block; overflow: hidden; height: 20px; line-height: 20px; }
+        .bw-btn__label > span { display: inline-block; transition: transform 0.3s ease; }
+        .bw-btn__label > span + span { position: absolute; left: 0; top: 100%; }
+        .bw-btn:hover .bw-btn__label > span { transform: translateY(-100%); }
+        .bw-btn__arrow {
+            position: relative; overflow: hidden; flex: 0 0 36px; width: 36px; height: 36px;
+            border-radius: 6px; background: var(--bw-arrow-bg); color: var(--bw-arrow-fg);
+        }
+        .bw-btn__arrow svg { position: absolute; inset: 0; margin: auto; width: 16px; height: 16px; transition: transform 0.3s ease; }
+        .bw-btn__arrow svg + svg { transform: translateX(calc(var(--bw-move) * -1)); }
+        .bw-btn:hover .bw-btn__arrow svg:first-child { transform: translateX(var(--bw-move)); }
+        .bw-btn:hover .bw-btn__arrow svg + svg { transform: translateX(0); }
+        /* Cancel, back and reset are solid Blue like every other button, so pairs such as Filter and Reset stay balanced.
+           The variant name is kept so existing markup keeps working. */
+        .bw-btn--secondary { }
+        .bw-btn--danger { --bw-bg: #C0392B; --bw-arrow-fg: #C0392B; }
+        /* Compact, for toolbars and table headers */
+        .bw-btn--sm { height: 40px; padding: 4px 4px 4px 16px; gap: 0.6rem; font-size: 0.85rem; border-radius: 6px 6px 12px 6px; }
+        .bw-btn--sm .bw-btn__arrow { flex-basis: 32px; width: 32px; height: 32px; }
+        @media (prefers-reduced-motion: reduce) { .bw-btn, .bw-btn * { transition: none !important; } }
+
+        /* Form fields: Ink 50% border (3:1), Blue focus */
+        .form-control, .form-select { border-color: #858F99; color: #0B1F33; }
+        .form-control::placeholder { color: #546270; }
+        .form-control:focus, .form-select:focus { border-color: #0773B9; box-shadow: 0 0 0 0.2rem rgba(7, 115, 185, 0.2); }
+        .form-check-input:checked { background-color: #0773B9; border-color: #0773B9; }
+        .text-muted { color: #546270 !important; }
 
         * {
             margin: 0;
@@ -44,13 +143,14 @@
         }
 
         body {
-            background-color: #f8f9fa;
+            background-color: #F3F8FC;
+            color: #0B1F33;
         }
 
         /* Top Bar Styling */
         .admin-topbar {
-            background: linear-gradient(135deg, var(--bytewave-blue) 0%, #055C93 100%);
-            box-shadow: 0 4px 12px rgba(7, 115, 184, 0.15);
+            background: var(--bytewave-blue);
+            box-shadow: 0 4px 12px rgba(7, 115, 185, 0.15);
             padding: 0 2rem;
             height: 70px;
             display: flex;
@@ -102,7 +202,7 @@
 
         .admin-dropdown .dropdown-toggle:hover {
             background-color: rgba(255, 255, 255, 0.1);
-            color: var(--bytewave-gold) !important;
+            color: #FFFFFF !important;
         }
 
         .admin-dropdown .dropdown-toggle::after {
@@ -112,7 +212,7 @@
         .admin-dropdown .dropdown-menu {
             border: none;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 24px rgba(11, 31, 51, 0.15);
             min-width: 220px;
         }
 
@@ -137,7 +237,7 @@
 
         /* Sidebar Styling */
         .admin-sidebar {
-            background: linear-gradient(180deg, var(--bytewave-blue-dark) 0%, var(--bytewave-blue) 100%);
+            background: var(--bytewave-blue);
             min-height: calc(100vh - 70px);
             padding: 2rem 0;
             position: fixed;
@@ -145,7 +245,7 @@
             top: 70px;
             width: 280px;
             overflow-y: auto;
-            box-shadow: 4px 0 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 4px 0 12px rgba(11, 31, 51, 0.1);
         }
 
         .admin-sidebar::-webkit-scrollbar {
@@ -157,7 +257,7 @@
         }
 
         .admin-sidebar::-webkit-scrollbar-thumb {
-            background: var(--bytewave-gold);
+            background: rgba(255, 255, 255, 0.5);
             border-radius: 3px;
         }
 
@@ -172,7 +272,7 @@
             align-items: center;
             gap: 0.75rem;
             padding: 0.875rem 1.25rem;
-            color: rgba(255, 255, 255, 0.85);
+            color: #FFFFFF;
             text-decoration: none;
             border-radius: 8px;
             transition: all 0.3s ease;
@@ -181,17 +281,17 @@
         }
 
         .sidebar-link:hover {
-            background-color: rgba(251, 177, 69, 0.15);
+            background-color: rgba(255, 255, 255, 0.12);
             color: white;
             padding-left: 1.75rem;
         }
 
         .sidebar-link.active {
-            background: rgba(251, 177, 69, 0.15);
+            background: rgba(255, 255, 255, 0.15);
             color: white;
             font-weight: 700;
             padding-left: 1.75rem;
-            border-left: 4px solid var(--bytewave-gold);
+            border-left: 4px solid #F1C442;
         }
 
         .sidebar-link.active::before {
@@ -201,7 +301,7 @@
             top: 0;
             bottom: 0;
             width: 4px;
-            background-color: var(--bytewave-gold);
+            background-color: #F1C442;
             border-radius: 0 4px 4px 0;
         }
 
@@ -217,8 +317,8 @@
             height: 22px;
             padding: 0 7px;
             border-radius: 11px;
-            background-color: var(--bytewave-gold);
-            color: #011724;
+            background-color: #FFFFFF;
+            color: var(--bytewave-blue);
             font-size: 0.75rem;
             font-weight: 700;
             display: inline-flex;
@@ -227,7 +327,7 @@
         }
 
         .sidebar-section-title {
-            color: var(--bytewave-gold);
+            color: #FFFFFF;
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -253,7 +353,7 @@
             color: white;
             font-size: 1.2rem;
             cursor: pointer;
-            box-shadow: 0 4px 12px rgba(7, 115, 184, 0.3);
+            box-shadow: 0 4px 12px rgba(7, 115, 185, 0.3);
             z-index: 999;
         }
 
@@ -272,7 +372,7 @@
         /* Alert Styling */
         .alert-success {
             border: none;
-            background: linear-gradient(135deg, rgba(7, 115, 184, 0.1) 0%, rgba(251, 177, 69, 0.05) 100%);
+            background: rgba(7, 115, 185, 0.08);
             color: var(--bytewave-blue-dark);
             border-left: 4px solid var(--bytewave-blue);
             border-radius: 8px;
@@ -280,9 +380,9 @@
 
         .alert-danger {
             border: none;
-            background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(248, 113, 113, 0.05) 100%);
-            color: #991B1B;
-            border-left: 4px solid #DC2626;
+            background: rgba(192, 57, 43, 0.08);
+            color: #C0392B;
+            border-left: 4px solid #C0392B;
             border-radius: 8px;
         }
 
@@ -488,6 +588,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
     <script>
+        // Changes only the label of a ByteWave button (.bw-btn), so the arrow and the hover animation survive
+        window.bwLabel = function (btn, text) {
+            btn.querySelectorAll('.bw-btn__label > span').forEach(function (s) { s.textContent = text; });
+        };
         document.addEventListener('DOMContentLoaded', function() {
             const sidebar = document.getElementById('adminSidebar');
             const toggleBtn = document.getElementById('sidebarToggle');
@@ -533,8 +637,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="mb-3 p-2 rounded d-flex align-items-center justify-content-between" style="background:#f0f7ff;border:1px solid #c8e0f7">
-                            <span style="font-size:.85rem;color:#0773B8"><i class="fas fa-eye me-2"></i>Always preview before sending</span>
+                        <div class="mb-3 p-2 rounded d-flex align-items-center justify-content-between" style="background:#CDE3F1;border:1px solid #CDE3F1">
+                            <span style="font-size:.85rem;color:#0773B9"><i class="fas fa-eye me-2"></i>Always preview before sending</span>
                             <a id="sendEmailPreviewBtn" href="#" target="_blank"
                                class="btn btn-sm btn-outline-primary">
                                 <i class="fas fa-external-link-alt me-1"></i> Preview
@@ -554,10 +658,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="submit" id="sendEmailSubmitBtn" class="btn btn-primary">
-                            <i class="fas fa-paper-plane me-1"></i> Send
-                        </button>
+                        <x-admin.button type="button" data-bs-dismiss="modal" variant="secondary">Cancel</x-admin.button>
+                        <x-admin.button type="submit" id="sendEmailSubmitBtn">Send</x-admin.button>
                     </div>
                 </div>
             </form>
@@ -580,7 +682,7 @@
                     document.getElementById('sendEmailCc').value = '';
                     document.getElementById('sendEmailBcc').value = '';
                     sendBtn.disabled = false;
-                    sendBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i> Send';
+                    bwLabel(sendBtn, 'Send');
                     var previewBtn = document.getElementById('sendEmailPreviewBtn');
                     if (previewBtn) previewBtn.href = this.dataset.preview || '#';
                     bootstrap.Modal.getOrCreateInstance(modalEl).show();
@@ -589,7 +691,7 @@
 
             sendForm.addEventListener('submit', function () {
                 sendBtn.disabled = true;
-                sendBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1" role="status"></span> Sending…';
+                bwLabel(sendBtn, 'Sending…');
             });
         });
     </script>

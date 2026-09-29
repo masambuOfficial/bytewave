@@ -8,26 +8,26 @@
         class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
     >
 
-    <div class="absolute inset-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent"></div>
+    <div class="absolute inset-0 bg-bytewave-ink/60"></div>
 
     <div class="absolute bottom-0 left-0 right-0 p-6 md:p-8 text-white">
         @if($article->category && is_object($article->category))
-            <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full mb-4 bg-bytewave-gold text-white">
+            <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full mb-4 bg-bytewave-blue text-white">
                 {{ $article->category->name }}
             </span>
         @endif
 
         <h2 class="text-2xl md:text-4xl font-bold mb-3 line-clamp-2">
-            <a href="{{ route('blog.show', $article->slug) }}" class="hover:text-bytewave-gold transition-colors">
+            <a href="{{ route('blog.show', $article->slug) }}" class="hover:underline transition-colors">
                 {{ $article->title }}
             </a>
         </h2>
 
-        <p class="text-gray-200 mb-5 line-clamp-2 max-w-2xl">
+        <p class="text-white mb-5 line-clamp-2 max-w-2xl">
             {{ $article->excerpt }}
         </p>
 
-        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-gray-200">
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-white">
             @if($article->author)
                 <div class="flex items-center gap-2">
                     <img

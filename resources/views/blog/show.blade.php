@@ -4,19 +4,20 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-2 text-warning mb-4 animated slideInDown">{{ $post->title }}</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('blog.index') }}">Blog</a></li>
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat, #0B1F33; background-size: cover;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">{{ $post->title }}</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-white text-lg">
+                    <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li><a href="{{ route('blog.index') }}" class="hover:underline">Blog</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
                     @if($post->category)
-                        <li class="breadcrumb-item">
-                            <a href="{{ route('blog.category', $post->category) }}">{{ $post->category }}</a>
-                        </li>
+                        <li><a href="{{ route('blog.category', $post->category) }}" class="hover:underline">{{ $post->category }}</a></li>
+                        <li class="text-white/50" aria-hidden="true">/</li>
                     @endif
-                    <li class="breadcrumb-item text-warning active">{{ Str::limit($post->title, 30) }}</li>
+                    <li class="text-white">{{ Str::limit($post->title, 30) }}</li>
                 </ol>
             </nav>
         </div>
@@ -114,10 +115,7 @@
                                                 <p class="text-secondary mb-3">
                                                     {{ $relatedPost->excerpt ?? Str::limit(strip_tags($relatedPost->content), 100) }}
                                                 </p>
-                                                <a href="{{ route('blog.show', $relatedPost) }}" 
-                                                   class="btn btn-warning rounded-pill py-2 px-4">
-                                                    Read More
-                                                </a>
+                                                <x-cta-button :href="route('blog.show', $relatedPost)" text="Read More" size="sm" />
                                             </div>
                                         </div>
                                     </div>
@@ -134,7 +132,7 @@
                         <form action="{{ route('blog.search') }}" method="GET">
                             <div class="input-group">
                                 <input type="text" class="form-control p-3" name="q" placeholder="Search posts...">
-                                <button class="btn btn-warning px-4"><i class="fas fa-search"></i></button>
+                                <button class="bg-bytewave-blue text-white px-4 py-2 rounded-lg hover:bg-bytewave-ink transition-colors" aria-label="Search"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
                     </div>
@@ -177,11 +175,6 @@
 
 @section('styles')
 <style>
-    .page-header {
-        background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat;
-        background-size: cover;
-    }
-
     .blog-content img {
         max-width: 100%;
         height: auto;

@@ -5,16 +5,16 @@
 @push('styles')
 <style>
     .bw-card {
-        border: 1px solid rgba(0, 0, 0, 0.06);
+        border: 1px solid rgba(11, 31, 51, 0.06);
         border-radius: 12px;
     }
     .bw-card-header {
         background: #fff;
-        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        border-bottom: 1px solid rgba(11, 31, 51, 0.06);
     }
     .bw-help {
         font-size: 0.85rem;
-        color: #6c757d;
+        color: #546270;
     }
 </style>
 @endpush
@@ -139,12 +139,8 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.client-services.index') }}" class="btn btn-outline-secondary">
-                                <i class="fas fa-arrow-left"></i> Back to List
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> {{ isset($service) ? 'Update' : 'Create' }} Service
-                            </button>
+                            <x-admin.button href="{{ route('admin.client-services.index') }}" variant="secondary">Back to List</x-admin.button>
+                            <x-admin.button type="submit">{{ isset($service) ? 'Update' : 'Create' }} Service</x-admin.button>
                         </div>
                     </form>
                 </div>

@@ -19,7 +19,7 @@
     }
 
     .clients-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -47,23 +47,23 @@
 
     .clients-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
     }
 
     .clients-toolbar {
         padding: 1.1rem 1.35rem;
-        border-bottom: 1px solid #F1F3F5;
+        border-bottom: 1px solid #CDE3F1;
     }
 
     .clients-search-input {
-        border: 1px solid #E2E8EE;
+        border: 1px solid #CDE3F1;
         border-radius: 10px;
         padding: 0.55rem 0.9rem 0.55rem 2.35rem;
         font-size: 0.88rem;
         width: 100%;
-        background: #FAFBFC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238A97A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat 0.85rem center;
+        background: #F3F8FC url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%238A97A0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'%3E%3C/circle%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'%3E%3C/line%3E%3C/svg%3E") no-repeat 0.85rem center;
     }
 
     .clients-search-input:focus {
@@ -90,8 +90,8 @@
 
     .btn-reset {
         background: transparent;
-        color: #8A97A0;
-        border: 1px solid #E2E8EE;
+        color: #546270;
+        border: 1px solid #CDE3F1;
         border-radius: 10px;
         padding: 0.55rem 1.1rem;
         font-weight: 600;
@@ -103,8 +103,8 @@
     }
 
     .btn-reset:hover {
-        background: #F1F4F7;
-        color: #1F2A33;
+        background: #F3F8FC;
+        color: #0B1F33;
     }
 
     .clients-table {
@@ -113,23 +113,23 @@
     }
 
     .clients-table thead th {
-        background: #FAFBFC;
-        color: #8A97A0;
+        background: #F3F8FC;
+        color: #546270;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid #EEF1F4;
+        border-bottom: 1px solid #CDE3F1;
         padding: 0.9rem 1.1rem;
         white-space: nowrap;
     }
 
     .clients-table tbody td {
         padding: 0.9rem 1.1rem;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
         vertical-align: middle;
         font-size: 0.88rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .clients-table tbody tr:last-child td {
@@ -137,16 +137,16 @@
     }
 
     .clients-table tbody tr:hover {
-        background: #FAFCFE;
+        background: #F3F8FC;
     }
 
     .client-name-cell {
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .clients-table td.text-muted-cell {
-        color: #8A97A0;
+        color: #546270;
     }
 
     .count-pill {
@@ -197,13 +197,13 @@
     }
 
     .client-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
     .clients-empty-row {
         text-align: center;
-        color: #8A97A0;
+        color: #546270;
         padding: 3rem 1rem !important;
     }
 
@@ -222,9 +222,7 @@
             <h1>Clients</h1>
             <p>Manage your clients and view linked quotations/invoices.</p>
         </div>
-        <a href="{{ route('admin.clients.create') }}" class="btn-add-client">
-            <i class="fas fa-plus"></i> Add Client
-        </a>
+        <x-admin.button href="{{ route('admin.clients.create') }}">Add Client</x-admin.button>
     </div>
 
     @if(session('success'))
@@ -247,8 +245,8 @@
                     <input type="text" id="q" name="q" value="{{ request('q') }}" class="clients-search-input" placeholder="Search by name, email, phone, address">
                 </div>
                 <div class="col-12 col-md-auto d-flex gap-2">
-                    <button type="submit" class="btn-filter">Filter</button>
-                    <a href="{{ route('admin.clients.index') }}" class="btn-reset">Reset</a>
+                    <x-admin.button type="submit" size="sm">Filter</x-admin.button>
+                    <x-admin.button href="{{ route('admin.clients.index') }}" variant="secondary" size="sm">Reset</x-admin.button>
                 </div>
             </form>
         </div>

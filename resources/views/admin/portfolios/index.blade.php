@@ -21,7 +21,7 @@
     }
 
     .portfolios-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -55,7 +55,7 @@
 
     .portfolio-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
         display: flex;
@@ -64,7 +64,7 @@
     }
 
     .portfolio-card:hover {
-        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 12px 28px rgba(11, 31, 51, 0.1);
         transform: translateY(-3px);
     }
 
@@ -88,7 +88,7 @@
     }
 
     .portfolio-image-placeholder.dark {
-        background: #1F2A33;
+        background: #0B1F33;
     }
 
     .portfolio-image-placeholder i {
@@ -106,7 +106,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
-        background: rgba(4, 69, 110, 0.65);
+        background: rgba(11, 31, 51, 0.65);
         backdrop-filter: blur(4px);
         color: #fff;
         padding: 0.3rem 0.75rem;
@@ -155,14 +155,14 @@
     .portfolio-card-title {
         font-size: 1.05rem;
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
         margin: 0;
     }
 
     .portfolio-menu-btn {
         background: none;
         border: none;
-        color: #8A97A0;
+        color: #546270;
         width: 28px;
         height: 28px;
         border-radius: 8px;
@@ -174,12 +174,12 @@
     }
 
     .portfolio-menu-btn:hover {
-        background: #F1F4F7;
+        background: #F3F8FC;
         color: var(--bytewave-blue-dark);
     }
 
     .portfolio-card-text {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.875rem;
         line-height: 1.5;
         margin-bottom: 0.9rem;
@@ -199,14 +199,14 @@
     .portfolio-meta {
         margin-top: auto;
         padding-top: 0.9rem;
-        border-top: 1px solid #F1F3F5;
+        border-top: 1px solid #CDE3F1;
     }
 
     .portfolio-meta-row {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        color: #8A97A0;
+        color: #546270;
         font-size: 0.82rem;
         margin-bottom: 0.4rem;
     }
@@ -226,7 +226,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -238,7 +238,7 @@
     }
 
     .portfolios-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 </style>
@@ -251,18 +251,14 @@
             <h1>Portfolio</h1>
             <p>Manage the projects showcased on your website.</p>
         </div>
-        <a href="{{ route('admin.portfolios.create') }}" class="btn-add-portfolio">
-            <i class="fas fa-plus"></i> Add New Project
-        </a>
+        <x-admin.button href="{{ route('admin.portfolios.create') }}">Add New Project</x-admin.button>
     </div>
 
     @if($portfolios->isEmpty())
         <div class="portfolios-empty">
             <i class="fas fa-project-diagram"></i>
             <p>No portfolio projects found.</p>
-            <a href="{{ route('admin.portfolios.create') }}" class="btn-add-portfolio">
-                Add your first project
-            </a>
+            <x-admin.button href="{{ route('admin.portfolios.create') }}">Add your first project</x-admin.button>
         </div>
     @else
         <div class="portfolios-grid">

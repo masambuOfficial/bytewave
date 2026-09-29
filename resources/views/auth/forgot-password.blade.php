@@ -4,14 +4,16 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-2 text-warning mb-4 animated slideInDown">Reset Password</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('login') }}">Login</a></li>
-                    <li class="breadcrumb-item text-warning active" aria-current="page">Reset Password</li>
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat, #0B1F33; background-size: cover;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">Reset Password</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-white text-lg">
+                    <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li><a href="{{ route('login') }}" class="hover:underline">Login</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li class="text-white" aria-current="page">Reset Password</li>
                 </ol>
             </nav>
         </div>
@@ -19,88 +21,50 @@
     <!-- Page Header End -->
 
     <!-- Forgot Password Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row justify-content-center">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="bg-light rounded p-5">
-                        <div class="text-center mb-5">
-                            <h5 class="text-primary">Forgot Password?</h5>
-                            <h1 class="text-warning mb-4">Reset Your Password</h1>
-                            <p class="text-muted">Enter your email address and we'll send you a link to reset your password.</p>
-                        </div>
-
-                        @if (session('status'))
-                            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                <i class="fas fa-check-circle me-2"></i>{{ session('status') }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        @endif
-
-                        <form method="POST" action="{{ route('password.email') }}">
-                            @csrf
-                            <div class="row g-3">
-                                <div class="col-12">
-                                    <div class="form-floating">
-                                        <input type="email" 
-                                               class="form-control @error('email') is-invalid @enderror" 
-                                               id="email" 
-                                               name="email" 
-                                               value="{{ old('email') }}" 
-                                               placeholder="Your Email"
-                                               required 
-                                               autofocus>
-                                        <label for="email">Email Address</label>
-                                        @error('email')
-                                            <div class="invalid-feedback">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button type="submit" class="btn btn-warning w-100 py-3 rounded-pill">
-                                        <i class="fas fa-paper-plane me-2"></i>Send Reset Link
-                                    </button>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <a href="{{ route('login') }}" class="text-primary">
-                                        <i class="fas fa-arrow-left me-1"></i>Back to Login
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+    <div class="relative isolate bg-bytewave-blue/5 py-12 md:py-20">
+        <x-bg-art layout="tint" />
+        <div class="max-w-md mx-auto px-4 sm:px-6">
+            <div class="rounded-2xl border border-bytewave-blue/20 bg-white p-8 shadow-xl">
+                <div class="text-center mb-8">
+                    <p class="text-bytewave-blue font-semibold text-sm uppercase tracking-wider mb-2">Forgot password?</p>
+                    <h2 class="text-3xl font-bold text-bytewave-ink mb-3">Reset Your Password</h2>
+                    <p class="text-bytewave-ink/70">Enter your email address and we'll send you a link to reset your password.</p>
                 </div>
+
+                @if (session('status'))
+                    <div class="mb-6 flex items-start gap-3 rounded-lg border border-bytewave-success/30 bg-bytewave-success-bg px-4 py-3 text-sm text-bytewave-success" role="alert">
+                        <i class="fas fa-check-circle mt-0.5"></i>
+                        <span>{{ session('status') }}</span>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('password.email') }}" class="space-y-5">
+                    @csrf
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-bytewave-ink mb-1.5">Email Address</label>
+                        <input type="email"
+                               id="email"
+                               name="email"
+                               value="{{ old('email') }}"
+                               placeholder="you@example.com"
+                               required
+                               autofocus
+                               class="w-full px-4 py-2.5 border border-bytewave-ink/50 rounded-lg text-bytewave-ink placeholder-bytewave-ink/70 focus:outline-none focus:ring-2 focus:ring-bytewave-blue/20 focus:border-bytewave-blue transition-colors @error('email') border-bytewave-danger @enderror">
+                        @error('email')
+                            <p class="mt-1.5 text-xs text-bytewave-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+
+                    <x-cta-button type="submit" text="Send Reset Link" full-width />
+
+                    <p class="text-center">
+                        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-sm font-medium text-bytewave-blue hover:text-bytewave-ink transition-colors">
+                            <i class="fas fa-arrow-left text-xs"></i>Back to Login
+                        </a>
+                    </p>
+                </form>
             </div>
         </div>
     </div>
     <!-- Forgot Password End -->
-@endsection
-
-@section('styles')
-<style>
-    .page-header {
-        background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat;
-        background-size: cover;
-    }
-
-    .form-floating > .form-control:focus ~ label,
-    .form-floating > .form-control:not(:placeholder-shown) ~ label {
-        color: var(--bs-primary);
-    }
-
-    .form-control:focus {
-        border-color: var(--bs-warning);
-        box-shadow: 0 0 0 0.25rem rgba(var(--bs-warning-rgb), 0.25);
-    }
-
-    .alert {
-        border: none;
-        border-radius: 10px;
-    }
-
-    .alert-success {
-        background-color: rgba(25, 135, 84, 0.1);
-        color: #198754;
-    }
-</style>
 @endsection

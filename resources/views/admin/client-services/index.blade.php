@@ -21,7 +21,7 @@
     }
 
     .client-services-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -49,23 +49,23 @@
 
     .client-services-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
     }
 
     .client-services-toolbar {
         padding: 1.1rem 1.35rem;
-        border-bottom: 1px solid #F1F3F5;
+        border-bottom: 1px solid #CDE3F1;
     }
 
     .cs-input, .cs-select {
-        border: 1px solid #E2E8EE;
+        border: 1px solid #CDE3F1;
         border-radius: 10px;
         padding: 0.55rem 0.9rem;
         font-size: 0.85rem;
         width: 100%;
-        background: #FAFBFC;
+        background: #F3F8FC;
     }
 
     .cs-input {
@@ -84,7 +84,7 @@
     .cs-label {
         font-size: 0.78rem;
         font-weight: 600;
-        color: #8A97A0;
+        color: #546270;
         margin-bottom: 0.3rem;
         display: block;
     }
@@ -107,8 +107,8 @@
 
     .btn-reset {
         background: transparent;
-        color: #8A97A0;
-        border: 1px solid #E2E8EE;
+        color: #546270;
+        border: 1px solid #CDE3F1;
         border-radius: 10px;
         padding: 0.55rem 1.1rem;
         font-weight: 600;
@@ -120,8 +120,8 @@
     }
 
     .btn-reset:hover {
-        background: #F1F4F7;
-        color: #1F2A33;
+        background: #F3F8FC;
+        color: #0B1F33;
     }
 
     .client-services-table {
@@ -130,23 +130,23 @@
     }
 
     .client-services-table thead th {
-        background: #FAFBFC;
-        color: #8A97A0;
+        background: #F3F8FC;
+        color: #546270;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid #EEF1F4;
+        border-bottom: 1px solid #CDE3F1;
         padding: 0.9rem 1.1rem;
         white-space: nowrap;
     }
 
     .client-services-table tbody td {
         padding: 0.9rem 1.1rem;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
         vertical-align: middle;
         font-size: 0.88rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .client-services-table tbody tr:last-child td {
@@ -154,7 +154,7 @@
     }
 
     .client-services-table tbody tr:hover {
-        background: #FAFCFE;
+        background: #F3F8FC;
     }
 
     .currency-pill {
@@ -162,8 +162,8 @@
         align-items: center;
         padding: 0.25rem 0.65rem;
         border-radius: 999px;
-        background: #F1F4F7;
-        color: #4B5A63;
+        background: #F3F8FC;
+        color: #546270;
         font-weight: 700;
         font-size: 0.75rem;
     }
@@ -208,13 +208,13 @@
     }
 
     .cs-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
     .client-services-empty-row {
         text-align: center;
-        color: #8A97A0;
+        color: #546270;
         padding: 3rem 1rem !important;
     }
 </style>
@@ -227,19 +227,17 @@
             <h1>Client Services</h1>
             <p>Manage service templates and suggested rates.</p>
         </div>
-        <a href="{{ route('admin.client-services.create') }}" class="btn-add-client-service">
-            <i class="fas fa-plus"></i> Add Service
-        </a>
+        <x-admin.button href="{{ route('admin.client-services.create') }}">Add Service</x-admin.button>
     </div>
 
     <div class="client-services-card">
         <div class="client-services-toolbar">
             <form method="GET" action="{{ route('admin.client-services.index') }}" class="row g-2 align-items-end">
-                <div class="col-12 col-md-5">
+                <div class="col-12 col-md-4">
                     <label class="cs-label" for="q">Search</label>
                     <input type="text" id="q" name="q" value="{{ request('q') }}" class="cs-input" placeholder="Name, description, unit">
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-2">
                     <label class="cs-label" for="currency">Currency</label>
                     <select class="cs-select" id="currency" name="currency">
                         <option value="">All</option>
@@ -255,9 +253,9 @@
                         <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Inactive</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-2 d-flex gap-2">
-                    <button type="submit" class="btn-filter">Filter</button>
-                    <a href="{{ route('admin.client-services.index') }}" class="btn-reset">Reset</a>
+                <div class="col-12 col-md-4 d-flex gap-2">
+                    <x-admin.button type="submit" size="sm">Filter</x-admin.button>
+                    <x-admin.button href="{{ route('admin.client-services.index') }}" variant="secondary" size="sm">Reset</x-admin.button>
                 </div>
             </form>
         </div>

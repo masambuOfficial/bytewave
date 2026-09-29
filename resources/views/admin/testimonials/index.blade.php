@@ -21,7 +21,7 @@
     }
 
     .testimonials-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -50,7 +50,7 @@
     .status-tabs {
         display: flex;
         gap: 0.4rem;
-        background: #F1F4F7;
+        background: #F3F8FC;
         padding: 0.35rem;
         border-radius: 12px;
         margin-bottom: 1.5rem;
@@ -63,7 +63,7 @@
         border-radius: 9px;
         font-size: 0.85rem;
         font-weight: 600;
-        color: #6B7A85;
+        color: #546270;
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
         white-space: nowrap;
@@ -76,12 +76,12 @@
     .status-tab.active {
         background: #fff;
         color: var(--bytewave-blue-dark);
-        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 2px 6px rgba(11, 31, 51, 0.1);
     }
 
     .testimonials-table-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
     }
@@ -92,23 +92,23 @@
     }
 
     .testimonials-table thead th {
-        background: #FAFBFC;
-        color: #8A97A0;
+        background: #F3F8FC;
+        color: #546270;
         font-size: 0.72rem;
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.04em;
-        border-bottom: 1px solid #EEF1F4;
+        border-bottom: 1px solid #CDE3F1;
         padding: 0.9rem 1.1rem;
         white-space: nowrap;
     }
 
     .testimonials-table tbody td {
         padding: 0.9rem 1.1rem;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
         vertical-align: middle;
         font-size: 0.88rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .testimonials-table tbody tr:last-child td {
@@ -116,7 +116,7 @@
     }
 
     .testimonials-table tbody tr:hover {
-        background: #FAFCFE;
+        background: #F3F8FC;
     }
 
     .client-avatar {
@@ -142,22 +142,22 @@
 
     .client-name {
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .client-meta {
-        color: #8A97A0;
+        color: #546270;
         font-size: 0.78rem;
     }
 
     .testimonial-excerpt {
         max-width: 280px;
-        color: #6B7A85;
+        color: #546270;
         line-height: 1.5;
     }
 
     .rating-stars {
-        color: var(--bytewave-gold);
+        color: var(--bytewave-blue);
         font-size: 0.85rem;
         white-space: nowrap;
     }
@@ -172,12 +172,12 @@
     }
 
     .status-pill.approved {
-        background: #E9F9EF;
-        color: #1E8E4F;
+        background: #E3F5EA;
+        color: #17703F;
     }
 
     .status-pill.pending {
-        background: rgba(251, 177, 69, 0.15);
+        background: #FFF1D1;
         color: #92600C;
     }
 
@@ -187,7 +187,7 @@
     }
 
     .featured-star {
-        color: var(--bytewave-gold);
+        color: var(--bytewave-blue);
     }
 
     .row-actions {
@@ -210,17 +210,17 @@
     }
 
     .row-action-btn.approve {
-        background: #E9F9EF;
-        color: #1E8E4F;
+        background: #E3F5EA;
+        color: #17703F;
     }
 
     .row-action-btn.approve:hover {
-        background: #1E8E4F;
+        background: #17703F;
         color: #fff;
     }
 
     .row-action-btn.reject {
-        background: rgba(251, 177, 69, 0.15);
+        background: #FFF1D1;
         color: #92600C;
     }
 
@@ -245,7 +245,7 @@
     }
 
     .row-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
@@ -253,7 +253,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -265,7 +265,7 @@
     }
 
     .testimonials-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 0;
     }
 </style>
@@ -278,9 +278,7 @@
             <h1>Testimonials</h1>
             <p>Review and manage client testimonials for your website.</p>
         </div>
-        <a href="{{ route('admin.testimonials.create') }}" class="btn-add-testimonial">
-            <i class="fas fa-plus"></i> Add New Testimonial
-        </a>
+        <x-admin.button href="{{ route('admin.testimonials.create') }}">Add New Testimonial</x-admin.button>
     </div>
 
     @if(session('success'))

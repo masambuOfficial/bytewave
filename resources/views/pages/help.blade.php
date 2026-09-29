@@ -5,13 +5,14 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-2 text-warning mb-4 animated slideInDown">Help Center</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item text-warning active" aria-current="page">Help</li>
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat, #0B1F33; background-size: cover;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">Help Center</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-white text-lg">
+                    <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li class="text-white" aria-current="page">Help</li>
                 </ol>
             </nav>
         </div>
@@ -19,154 +20,99 @@
     <!-- Page Header End -->
 
     <!-- Help Center Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <!-- Quick Help Section -->
-            <div class="row g-4 mb-5">
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
-                    <div class="service-item bg-light rounded h-100 p-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-warning rounded-circle mb-4" style="width: 60px; height: 60px;">
-                            <i class="fas fa-headset text-white fs-4"></i>
+    <div class="relative isolate py-12 md:py-20">
+        <x-bg-art layout="tint" />
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Quick help -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+                @php
+                    $help = [
+                        ['icon' => 'fa-headset', 'title' => 'Live Support', 'text' => 'Get immediate assistance from our expert support team during business hours.', 'button' => 'Start Chat', 'href' => '#', 'onclick' => 'initLiveChat()'],
+                        ['icon' => 'fa-ticket-alt', 'title' => 'Support Ticket', 'text' => 'Create a support ticket for technical issues or complex inquiries.', 'button' => 'Submit Ticket', 'href' => url('/contact'), 'onclick' => null],
+                        ['icon' => 'fa-book', 'title' => 'Knowledge Base', 'text' => 'Browse our extensive collection of guides, tutorials, and FAQs.', 'button' => 'Browse Articles', 'href' => url('/faqs'), 'onclick' => null],
+                    ];
+                @endphp
+                @foreach ($help as $card)
+                    <div class="flex flex-col rounded-xl border border-bytewave-blue/20 bg-white p-6 transition-transform duration-300 hover:-translate-y-1">
+                        <div class="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-bytewave-blue/10 text-bytewave-blue">
+                            <i class="fas {{ $card['icon'] }} text-xl"></i>
                         </div>
-                        <h4 class="mb-3">Live Support</h4>
-                        <p class="mb-4">Get immediate assistance from our expert support team during business hours.</p>
-                        <a class="btn btn-warning px-4 py-2 rounded-pill" href="#" onclick="initLiveChat()">
-                            <i class="fas fa-comments me-2"></i>Start Chat
-                        </a>
-                    </div>
-                </div>
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
-                    <div class="service-item bg-light rounded h-100 p-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-warning rounded-circle mb-4" style="width: 60px; height: 60px;">
-                            <i class="fas fa-ticket-alt text-white fs-4"></i>
+                        <h3 class="text-xl font-bold text-bytewave-ink mb-2">{{ $card['title'] }}</h3>
+                        <p class="text-bytewave-ink/70 mb-6">{{ $card['text'] }}</p>
+                        <div class="mt-auto">
+                            @if ($card['onclick'])
+                                <x-cta-button href="{{ $card['href'] }}" onclick="{{ $card['onclick'] }}" text="{{ $card['button'] }}" size="sm" />
+                            @else
+                                <x-cta-button href="{{ $card['href'] }}" text="{{ $card['button'] }}" size="sm" />
+                            @endif
                         </div>
-                        <h4 class="mb-3">Support Ticket</h4>
-                        <p class="mb-4">Create a support ticket for technical issues or complex inquiries.</p>
-                        <a class="btn btn-warning px-4 py-2 rounded-pill" href="{{ url('/contact') }}">
-                            <i class="fas fa-paper-plane me-2"></i>Submit Ticket
-                        </a>
                     </div>
-                </div>
-                <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
-                    <div class="service-item bg-light rounded h-100 p-4">
-                        <div class="d-inline-flex align-items-center justify-content-center bg-warning rounded-circle mb-4" style="width: 60px; height: 60px;">
-                            <i class="fas fa-book text-white fs-4"></i>
-                        </div>
-                        <h4 class="mb-3">Knowledge Base</h4>
-                        <p class="mb-4">Browse our extensive collection of guides, tutorials, and FAQs.</p>
-                        <a class="btn btn-warning px-4 py-2 rounded-pill" href="{{ url('/faqs') }}">
-                            <i class="fas fa-search me-2"></i>Browse Articles
-                        </a>
-                    </div>
-                </div>
+                @endforeach
             </div>
 
-            <!-- Popular Topics -->
-            <div class="row g-5">
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s">
-                    <h2 class="text-warning mb-4">Popular Topics</h2>
-                    <div class="row g-4">
-                        <div class="col-12">
-                            <div class="bg-light rounded p-4">
-                                <h5 class="mb-3">Getting Started</h5>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>How to request a quote
-                                        </a>
-                                    </li>
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Project development process
-                                        </a>
-                                    </li>
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Payment methods
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Service level agreements
-                                        </a>
-                                    </li>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14">
+
+                <!-- Popular topics -->
+                <div>
+                    <p class="text-bytewave-blue font-semibold text-sm uppercase tracking-wider mb-2 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Quick answers</p>
+                    <h2 class="text-3xl font-bold text-bytewave-ink mb-6">Popular Topics</h2>
+                    <div class="space-y-4">
+                        @php
+                            $topics = [
+                                'Getting Started' => ['How to request a quote', 'Project development process', 'Payment methods', 'Service level agreements'],
+                                'Technical Support' => ['Website maintenance', 'Mobile app updates', 'Cloud hosting services', 'Security measures'],
+                            ];
+                        @endphp
+                        @foreach ($topics as $heading => $items)
+                            <div class="rounded-xl border border-bytewave-blue/20 bg-white p-6">
+                                <h3 class="font-bold text-bytewave-ink mb-3">{{ $heading }}</h3>
+                                <ul class="space-y-2">
+                                    @foreach ($items as $item)
+                                        <li>
+                                            <a href="#" class="inline-flex items-center text-bytewave-ink/70 transition-colors hover:text-bytewave-blue">
+                                                <i class="fas fa-angle-right text-bytewave-blue mr-2"></i>{{ $item }}
+                                            </a>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <!-- Contact information -->
+                <div>
+                    <p class="text-bytewave-blue font-semibold text-sm uppercase tracking-wider mb-2 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Talk to us</p>
+                    <h2 class="text-3xl font-bold text-bytewave-ink mb-6">Contact Information</h2>
+                    <div class="rounded-xl border border-bytewave-blue/20 bg-white p-6 space-y-6">
+                        <div class="flex gap-4">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bytewave-blue text-white"><i class="fas fa-phone"></i></div>
+                            <div>
+                                <h3 class="font-bold text-bytewave-ink">Phone</h3>
+                                <p class="text-bytewave-ink">{{ config('company.phone') }}</p>
+                                <p class="text-sm text-bytewave-ink/70">Monday - Friday, 9:00 AM - 5:00 PM EAT</p>
+                            </div>
                         </div>
-                        <div class="col-12">
-                            <div class="bg-light rounded p-4">
-                                <h5 class="mb-3">Technical Support</h5>
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Website maintenance
-                                        </a>
-                                    </li>
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Mobile app updates
-                                        </a>
-                                    </li>
-                                    <li class="mb-2">
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Cloud hosting services
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="text-secondary">
-                                            <i class="fas fa-angle-right text-primary me-2"></i>Security measures
-                                        </a>
-                                    </li>
-                                </ul>
+                        <div class="flex gap-4">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bytewave-blue text-white"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h3 class="font-bold text-bytewave-ink">Email</h3>
+                                <p class="text-bytewave-ink break-all">{{ config('company.email') }}</p>
+                                <p class="text-sm text-bytewave-ink/70">We usually respond within 24 hours</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4">
+                            <div class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-bytewave-blue text-white"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h3 class="font-bold text-bytewave-ink">Office</h3>
+                                <p class="text-bytewave-ink">{{ config('company.address2') }}</p>
+                                <p class="text-sm text-bytewave-ink/70">{{ config('company.address3') }}, {{ config('company.address') }}</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Contact Information -->
-                <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.5s">
-                    <h2 class="text-warning mb-4">Contact Information</h2>
-                    <div class="bg-light rounded p-4">
-                        <div class="row g-4">
-                            <div class="col-12">
-                                <div class="d-flex">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-warning rounded-circle" style="width: 50px; height: 50px;">
-                                        <i class="fas fa-phone text-white"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-1">Phone</h5>
-                                        <p class="mb-0">{{ config('company.phone') }}</p>
-                                        <small class="text-muted">Monday - Friday, 9:00 AM - 5:00 PM EAT</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="d-flex">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-warning rounded-circle" style="width: 50px; height: 50px;">
-                                        <i class="fas fa-envelope text-white"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-1">Email</h5>
-                                        <p class="mb-0">support@bytewave.com</p>
-                                        <small class="text-muted">We usually respond within 24 hours</small>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12">
-                                <div class="d-flex">
-                                    <div class="d-flex flex-shrink-0 align-items-center justify-content-center bg-warning rounded-circle" style="width: 50px; height: 50px;">
-                                        <i class="fas fa-map-marker-alt text-white"></i>
-                                    </div>
-                                    <div class="ms-3">
-                                        <h5 class="mb-1">Office</h5>
-                                        <p class="mb-0">Plot 123, Kampala Road</p>
-                                        <small class="text-muted">Kampala, Uganda</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

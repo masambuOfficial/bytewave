@@ -21,7 +21,7 @@
     }
 
     .posts-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -55,7 +55,7 @@
 
     .post-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
         display: flex;
@@ -64,7 +64,7 @@
     }
 
     .post-card:hover {
-        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 12px 28px rgba(11, 31, 51, 0.1);
         transform: translateY(-3px);
     }
 
@@ -105,11 +105,11 @@
 
     .post-status-badge.draft {
         background: rgba(255, 255, 255, 0.92);
-        color: #6B7A85;
+        color: #546270;
     }
 
     .post-status-badge.published {
-        background: rgba(30, 142, 79, 0.92);
+        background: rgba(23, 112, 63, 0.92);
         color: #fff;
     }
 
@@ -117,7 +117,7 @@
         position: absolute;
         top: 10px;
         left: 10px;
-        background: rgba(4, 69, 110, 0.65);
+        background: rgba(11, 31, 51, 0.65);
         backdrop-filter: blur(4px);
         color: #fff;
         padding: 0.3rem 0.75rem;
@@ -136,7 +136,7 @@
     .post-card-title {
         font-size: 1.05rem;
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
         margin-bottom: 0.4rem;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -144,7 +144,7 @@
     }
 
     .post-card-text {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.875rem;
         line-height: 1.5;
         margin-bottom: 0.9rem;
@@ -159,7 +159,7 @@
         display: flex;
         flex-wrap: wrap;
         gap: 0.9rem;
-        color: #8A97A0;
+        color: #546270;
         font-size: 0.78rem;
         margin-bottom: 1rem;
     }
@@ -173,7 +173,7 @@
     .post-card-actions {
         display: flex;
         gap: 0.5rem;
-        border-top: 1px solid #F1F3F5;
+        border-top: 1px solid #CDE3F1;
         padding-top: 0.9rem;
         margin-top: auto;
     }
@@ -203,12 +203,12 @@
     }
 
     .post-action-btn.view {
-        background: #F1F4F7;
-        color: #4B5A63;
+        background: #F3F8FC;
+        color: #546270;
     }
 
     .post-action-btn.view:hover {
-        background: #4B5A63;
+        background: #546270;
         color: #fff;
     }
 
@@ -218,7 +218,7 @@
     }
 
     .post-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
@@ -231,7 +231,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -243,14 +243,14 @@
     }
 
     .posts-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 
     .status-tabs {
         display: flex;
         gap: 0.4rem;
-        background: #F1F4F7;
+        background: #F3F8FC;
         padding: 0.35rem;
         border-radius: 12px;
         margin-bottom: 1.5rem;
@@ -263,7 +263,7 @@
         border-radius: 9px;
         font-size: 0.85rem;
         font-weight: 600;
-        color: #6B7A85;
+        color: #546270;
         text-decoration: none;
         transition: background 0.2s ease, color 0.2s ease;
         white-space: nowrap;
@@ -276,7 +276,7 @@
     .status-tab.active {
         background: #fff;
         color: var(--bytewave-blue-dark);
-        box-shadow: 0 2px 6px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 2px 6px rgba(11, 31, 51, 0.1);
     }
 </style>
 @endpush
@@ -288,9 +288,7 @@
             <h1>Blog Posts</h1>
             <p>Write and manage articles published on your website.</p>
         </div>
-        <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
-            <i class="fas fa-plus"></i> Write New Post
-        </a>
+        <x-admin.button href="{{ route('admin.posts.create') }}">Write New Post</x-admin.button>
     </div>
 
     <div class="status-tabs">
@@ -310,9 +308,7 @@
             <i class="fas fa-newspaper"></i>
             <p>{{ $status !== '' ? 'No blog posts match this filter.' : 'No blog posts found.' }}</p>
             @if($status === '')
-                <a href="{{ route('admin.posts.create') }}" class="btn-add-post">
-                    Write your first post
-                </a>
+                <x-admin.button href="{{ route('admin.posts.create') }}">Write your first post</x-admin.button>
             @endif
         </div>
     @else

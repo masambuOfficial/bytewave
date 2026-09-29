@@ -14,7 +14,7 @@
         position: relative;
         width: 100%;
         height: 250px;
-        border: 2px dashed #dee2e6;
+        border: 2px dashed #CDE3F1;
         border-radius: 0.375rem;
         display: flex;
         align-items: center;
@@ -30,7 +30,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(11, 31, 51, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -38,14 +38,14 @@
         transition: opacity 0.2s;
     }
     .technologies-input {
-        border: 1px solid #ced4da;
+        border: 1px solid #CDE3F1;
         border-radius: 0.375rem;
         padding: 0.5rem;
         min-height: 100px;
     }
     .technology-tag {
         display: inline-block;
-        background: #e9ecef;
+        background: #F3F8FC;
         padding: 0.25rem 0.5rem;
         margin: 0.25rem;
         border-radius: 0.25rem;
@@ -53,7 +53,7 @@
     .technology-tag .remove {
         margin-left: 0.5rem;
         cursor: pointer;
-        color: #dc3545;
+        color: #C0392B;
     }
 </style>
 @endpush
@@ -219,9 +219,7 @@
                                                  id="imagePreview">
                                         @endif
                                         <div class="preview-overlay">
-                                            <button type="button" class="btn btn-light" id="primaryUploadButton">
-                                                <i class="fas fa-upload"></i> Change Media
-                                            </button>
+                                            <x-admin.button type="button" id="primaryUploadButton" variant="secondary">Change Media</x-admin.button>
                                         </div>
                                     </div>
 
@@ -348,12 +346,8 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.portfolios.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back to List
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> {{ isset($portfolio) ? 'Update' : 'Create' }} Project
-                            </button>
+                            <x-admin.button href="{{ route('admin.portfolios.index') }}" variant="secondary">Back to List</x-admin.button>
+                            <x-admin.button type="submit">{{ isset($portfolio) ? 'Update' : 'Create' }} Project</x-admin.button>
                         </div>
                     </form>
                 </div>

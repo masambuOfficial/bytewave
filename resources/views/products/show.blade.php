@@ -30,13 +30,13 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="relative bg-cover bg-center py-20 mb-12" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat; background-size: cover;">
+    <div class="relative bg-cover bg-center py-20 mb-12" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat, #0B1F33; background-size: cover;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
-            <h1 class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">{{ $product->name }}</h1>
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6 animate-fadeInDown">{{ $product->name }}</h1>
             <nav aria-label="breadcrumb" class="animate-fadeInDown">
                 <ol class="flex justify-center items-center space-x-2 text-white">
-                    <li><a class="hover:text-bytewave-gold transition-colors" href="{{ url('/') }}">Home</a></li>
-                    <li class="before:content-['/'] before:mx-2"><a class="hover:text-bytewave-gold transition-colors" href="{{ route('products.index') }}">Products</a></li>
+                    <li><a class="hover:underline transition-colors" href="{{ url('/') }}">Home</a></li>
+                    <li class="before:content-['/'] before:mx-2"><a class="hover:underline transition-colors" href="{{ route('products.index') }}">Products</a></li>
                     <li class="before:content-['/'] before:mx-2">{{ $product->name }}</li>
                 </ol>
             </nav>
@@ -45,12 +45,13 @@
     <!-- Page Header End -->
 
     <!-- Product Details Start -->
-    <div class="py-12 my-12">
+    <div class="relative isolate py-12 my-12">
+        <x-bg-art layout="white" />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Product Image -->
                 <div class="animate-fadeIn">
-                    <div class="bg-gray-50 p-6 rounded-2xl shadow-lg">
+                    <div class="bg-bytewave-blue/5 p-6 rounded-2xl shadow-lg">
                         <img src="{{ asset($product->image_url) }}" 
                              class="w-full h-auto max-h-[500px] object-contain rounded-xl" 
                              alt="{{ $product->name }}">
@@ -60,35 +61,33 @@
                 <!-- Product Info -->
                 <div class="animate-fadeIn">
                     <div class="h-full">
-                        <h2 class="text-4xl font-bold text-gray-900 mb-4">{{ $product->name }}</h2>
-                        <p class="text-xl text-gray-700 mb-6 leading-relaxed">{{ $product->description }}</p>
+                        <h2 class="text-4xl font-bold text-bytewave-ink mb-4">{{ $product->name }}</h2>
+                        <p class="text-xl text-bytewave-ink mb-6 leading-relaxed">{{ $product->description }}</p>
 
                         <div class="flex items-center gap-4 mb-6">
                             <div class="flex items-center gap-3 flex-wrap">
                                 <h3 class="text-3xl font-bold text-bytewave-blue">{{ $product->formatted_price }}</h3>
-                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-bytewave-blue/10 text-bytewave-blue">
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-semibold bg-bytewave-blue/5 text-bytewave-blue">
                                     {{ $product->billing_cycle_label }}
                                 </span>
                             </div>
                             @if($product->stock > 0)
-                                <span class="bg-green-500 text-white px-4 py-2 rounded-full text-sm font-semibold">In Stock</span>
+                                <span class="bg-bytewave-success text-white px-4 py-2 rounded-full text-sm font-semibold">In Stock</span>
                             @else
-                                <span class="bg-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold">Out of Stock</span>
+                                <span class="bg-bytewave-danger text-white px-4 py-2 rounded-full text-sm font-semibold">Out of Stock</span>
                             @endif
                         </div>
 
                         @if($product->category)
-                            <p class="text-gray-700 mb-6 text-lg">
+                            <p class="text-bytewave-ink mb-6 text-lg">
                                 <strong class="font-semibold">Category:</strong> {{ $product->category }}
                             </p>
                         @endif
 
-                        <div class="mt-8 bg-blue-50 p-6 rounded-xl">
-                            <h4 class="text-2xl font-bold text-gray-900 mb-3">Interested in this product?</h4>
-                            <p class="text-gray-600 mb-6">Contact us to learn more about pricing, specifications, and how this product can benefit your business.</p>
-                            <a href="{{ route('contact') }}" class="inline-block bg-bytewave-blue hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-full transition-all duration-300">
-                                Contact Us
-                            </a>
+                        <div class="mt-8 bg-bytewave-blue/5 p-6 rounded-xl">
+                            <h4 class="text-2xl font-bold text-bytewave-ink mb-3">Interested in this product?</h4>
+                            <p class="text-bytewave-ink/70 mb-6">Contact us to learn more about pricing, specifications, and how this product can benefit your business.</p>
+                            <x-cta-button :href="route('contact')" text="Contact Us" />
                         </div>
                     </div>
                 </div>
@@ -96,7 +95,7 @@
 
             <!-- Back to Products -->
             <div class="mt-12">
-                <a href="{{ route('products.index') }}" class="inline-flex items-center text-bytewave-blue hover:text-blue-700 font-semibold transition-colors duration-300">
+                <a href="{{ route('products.index') }}" class="inline-flex items-center text-bytewave-blue hover:text-bytewave-ink font-semibold transition-colors duration-300">
                     <i class="fas fa-arrow-left mr-2"></i>Back to Products
                 </a>
             </div>
@@ -106,11 +105,12 @@
 
     @if($relatedProducts->isNotEmpty())
     <!-- Related Products Start -->
-    <div class="py-12 bg-gray-50">
+    <div class="relative isolate py-12 bg-bytewave-blue/5">
+        <x-bg-art layout="tint" flip />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mx-auto pb-12 max-w-2xl animate-fadeIn">
-                <h5 class="text-bytewave-blue font-semibold text-base uppercase tracking-wider mb-4">Our Products</h5>
-                <h2 class="text-3xl md:text-4xl font-bold text-bytewave-gold">Other Products You Might Like</h2>
+                <h5 class="text-bytewave-blue font-semibold text-base uppercase tracking-wider mb-4 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Our Products</h5>
+                <h2 class="text-3xl md:text-4xl font-bold text-bytewave-blue">Other Products You Might Like</h2>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 @foreach($relatedProducts as $relatedProduct)
@@ -123,14 +123,11 @@
                             </div>
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-3">
-                                    <h5 class="text-xl font-bold text-gray-800">{{ $relatedProduct->name }}</h5>
+                                    <h5 class="text-xl font-bold text-bytewave-ink">{{ $relatedProduct->name }}</h5>
                                     <span class="text-bytewave-blue font-bold text-lg">${{ number_format($relatedProduct->price, 2) }}</span>
                                 </div>
-                                <p class="text-gray-600 mb-6">{{ Str::limit($relatedProduct->description, 100) }}</p>
-                                <a href="{{ route('products.show', $relatedProduct->slug) }}" 
-                                   class="inline-block bg-bytewave-blue hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-full transition-all duration-300">
-                                    View Details
-                                </a>
+                                <p class="text-bytewave-ink/70 mb-6">{{ Str::limit($relatedProduct->description, 100) }}</p>
+                                <x-cta-button :href="route('products.show', $relatedProduct->slug)" text="View Details" size="sm" />
                             </div>
                         </div>
                     </div>

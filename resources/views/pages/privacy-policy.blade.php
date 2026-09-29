@@ -5,13 +5,14 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="container-fluid page-header py-5 wow fadeIn" data-wow-delay="0.1s">
-        <div class="container text-center py-5">
-            <h1 class="display-2 text-warning mb-4 animated slideInDown">Privacy Policy</h1>
-            <nav aria-label="breadcrumb animated slideInDown">
-                <ol class="breadcrumb justify-content-center mb-0">
-                    <li class="breadcrumb-item"><a href="{{ url('/') }}">Home</a></li>
-                    <li class="breadcrumb-item text-warning active" aria-current="page">Privacy Policy</li>
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bg-1.jpg') }}') center center no-repeat, #0B1F33; background-size: cover;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
+            <h1 class="text-5xl md:text-6xl font-bold text-white mb-6">Privacy Policy</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="flex justify-center items-center space-x-2 text-white text-lg">
+                    <li><a href="{{ url('/') }}" class="hover:underline">Home</a></li>
+                    <li class="text-white/50" aria-hidden="true">/</li>
+                    <li class="text-white" aria-current="page">Privacy Policy</li>
                 </ol>
             </nav>
         </div>
@@ -19,66 +20,60 @@
     <!-- Page Header End -->
 
     <!-- Privacy Policy Start -->
-    <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="row">
-                <div class="col-lg-10 mx-auto">
-                    <div class="wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">Introduction</h3>
-                            <p>At BYTEWAVE, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
-                        </div>
+    <div class="relative isolate py-12 md:py-20">
+        <x-bg-art layout="white" flip />
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
 
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">Information We Collect</h3>
-                            <p>We collect information that you provide directly to us when you:</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Fill out forms on our website</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Subscribe to our newsletter</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Request a quote or consultation</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Contact us via email or phone</li>
-                            </ul>
-                        </div>
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">Introduction</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed">At BYTEWAVE, we take your privacy seriously. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.</p>
+            </section>
 
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">How We Use Your Information</h3>
-                            <p>We use the information we collect to:</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Provide and maintain our services</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Improve our website and services</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Communicate with you about our services</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Send you marketing communications (with your consent)</li>
-                            </ul>
-                        </div>
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">Information We Collect</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed">We collect information that you provide directly to us when you:</p>
+                <ul class="mt-4 space-y-2 text-bytewave-ink">
+                    @foreach (['Fill out forms on our website', 'Subscribe to our newsletter', 'Request a quote or consultation', 'Contact us via email or phone'] as $item)
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-bytewave-blue mt-1.5 text-sm"></i><span>{{ $item }}</span></li>
+                    @endforeach
+                </ul>
+            </section>
 
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">Data Security</h3>
-                            <p>We implement appropriate technical and organizational security measures to protect your personal information. However, please note that no method of transmission over the internet is 100% secure.</p>
-                        </div>
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">How We Use Your Information</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed">We use the information we collect to:</p>
+                <ul class="mt-4 space-y-2 text-bytewave-ink">
+                    @foreach (['Provide and maintain our services', 'Improve our website and services', 'Communicate with you about our services', 'Send you marketing communications (with your consent)'] as $item)
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-bytewave-blue mt-1.5 text-sm"></i><span>{{ $item }}</span></li>
+                    @endforeach
+                </ul>
+            </section>
 
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">Your Rights</h3>
-                            <p>You have the right to:</p>
-                            <ul class="list-unstyled">
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Access your personal information</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Correct inaccurate information</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Request deletion of your information</li>
-                                <li class="mb-2"><i class="fas fa-check text-primary me-2"></i>Opt-out of marketing communications</li>
-                            </ul>
-                        </div>
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">Data Security</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed">We implement appropriate technical and organizational security measures to protect your personal information. However, please note that no method of transmission over the internet is 100% secure.</p>
+            </section>
 
-                        <div class="mb-5">
-                            <h3 class="text-warning mb-4">Contact Us</h3>
-                            <p>If you have any questions about this Privacy Policy, please contact us at:</p>
-                            <div class="bg-light p-4 rounded">
-                                <p class="mb-2"><i class="fas fa-envelope text-primary me-2"></i>Email: {{ config('company.email') }}</p>
-                                <p class="mb-2"><i class="fas fa-phone text-primary me-2"></i>Phone: {{ config('company.phone') }}</p>
-                                <p class="mb-0"><i class="fas fa-map-marker-alt text-primary me-2"></i>Address: {{ config('company.address2') }}, {{ config('company.address3') }}, {{ config('company.address') }}</p>
-                            </div>
-                        </div>
-                    </div>
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">Your Rights</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed">You have the right to:</p>
+                <ul class="mt-4 space-y-2 text-bytewave-ink">
+                    @foreach (['Access your personal information', 'Correct inaccurate information', 'Request deletion of your information', 'Opt-out of marketing communications'] as $item)
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-bytewave-blue mt-1.5 text-sm"></i><span>{{ $item }}</span></li>
+                    @endforeach
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="text-2xl font-bold text-bytewave-ink mb-3">Contact Us</h2>
+                <p class="text-bytewave-ink/70 leading-relaxed mb-4">If you have any questions about this Privacy Policy, please contact us at:</p>
+                <div class="rounded-xl border border-bytewave-blue/20 bg-bytewave-blue/5 p-6 space-y-3 text-bytewave-ink">
+                    <p class="flex items-start gap-3"><i class="fas fa-envelope text-bytewave-blue mt-1"></i><span>Email: {{ config('company.email') }}</span></p>
+                    <p class="flex items-start gap-3"><i class="fas fa-phone text-bytewave-blue mt-1"></i><span>Phone: {{ config('company.phone') }}</span></p>
+                    <p class="flex items-start gap-3"><i class="fas fa-map-marker-alt text-bytewave-blue mt-1"></i><span>Address: {{ config('company.address2') }}, {{ config('company.address3') }}, {{ config('company.address') }}</span></p>
                 </div>
-            </div>
+            </section>
+
         </div>
     </div>
     <!-- Privacy Policy End -->

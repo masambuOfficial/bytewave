@@ -1,7 +1,7 @@
 @props(['article', 'title' => 'Share this article'])
 
 <div class="flex flex-col space-y-3">
-    <h4 class="text-sm font-semibold text-gray-700">{{ $title }}</h4>
+    <h4 class="text-sm font-semibold text-bytewave-ink">{{ $title }}</h4>
     
     <div class="flex items-center space-x-3">
         <!-- Facebook -->
@@ -9,7 +9,7 @@
             href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(route('blog.show', $article->slug)) }}" 
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-bytewave-blue text-white hover:bg-bytewave-ink transition-colors"
             aria-label="Share on Facebook"
         >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -22,7 +22,7 @@
             href="https://twitter.com/intent/tweet?url={{ urlencode(route('blog.show', $article->slug)) }}&text={{ urlencode($article->title) }}" 
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-black text-white hover:bg-gray-800 transition-colors"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-bytewave-ink text-white hover:bg-bytewave-blue transition-colors"
             aria-label="Share on Twitter"
         >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -35,7 +35,7 @@
             href="https://www.linkedin.com/shareArticle?mini=true&url={{ urlencode(route('blog.show', $article->slug)) }}&title={{ urlencode($article->title) }}" 
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-blue-700 text-white hover:bg-blue-800 transition-colors"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-bytewave-blue text-white hover:bg-bytewave-ink transition-colors"
             aria-label="Share on LinkedIn"
         >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -48,7 +48,7 @@
             href="https://wa.me/?text={{ urlencode($article->title . ' ' . route('blog.show', $article->slug)) }}" 
             target="_blank"
             rel="noopener noreferrer"
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-green-500 text-white hover:bg-green-600 transition-colors"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-bytewave-success text-white hover:bg-bytewave-ink transition-colors"
             aria-label="Share on WhatsApp"
         >
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -59,7 +59,7 @@
         <!-- Copy Link -->
         <button 
             @click="copyLink('{{ route('blog.show', $article->slug) }}')"
-            class="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 text-gray-700 hover:bg-gray-300 transition-colors"
+            class="flex items-center justify-center w-10 h-10 rounded-full bg-bytewave-blue/10 text-bytewave-ink hover:bg-bytewave-blue/20 transition-colors"
             aria-label="Copy link"
         >
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

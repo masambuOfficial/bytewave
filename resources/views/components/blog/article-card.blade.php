@@ -1,8 +1,8 @@
 @props(['article', 'featured' => false])
 
-<article class="{{ $featured ? 'md:col-span-2' : '' }} group bg-white rounded-xl shadow-sm hover:shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:-translate-y-1">
+<article class="{{ $featured ? 'md:col-span-2' : '' }} group bg-white rounded-xl shadow-sm hover:shadow-lg border border-bytewave-blue/20 overflow-hidden transition-all duration-300 hover:-translate-y-1">
     <a href="{{ route('blog.show', $article->slug) }}" class="block">
-        <div class="relative overflow-hidden {{ $featured ? 'h-80' : 'h-52' }} bg-gray-100">
+        <div class="relative overflow-hidden {{ $featured ? 'h-80' : 'h-52' }} bg-bytewave-blue/5">
             <img loading="lazy" decoding="async"
                 src="{{ $article->cover_image }}"
                 alt="{{ $article->title }}"
@@ -18,15 +18,15 @@
         </div>
 
         <div class="p-5">
-            <h3 class="text-lg font-bold text-gray-900 group-hover:text-bytewave-blue transition-colors line-clamp-2">
+            <h3 class="text-lg font-bold text-bytewave-ink group-hover:text-bytewave-blue transition-colors line-clamp-2">
                 {{ $article->title }}
             </h3>
 
-            <p class="mt-2 text-sm text-gray-600 line-clamp-2">
+            <p class="mt-2 text-sm text-bytewave-ink/70 line-clamp-2">
                 {{ $article->excerpt }}
             </p>
 
-            <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
+            <div class="mt-4 pt-4 border-t border-bytewave-blue/20 flex items-center justify-between text-xs text-bytewave-ink/70">
                 <div class="flex items-center gap-2">
                     @if($article->author)
                         <img loading="lazy" decoding="async"
@@ -34,8 +34,8 @@
                             alt="{{ $article->author->name }}"
                             class="w-6 h-6 rounded-full object-cover"
                         >
-                        <span class="font-medium text-gray-700">{{ $article->author->name }}</span>
-                        <span class="text-gray-300">&bull;</span>
+                        <span class="font-medium text-bytewave-ink">{{ $article->author->name }}</span>
+                        <span class="text-bytewave-blue/30">&bull;</span>
                     @endif
                     <span>{{ $article->published_at?->format('M d, Y') }}</span>
                 </div>

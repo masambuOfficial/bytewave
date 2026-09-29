@@ -14,7 +14,7 @@
         position: relative;
         width: 100%;
         height: 200px;
-        border: 2px dashed #dee2e6;
+        border: 2px dashed #CDE3F1;
         border-radius: 0.375rem;
         display: flex;
         align-items: center;
@@ -30,7 +30,7 @@
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
+        background: rgba(11, 31, 51, 0.5);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -142,11 +142,7 @@
                                                  id="imagePreview">
                                         @endif
                                         <div class="preview-overlay">
-                                            <button type="button" 
-                                                    class="btn btn-light" 
-                                                    onclick="document.getElementById('image').click()">
-                                                <i class="fas fa-upload"></i> Change Image
-                                            </button>
+                                            <x-admin.button type="button" onclick="document.getElementById('image').click()" variant="secondary">Change Image</x-admin.button>
                                         </div>
                                     </div>
                                     <input type="file" 
@@ -162,12 +158,8 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.services.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back to List
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> {{ isset($service) ? 'Update' : 'Create' }} Service
-                            </button>
+                            <x-admin.button href="{{ route('admin.services.index') }}" variant="secondary">Back to List</x-admin.button>
+                            <x-admin.button type="submit">{{ isset($service) ? 'Update' : 'Create' }} Service</x-admin.button>
                         </div>
                     </form>
                 </div>

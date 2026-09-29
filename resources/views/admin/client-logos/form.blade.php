@@ -6,9 +6,7 @@
 <div class="container-fluid">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="h3 mb-0 text-gray-800">{{ isset($clientLogo) ? 'Edit' : 'Add' }} Client Logo</h1>
-        <a href="{{ route('admin.client-logos.index') }}" class="btn btn-secondary">
-            <i class="fas fa-arrow-left"></i> Back to List
-        </a>
+        <x-admin.button href="{{ route('admin.client-logos.index') }}" variant="secondary">Back to List</x-admin.button>
     </div>
 
     <div class="row">
@@ -112,10 +110,8 @@
 
                         <!-- Submit Button -->
                         <div class="form-group mb-0">
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> {{ isset($clientLogo) ? 'Update' : 'Add' }} Logo
-                            </button>
-                            <a href="{{ route('admin.client-logos.index') }}" class="btn btn-secondary">Cancel</a>
+                            <x-admin.button type="submit">{{ isset($clientLogo) ? 'Update' : 'Add' }} Logo</x-admin.button>
+                            <x-admin.button href="{{ route('admin.client-logos.index') }}" variant="secondary">Cancel</x-admin.button>
                         </div>
                     </form>
                 </div>

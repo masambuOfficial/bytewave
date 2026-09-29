@@ -57,7 +57,7 @@
                  x-transition:leave-end="opacity-0"
                  class="absolute inset-0">
                 <div class="absolute inset-0 bg-cover bg-center" :style="`background-image: url('${slide.image}')`"></div>
-                <div class="absolute inset-0 bg-gradient-to-r from-black/70 to-black/40"></div>
+                <div class="absolute inset-0 bg-bytewave-ink/60"></div>
             </div>
         </template>
         
@@ -69,19 +69,19 @@
                     <div class="max-w-[900px]">
                         <!-- Badge -->
                         <div class="inline-flex items-center gap-2 mb-6 bg-white px-4 py-2" style="border-radius: 6px 6px 16px 6px;">
-                            <span class="w-2 h-2 bg-red-500 rounded-sm"></span>
-                            <span class="text-blue-500 text-sm md:text-base font-medium tracking-wide">Your Trusted ICT & Multimedia Partner</span>
+                            <span class="w-2 h-2 bg-bytewave-gold rounded-sm"></span>
+                            <span class="text-bytewave-blue text-sm md:text-base font-medium tracking-wide">Your Trusted ICT & Multimedia Partner</span>
                         </div>
                         
                         <!-- Main Heading -->
                         <h1 class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white leading-tight">
-                            From <span class="text-blue-500 whitespace-nowrap inline-block relative">
-                                <!-- Invisible placeholder to maintain height -->
-                                <span class="invisible">innovative ideas</span>
-                                <!-- Phrases synced with slides (instant cut, no transition) -->
+                            From <span class="whitespace-nowrap inline-grid justify-items-start">
+                                <!-- Every phrase sits in the same grid cell, so the headline always reserves the width of the LONGEST one
+                                     and only the current slide's phrase is visible (instant cut, no transition). Square gold chips with brand-blue                                     text, first letter of each word capitalised (blue on gold is 3.06:1: fine for this large bold headline text only, never for small text; white on gold would fail).
+                                     Chip text is 80-85% of the headline size so the longest phrase stays beside "From" on desktop and inside the screen on phones. -->
                                 <template x-for="(slide, index) in slides" :key="index">
-                                    <span x-show="currentSlide === index"
-                                          class="absolute left-0 top-0"
+                                    <span class="col-start-1 row-start-1 bg-bytewave-gold text-bytewave-blue capitalize text-[0.85em] lg:text-[0.8em] xl:text-[0.85em] px-[0.25em]"
+                                          :class="currentSlide === index ? 'visible' : 'invisible'"
                                           x-text="slide.phrase"></span>
                                 </template>
                             </span><br>
@@ -92,7 +92,7 @@
                     <!-- Right Column -->
                     <!-- Featured slide: e-BETP (current project) -->
                     <div class="space-y-6" x-show="slides[currentSlide].featured">
-                        <div class="text-bytewave-gold text-sm md:text-base font-semibold">
+                        <div class="text-white text-sm md:text-base font-bold">
                             <p>// CURRENT PROJECT //</p>
                         </div>
 
@@ -106,16 +106,12 @@
                             target="_blank"
                             rel="noopener"
                             text="Visit ebetp.africa"
-                            bgColor="bg-blue-500"
-                            hoverBgColor="hover:bg-blue-600"
-                            arrowBgColor="bg-white"
-                            arrowColor="text-blue-500"
                         />
                     </div>
 
                     <!-- Default slides -->
                     <div class="space-y-6" style="display: none;" x-show="!slides[currentSlide].featured">
-                        <div class="text-bytewave-gold text-sm md:text-base font-semibold">
+                        <div class="text-white text-sm md:text-base font-bold">
                             <p>// SINCE 2020 //</p>
                         </div>
 
@@ -127,10 +123,6 @@
                         <x-cta-button
                             href="{{ url('/services') }}"
                             text="Explore our capabilities"
-                            bgColor="bg-blue-500"
-                            hoverBgColor="hover:bg-blue-600"
-                            arrowBgColor="bg-white"
-                            arrowColor="text-blue-500"
                         />
                     </div>
                 </div>
@@ -141,7 +133,7 @@
         <div class="absolute bottom-24 left-1/2 -translate-x-1/2 flex gap-3 z-20">
             <template x-for="(slide, index) in slides" :key="index">
                 <button @click="currentSlide = index" 
-                        :class="currentSlide === index ? 'w-12 bg-bytewave-gold' : 'w-3 bg-white hover:bg-white/75'"
+                        :class="currentSlide === index ? 'w-12 bg-bytewave-gold' : 'w-3 bg-white/50 hover:bg-white/75'"
                         class="h-3 rounded-full transition-all duration-300">
                 </button>
             </template>
@@ -175,18 +167,19 @@
     </div>
 
     <!-- Why Choose Us Section -->
-    <section id="why-choose-us" class="py-12 md:py-20 bg-gray-50">
+    <section id="why-choose-us" class="relative isolate py-12 md:py-20 bg-bytewave-blue/5">
+        <x-bg-art layout="tint" />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                 <div class="lg:pr-8">
-                    <span class="inline-block text-bytewave-blue font-semibold mb-4 uppercase tracking-wider text-base">Why Choose Us</span>
-                    <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-6">We're Here To Grow Your Business Exponentially</h2>
-                    <p class="text-gray-600 leading-relaxed">We combine technical expertise with business acumen to deliver solutions that drive real results. Our team of experts is passionate about helping businesses succeed in the digital age.</p>
+                    <span class="inline-block text-bytewave-blue font-semibold mb-4 uppercase tracking-wider text-base before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Why Choose Us</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-bytewave-ink mb-6">We're Here To Grow Your Business Exponentially</h2>
+                    <p class="text-bytewave-ink/70 leading-relaxed">We combine technical expertise with business acumen to deliver solutions that drive real results. Our team of experts is passionate about helping businesses succeed in the digital age.</p>
                 </div>
                 <div class="relative">
                     <div class="relative rounded-lg overflow-hidden shadow-2xl">
                         <img src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Why Choose Us" class="w-full h-auto rounded-lg">
-                        <div class="absolute inset-0 bg-gradient-to-b from-bytewave-blue/10 to-bytewave-blue/30"></div>
+                        <div class="absolute inset-0 bg-bytewave-blue/20"></div>
                     </div>
                 </div>
             </div>
@@ -249,19 +242,15 @@
             <!-- Section Header -->
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-12 md:mb-16 gap-6">
                 <div class="max-w-2xl">
-                    <span class="inline-block text-bytewave-blue font-semibold mb-3 uppercase tracking-wider text-sm">What we do</span>
-                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900">
-                        Scalable <span class="text-blue-600">capabilities</span><br>
+                    <span class="inline-block text-bytewave-blue font-semibold mb-3 uppercase tracking-wider text-sm before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">What we do</span>
+                    <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold text-bytewave-ink">
+                        Scalable <span class="text-bytewave-blue">capabilities</span><br>
                         for every challenge
                     </h2>
                 </div>
                 <x-cta-button 
                     href="{{ url('/services') }}" 
                     text="Explore all capabilities"
-                    bgColor="bg-blue-500"
-                    hoverBgColor="hover:bg-blue-600"
-                    arrowBgColor="bg-white"
-                    arrowColor="text-blue-500"
                 />
             </div>
 
@@ -269,25 +258,25 @@
             <div class="relative">
                 <template x-for="(service, index) in services" :key="index">
                     <div class="sticky" :style="`top: ${index * 150}px; z-index: ${index + 1}`">
-                        <div class="group bg-white border-y border-gray-200 py-8">
+                        <div class="group bg-white border-y border-bytewave-blue/20 py-8">
                             <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
                                 <!-- Icon -->
                                 <div class="lg:col-span-1 flex justify-center lg:justify-start">
                                     <div class="w-14 h-14 flex items-center justify-center">
                                         <!-- Computer Icon -->
-                                        <svg x-show="service.icon === 'computer'" class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="service.icon === 'computer'" class="w-10 h-10 text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
                                         </svg>
                                         <!-- Video Icon -->
-                                        <svg x-show="service.icon === 'video'" class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="service.icon === 'video'" class="w-10 h-10 text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
                                         </svg>
                                         <!-- Code Icon -->
-                                        <svg x-show="service.icon === 'code'" class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="service.icon === 'code'" class="w-10 h-10 text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
                                         </svg>
                                         <!-- Chart Icon -->
-                                        <svg x-show="service.icon === 'chart'" class="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <svg x-show="service.icon === 'chart'" class="w-10 h-10 text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
                                         </svg>
                                     </div>
@@ -303,19 +292,19 @@
 
                                 <!-- Service Title -->
                                 <div class="lg:col-span-2">
-                                    <h3 class="text-xl md:text-2xl font-bold text-gray-900" x-text="service.title"></h3>
+                                    <h3 class="text-xl md:text-2xl font-bold text-bytewave-ink" x-text="service.title"></h3>
                                 </div>
 
                                 <!-- Features -->
                                 <div class="lg:col-span-4">
                                     <div class="space-y-2">
-                                        <p class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Features</p>
+                                        <p class="text-sm font-semibold text-bytewave-ink/70 uppercase tracking-wider mb-3">Features</p>
                                         <template x-for="(feature, fIndex) in service.features" :key="fIndex">
                                             <div class="flex items-start gap-2">
                                                 <svg class="w-5 h-5 text-bytewave-blue flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                                                 </svg>
-                                                <span class="text-gray-700" x-text="feature"></span>
+                                                <span class="text-bytewave-ink" x-text="feature"></span>
                                             </div>
                                         </template>
                                     </div>
@@ -324,7 +313,7 @@
                                 <!-- Arrow Button -->
                                 <div class="lg:col-span-1 flex justify-center lg:justify-end">
                                     <a href="{{ url('/services') }}" 
-                                       class="w-12 h-12 rounded-md bg-blue-600 hover:bg-blue-700 flex items-center justify-center transition-all duration-300 hover:scale-110 group-hover:translate-x-2">
+                                       class="w-12 h-12 rounded-md bg-bytewave-blue hover:bg-bytewave-ink flex items-center justify-center transition-all duration-300 hover:scale-110 group-hover:translate-x-2">
                                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                         </svg>
@@ -354,9 +343,9 @@
                             <!-- CTA Button -->
                             <div class="relative z-10">
                                 <!-- <a href="{{ url('/contact') }}" 
-                                   class="inline-flex items-center gap-3 bg-white text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-all duration-300 group">
+                                   class="inline-flex items-center gap-3 bg-white text-bytewave-ink px-6 py-3 rounded-lg font-semibold hover:bg-bytewave-blue/10 transition-all duration-300 group">
                                     <span>Schedule consultation</span>
-                                    <div class="w-8 h-8 bg-gradient-to-br from-red-500 to-red-600 rounded flex items-center justify-center transition-transform group-hover:translate-x-1">
+                                    <div class="w-8 h-8 bg-bytewave-blue rounded flex items-center justify-center transition-transform group-hover:translate-x-1">
                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
                                         </svg>
@@ -370,7 +359,7 @@
 
             <!-- CTA with Why Choose Us width -->
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-32">
-                <div class="bg-gradient-to-r from-gray-900 to-gray-800 rounded-lg overflow-hidden">
+                <div class="bg-bytewave-ink rounded-lg overflow-hidden">
                     <div class="relative px-8 py-12 md:px-12 md:py-16 flex flex-col md:flex-row items-center justify-between gap-6">
                             <!-- Background Pattern -->
                             <div class="absolute inset-0 opacity-10">
@@ -392,9 +381,9 @@
                                     rel="noopener noreferrer"
                                     text="Schedule consultation"
                                     bgColor="bg-white"
-                                    hoverBgColor="hover:bg-gray-100"
-                                    textColor="text-blue-600"
-                                    arrowBgColor="bg-blue-600"
+                                    hoverBgColor="hover:bg-bytewave-blue/10"
+                                    textColor="text-bytewave-blue"
+                                    arrowBgColor="bg-bytewave-blue"
                                     arrowColor="text-white"
                                 />
                             </div>
@@ -423,21 +412,21 @@
             <!-- Section Header with Navigation -->
             <div class="flex items-start justify-between mb-12 md:mb-16 gap-8">
                 <div class="flex-1">
-                    <span class="inline-block text-sm font-semibold mb-4 uppercase tracking-wider text-bytewave-gold">Real-world success</span>
-                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                        Real <span class="text-blue-600">results</span> from real projects
+                    <span class="inline-block text-sm font-semibold mb-4 uppercase tracking-wider text-bytewave-blue before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Real-world success</span>
+                    <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-bytewave-ink leading-tight">
+                        Real <span class="text-bytewave-blue">results</span> from real projects
                     </h2>
                 </div>
                 
                 <!-- Navigation Arrows -->
                 <div class="flex gap-2">
-                    <button @click="prev" class="w-12 h-12 rounded-md border-2 border-gray-300 hover:border-blue-600 hover:bg-blue-50 flex items-center justify-center transition-all duration-300 group">
-                        <svg class="w-5 h-5 text-gray-600 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button @click="prev" class="w-12 h-12 rounded-md border-2 border-bytewave-ink/50 hover:border-bytewave-blue hover:bg-bytewave-blue/5 flex items-center justify-center transition-all duration-300 group">
+                        <svg class="w-5 h-5 text-bytewave-ink/70 group-hover:text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                     </button>
-                    <button @click="next" class="w-12 h-12 rounded-md border-2 border-gray-300 hover:border-blue-600 hover:bg-blue-50 flex items-center justify-center transition-all duration-300 group">
-                        <svg class="w-5 h-5 text-gray-600 group-hover:text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <button @click="next" class="w-12 h-12 rounded-md border-2 border-bytewave-ink/50 hover:border-bytewave-blue hover:bg-bytewave-blue/5 flex items-center justify-center transition-all duration-300 group">
+                        <svg class="w-5 h-5 text-bytewave-ink/70 group-hover:text-bytewave-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
                         </svg>
                     </button>
@@ -447,7 +436,7 @@
             <!-- Carousel Content -->
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-0 rounded-lg overflow-hidden shadow-xl">
                 <!-- Left Column - Dark Background with Project Info -->
-                <div class="p-8 md:p-12 lg:p-12 flex flex-col justify-between min-h-[400px] lg:min-h-[450px]" style="background: linear-gradient(135deg, #0773B8 0%, #04456E 100%);">
+                <div class="p-8 md:p-12 lg:p-12 flex flex-col justify-between min-h-[400px] lg:min-h-[450px]" style="background: #0773B9;">
                     <!-- Category Badge -->
                     <div>
                         <span class="inline-block px-4 py-1 bg-white/10 text-white text-sm font-semibold rounded-full mb-6" x-text="currentPortfolio.category"></span>
@@ -456,7 +445,7 @@
                         <h3 class="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4" x-text="currentPortfolio.title"></h3>
                         
                         <!-- Project Description -->
-                        <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-8" x-text="currentPortfolio.description ? currentPortfolio.description.substring(0, 120) + '...' : ''"></p>
+                        <p class="text-white text-base md:text-lg leading-relaxed mb-8" x-text="currentPortfolio.description ? currentPortfolio.description.substring(0, 120) + '...' : ''"></p>
                     </div>
                     
                     <!-- Stats & CTA -->
@@ -464,17 +453,17 @@
                         <!-- Placeholder Stats (will be dynamic when DB field is added) -->
                         <div class="flex-shrink-0">
                             <div class="text-4xl md:text-5xl font-bold text-white mb-1">100%</div>
-                            <div class="text-gray-400 text-xs uppercase tracking-wider">Client Satisfaction</div>
+                            <div class="text-white text-xs uppercase tracking-wider">Client Satisfaction</div>
                         </div>
                         
                         <!-- View Case Button -->
                         <div class="flex-shrink-0">
-                            <a :href="`/portfolios/${currentPortfolio.slug}`" class="inline-flex items-center gap-2 bg-white text-gray-900 font-semibold transition-all duration-300 group overflow-hidden" style="height: 48px; padding: 6px 6px 6px 18px; border-radius: 6px 6px 16px 6px;">
+                            <a :href="`/portfolios/${currentPortfolio.slug}`" class="inline-flex items-center gap-2 bg-white text-bytewave-ink font-semibold transition-all duration-300 group overflow-hidden" style="height: 48px; padding: 6px 6px 6px 18px; border-radius: 6px 6px 16px 6px;">
                                 <span class="text-sm whitespace-nowrap relative overflow-hidden inline-block" style="height: 20px;">
                                     <span class="inline-block transition-transform duration-300 group-hover:-translate-y-full">View case</span>
                                     <span class="inline-block absolute left-0 top-full transition-transform duration-300 group-hover:-translate-y-full">View case</span>
                                 </span>
-                                <div class="bg-gray-900 rounded-md flex items-center justify-center relative overflow-hidden flex-shrink-0" style="width: 36px; height: 36px;">
+                                <div class="bg-bytewave-ink rounded-md flex items-center justify-center relative overflow-hidden flex-shrink-0" style="width: 36px; height: 36px;">
                                     <span class="absolute inset-0 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-full">
                                         <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
@@ -492,7 +481,7 @@
                 </div>
 
                 <!-- Right Column - Image/Video -->
-                <div class="relative bg-gray-100 min-h-[400px] lg:min-h-[450px]">
+                <div class="relative bg-bytewave-blue/5 min-h-[400px] lg:min-h-[450px]">
                     @foreach($latestPortfolios ?? [] as $index => $portfolio)
                         @php
                             $type = $portfolio->getPrimaryMediaType();
@@ -514,13 +503,13 @@
                     
                     <!-- Client Logo Overlay (if applicable) -->
                     <div class="absolute top-8 right-8 bg-white/90 backdrop-blur-sm px-6 py-3 rounded-lg z-10">
-                        <span class="text-gray-900 font-semibold" x-text="currentPortfolio.client || 'Client Name'"></span>
+                        <span class="text-bytewave-ink font-semibold" x-text="currentPortfolio.client || 'Client Name'"></span>
                     </div>
                 </div>
             </div>
 
             <!-- Bottom CTA Section - "Open a conversation" -->
-            <div class="mt-16 bg-blue-500 rounded-lg p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="mt-16 bg-bytewave-blue rounded-lg p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-6">
                 <div class="flex items-center gap-4">
                     <!-- Avatar Images -->
                     <div class="flex -space-x-3">
@@ -529,7 +518,7 @@
                     </div>
                     <div>
                         <h4 class="text-xl font-bold text-white">Open a conversation</h4>
-                        <p class="text-blue-100">Contact us to explore solutions tailored to your needs.</p>
+                        <p class="text-white">Contact us to explore solutions tailored to your needs.</p>
                     </div>
                 </div>
                 
@@ -538,9 +527,9 @@
                     href="{{ url('/contact') }}" 
                     text="Contact us now"
                     bgColor="bg-white"
-                    hoverBgColor="hover:bg-gray-100"
-                    textColor="text-blue-600"
-                    arrowBgColor="bg-blue-600"
+                    hoverBgColor="hover:bg-bytewave-blue/10"
+                    textColor="text-bytewave-blue"
+                    arrowBgColor="bg-bytewave-blue"
                     arrowColor="text-white"
                 />
             </div>
@@ -572,26 +561,26 @@
         <div class="w-full px-6 sm:px-8 md:px-12 lg:px-16 xl:px-24 2xl:px-32">
             <!-- Section Header -->
             <div class="text-center mb-12 md:mb-16">
-                <div class="inline-flex items-center gap-2 bg-white border border-gray-200 rounded-full px-4 py-2 mb-4">
-                    <div class="w-2 h-2 bg-blue-500 rounded-sm"></div>
-                    <span class="text-sm font-semibold text-gray-900 uppercase tracking-wide">Build on trust</span>
+                <div class="inline-flex items-center gap-2 bg-white border border-bytewave-blue/20 rounded-full px-4 py-2 mb-4">
+                    <div class="w-2 h-2 bg-bytewave-blue rounded-sm"></div>
+                    <span class="text-sm font-semibold text-bytewave-ink uppercase tracking-wide">Build on trust</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
-                    Trusted by <span class="text-blue-500">clients</span>, proven by results
+                <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-bytewave-ink leading-tight">
+                    Trusted by <span class="text-bytewave-blue">clients</span>, proven by results
                 </h2>
             </div>
 
             <!-- Three Column Layout -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 <!-- Column 1: Testimonials -->
-                <div class="bg-gray-900 rounded-lg p-6 flex gap-4">
+                <div class="bg-bytewave-ink rounded-lg p-6 flex gap-4">
                     <!-- Avatar Stack -->
                     <div class="flex flex-col gap-3 flex-shrink-0">
                         <template x-for="(testimonial, index) in testimonials" :key="index">
                             <button 
                                 @click="currentTestimonial = index"
                                 class="w-12 h-12 rounded-full border-2 transition-all duration-300"
-                                :class="currentTestimonial === index ? 'border-orange-500 opacity-100' : 'border-white opacity-40'"
+                                :class="currentTestimonial === index ? 'border-white opacity-100' : 'border-white opacity-40'"
                             >
                                 <img loading="lazy" decoding="async" :src="testimonial.image" :alt="testimonial.name" class="w-full h-full rounded-full object-cover">
                             </button>
@@ -599,23 +588,23 @@
                     </div>
 
                     <!-- Testimonial Content -->
-                    <div class="flex-1 bg-gray-100 rounded-lg p-6">
+                    <div class="flex-1 bg-bytewave-blue/5 rounded-lg p-6">
                         <!-- Star Rating -->
                         <div class="flex gap-1 mb-4">
                             <template x-for="i in 5" :key="i">
-                                <svg class="w-5 h-5" :class="i <= testimonials[currentTestimonial].rating ? 'text-orange-500' : 'text-gray-300'" fill="currentColor" viewBox="0 0 20 20">
+                                <svg class="w-5 h-5" :class="i <= testimonials[currentTestimonial].rating ? 'text-bytewave-gold' : 'text-white/30'" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
                                 </svg>
                             </template>
                         </div>
 
                         <!-- Testimonial Text -->
-                        <p class="text-gray-700 mb-6 leading-relaxed" x-text="testimonials[currentTestimonial].text"></p>
+                        <p class="text-bytewave-ink mb-6 leading-relaxed" x-text="testimonials[currentTestimonial].text"></p>
 
                         <!-- Client Info -->
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900" x-text="testimonials[currentTestimonial].name"></h4>
-                            <p class="text-sm text-gray-600" x-text="testimonials[currentTestimonial].title"></p>
+                            <h4 class="text-lg font-bold text-bytewave-ink" x-text="testimonials[currentTestimonial].name"></h4>
+                            <p class="text-sm text-bytewave-ink/70" x-text="testimonials[currentTestimonial].title"></p>
                         </div>
                     </div>
                 </div>
@@ -623,7 +612,7 @@
                 <!-- Column 2: Two Stacked Cards -->
                 <div class="flex flex-col gap-6">
                     <!-- Top Card: Company Logo with Background -->
-                    <div class="relative bg-gray-900 rounded-lg overflow-hidden" style="min-height: 280px;">
+                    <div class="relative bg-bytewave-ink rounded-lg overflow-hidden" style="min-height: 280px;">
                         <div class="absolute inset-0 opacity-30">
                             <img loading="lazy" decoding="async" src="{{ asset('images/bytewave_livestreaming.jpg') }}" alt="Background" class="w-full h-full object-cover">
                         </div>
@@ -634,7 +623,7 @@
                     </div>
 
                     <!-- Bottom Card: Stats -->
-                    <div class="bg-gradient-to-br from-bytewave-gold to-yellow-500 rounded-lg p-6 grid grid-cols-2 gap-6">
+                    <div class="bg-bytewave-blue rounded-lg p-6 grid grid-cols-2 gap-6">
                         <div>
                             <div class="text-4xl md:text-5xl font-bold text-white mb-2">98%</div>
                             <p class="text-white text-sm">On-Time delivery rate</p>
@@ -647,7 +636,7 @@
                 </div>
 
                 <!-- Column 3: Support Content -->
-                <div class="relative bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-8 flex flex-col justify-between overflow-hidden">
+                <div class="relative bg-bytewave-blue rounded-lg p-8 flex flex-col justify-between overflow-hidden">
                     <!-- Background Shadow -->
                     <div class="absolute bottom-0 right-0 w-64 h-64 opacity-10">
                         <svg viewBox="0 0 200 200" fill="white">
@@ -664,7 +653,7 @@
                         <!-- Content -->
                         <div>
                             <h4 class="text-2xl font-bold text-white mb-4">Need help choosing the right product?</h4>
-                            <p class="text-blue-100">Always ready with guidance, product details, and after-sales support.</p>
+                            <p class="text-white">Always ready with guidance, product details, and after-sales support.</p>
                         </div>
 
                         <!-- Button -->
@@ -673,9 +662,9 @@
                                 href="{{ url('/contact') }}" 
                                 text="Contact Support"
                                 bgColor="bg-white"
-                                hoverBgColor="hover:bg-gray-100"
-                                textColor="text-blue-600"
-                                arrowBgColor="bg-blue-600"
+                                hoverBgColor="hover:bg-bytewave-blue/10"
+                                textColor="text-bytewave-blue"
+                                arrowBgColor="bg-bytewave-blue"
                                 arrowColor="text-white"
                             />
                         </div>
@@ -764,24 +753,23 @@
 
     <!-- Latest News & Articles Section -->
     @if($recentArticles->isNotEmpty())
-    <section class="bg-gray-50 py-12 md:py-20">
+    <section class="relative isolate bg-bytewave-blue/5 py-12 md:py-20">
+        <x-bg-art layout="tint" flip />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12 max-w-3xl mx-auto">
-                <span class="inline-block text-bytewave-blue font-semibold mb-4 uppercase tracking-wider text-base">Stay Updated</span>
-                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Latest News & Articles</h2>
-                <p class="text-gray-600">Discover the latest insights, trends, and updates from the tech world</p>
+            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-6 mb-12">
+                <div class="max-w-2xl text-left">
+                    <span class="inline-block text-bytewave-blue font-semibold mb-4 uppercase tracking-wider text-base before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Stay Updated</span>
+                    <h2 class="text-3xl md:text-4xl font-bold text-bytewave-ink mb-4">Latest News & Articles</h2>
+                    <p class="text-bytewave-ink/70">Discover the latest insights, trends, and updates from the tech world</p>
+                </div>
+                <div class="flex-shrink-0">
+                    <x-cta-button :href="route('blog.index')" text="View all articles" />
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
-                @foreach($recentArticles as $article)
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">                @foreach($recentArticles as $article)
                     <x-blog.article-card :article="$article" />
                 @endforeach
-            </div>
-
-            <div class="text-center">
-                <a href="{{ route('blog.index') }}" class="inline-block bg-bytewave-gold text-white font-semibold px-8 py-3 rounded-full hover:bg-bytewave-gold-600 transition-all duration-300 hover:scale-105 shadow-lg">
-                    View All Articles →
-                </a>
             </div>
         </div>
     </section>
@@ -792,7 +780,7 @@
         .clients-showcase {
             width: 100%;
             min-height: 85vh;
-            background-color: #eff6ff;
+            background-color: #F3F8FC;
             display: flex;
         }
 
@@ -808,7 +796,7 @@
             flex-direction: column;
             justify-content: center;
             padding: 4rem 3rem;
-            border-right: 1px solid rgba(0, 0, 0, 0.08);
+            border-right: 1px solid rgba(11, 31, 51, 0.08);
         }
 
         .clients-showcase-eyebrow {
@@ -817,7 +805,7 @@
             letter-spacing: 0.15em;
             font-size: 0.75rem;
             font-weight: 700;
-            color: #3b82f6;
+            color: #0773B9;
             margin-bottom: 1rem;
         }
 
@@ -825,14 +813,14 @@
             font-size: clamp(1.375rem, 1rem + 2vw, 2rem);
             line-height: 1.2;
             font-weight: 700;
-            color: #111827;
+            color: #0B1F33;
             margin-bottom: 1rem;
         }
 
         .clients-showcase-desc {
             font-size: 1rem;
             line-height: 1.6;
-            color: #6b7280;
+            color: #546270;
         }
 
         .clients-showcase-nav {
@@ -843,20 +831,20 @@
             width: 44px;
             height: 44px;
             border-radius: 8px;
-            border: 2px solid #d1d5db;
+            border: 2px solid #858F99;
             background-color: transparent;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #4b5563;
+            color: #546270;
             cursor: pointer;
             transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
         }
 
         .clients-showcase-nav-btn:hover:not(.is-disabled) {
-            border-color: #3b82f6;
-            background-color: #eff6ff;
-            color: #3b82f6;
+            border-color: #0773B9;
+            background-color: #F3F8FC;
+            color: #0773B9;
         }
 
         .clients-showcase-nav-btn.is-disabled {
@@ -869,7 +857,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1px;
-            background-color: rgba(0, 0, 0, 0.08);
+            background-color: rgba(11, 31, 51, 0.08);
         }
 
         .clients-showcase-logo-cell {
@@ -878,7 +866,7 @@
             justify-content: center;
             min-height: 180px;
             padding: 2.5rem;
-            background-color: #eff6ff;
+            background-color: #F3F8FC;
         }
 
         .clients-showcase-logo-cell img {
@@ -914,7 +902,7 @@
                 flex: 0 0 100%;
                 max-width: 100%;
                 border-right: none;
-                border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+                border-bottom: 1px solid rgba(11, 31, 51, 0.08);
                 padding: 2.5rem 1.5rem;
                 text-align: center;
                 align-items: center;
@@ -991,9 +979,10 @@
     </style>
     
     <!-- Call to Action -->
-    <section class="py-12 md:py-20">
+    <section class="relative isolate py-12 md:py-20">
+        <x-bg-art layout="white" flip />
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-gradient-to-br from-bytewave-blue to-bytewave-blue-700 rounded-2xl p-8 md:p-12 shadow-2xl">
+            <div class="bg-bytewave-blue rounded-2xl p-8 md:p-12 shadow-2xl">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="flex items-center gap-6">
                         <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-lg">
@@ -1010,7 +999,7 @@
                         </div>
                         <div class="min-w-0">
                             <p class="text-white/90 text-sm mb-1">Mail Us Now</p>
-                            <a href="mailto:info@bytewaveinvestments.com" class="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold hover:text-bytewave-gold transition-colors duration-300 break-all">info@bytewaveinvestments.com</a>
+                            <a href="mailto:info@bytewaveinvestments.com" class="text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-bold hover:underline transition-colors duration-300 break-all">info@bytewaveinvestments.com</a>
                         </div>
                     </div>
                 </div>

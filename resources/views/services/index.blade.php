@@ -9,12 +9,12 @@
 
 @section('content')
     <!-- Page Header Start -->
-    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
+    <div class="relative bg-cover bg-center py-20" style="background: linear-gradient(rgba(11, 31, 51, 0.6), rgba(11, 31, 51, 0.6)), url('{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}') center center no-repeat; background-size: cover;">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-12">
-            <p class="text-5xl md:text-6xl font-bold text-bytewave-gold mb-6 animate-fadeInDown">Services</p>
+            <p class="text-5xl md:text-6xl font-bold text-white mb-6 animate-fadeInDown">Services</p>
             <nav aria-label="breadcrumb" class="animate-fadeInDown">
                 <ol class="flex justify-center items-center space-x-2 text-white">
-                    <li><a class="hover:text-bytewave-gold transition-colors" href="{{ url('/') }}">Home</a></li>
+                    <li><a class="hover:underline transition-colors" href="{{ url('/') }}">Home</a></li>
                     <li class="before:content-['/'] before:mx-2">Services</li>
                 </ol>
             </nav>
@@ -23,30 +23,25 @@
     <!-- Page Header End -->
 
     <!-- Services Start -->
-    <div class="py-12 relative overflow-hidden bg-bytewave-blue-50 via-white to-blue-50">
-        <!-- Animated Background Shapes -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-10 left-10 w-72 h-72 bg-bytewave-blue opacity-5 rounded-full blur-3xl animate-blob"></div>
-            <div class="absolute top-40 right-20 w-96 h-96 bg-bytewave-gold opacity-5 rounded-full blur-3xl animate-blob animation-delay-2000"></div>
-            <div class="absolute bottom-20 left-1/3 w-80 h-80 bg-blue-400 opacity-5 rounded-full blur-3xl animate-blob animation-delay-4000"></div>
-        </div>
+    <div class="py-12 relative isolate bg-bytewave-blue/5">
+        <x-bg-art layout="tint" />
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
             <!-- Section Header with Animation -->
             <div class="text-center mx-auto pb-12 max-w-2xl animate-fadeIn">
                 <div class="inline-block mb-4">
-                    <span class="bg-bytewave-blue/10 text-bytewave-blue px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">Our Services</span>
+                    <span class="bg-bytewave-blue/5 text-bytewave-blue px-4 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">Our Services</span>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                <h1 class="text-4xl md:text-5xl font-bold text-bytewave-ink mb-4">
                     Services Built Specifically For 
-                    <span class="text-bytewave-gold relative">
+                    <span class="text-bytewave-blue relative">
                         Your Business
                         <svg class="absolute -bottom-2 left-0 w-full" height="8" viewBox="0 0 200 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M1 5.5C50 2.5 150 2.5 199 5.5" stroke="#F59E0B" stroke-width="3" stroke-linecap="round"/>
+                            <path d="M1 5.5C50 2.5 150 2.5 199 5.5" stroke="#0773B9" stroke-width="3" stroke-linecap="round"/>
                         </svg>
                     </span>
                 </h1>
-                <p class="text-gray-600 mt-4 text-lg">Innovative solutions tailored to drive your business forward</p>
+                <p class="text-bytewave-ink/70 mt-4 text-lg">Innovative solutions tailored to drive your business forward</p>
             </div>
 
             <!-- Services by Category with Accordion -->
@@ -57,11 +52,11 @@
             <div class="space-y-4" x-data="{ openCategory: '{{ $servicesByCategory->keys()->first() }}' }">
                 @forelse($servicesByCategory as $category => $categoryServices)
                     <!-- Category Accordion Item -->
-                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100 animate-fadeIn">
+                    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-bytewave-blue/20 animate-fadeIn">
                         <!-- Accordion Header -->
                         <button 
                             @click="openCategory = openCategory === '{{ $category }}' ? null : '{{ $category }}'"
-                            class="w-full px-8 py-6 flex items-center justify-between bg-gradient-to-r from-bytewave-blue to-blue-600 hover:from-bytewave-blue-600 hover:to-blue-700 transition-all duration-300"
+                            class="w-full px-8 py-6 flex items-center justify-between bg-bytewave-blue hover:bg-bytewave-ink transition-all duration-300"
                         >
                             <div class="flex items-center gap-4">
                                 <div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
@@ -95,7 +90,7 @@
                                 </div>
                                 <div class="text-left">
                                     <h3 class="text-2xl font-bold text-white">{{ $category ?? 'Uncategorized' }}</h3>
-                                    <p class="text-blue-100 text-sm">{{ $categoryServices->count() }} {{ Str::plural('service', $categoryServices->count()) }}</p>
+                                    <p class="text-white text-sm">{{ $categoryServices->count() }} {{ Str::plural('service', $categoryServices->count()) }}</p>
                                 </div>
                             </div>
                             <svg 
@@ -120,7 +115,7 @@
                             x-transition:leave-end="opacity-0 max-h-0"
                             class="overflow-hidden"
                         >
-                            <div class="p-8 bg-gray-50">
+                            <div class="p-8 bg-bytewave-blue/5">
                                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                     @foreach($categoryServices as $service)
                                         <div class="bg-white rounded-xl shadow hover:shadow-xl transition-all duration-300 overflow-hidden group">
@@ -129,16 +124,16 @@
                                                 <img loading="lazy" decoding="async" src="{{ $service->image ? asset('storage/' . $service->image) : asset('images/bytewave_livestreaming.jpg') }}" 
                                                      alt="{{ $service->name }}" 
                                                      class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                                <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                                                <div class="absolute inset-0 bg-bytewave-ink/40"></div>
                                             </div>
                                             
                                             <!-- Content -->
                                             <div class="p-6">
-                                                <h4 class="text-xl font-bold text-gray-900 mb-3">{{ $service->name }}</h4>
-                                                <p class="text-gray-600 text-sm mb-4 line-clamp-3">{{ Str::limit($service->description, 120) }}</p>
+                                                <h4 class="text-xl font-bold text-bytewave-ink mb-3">{{ $service->name }}</h4>
+                                                <p class="text-bytewave-ink/70 text-sm mb-4 line-clamp-3">{{ Str::limit($service->description, 120) }}</p>
                                                 
                                                 <a href="{{ Str::contains($service->name, 'Audio-Visual') || Str::contains($service->name, 'Audio Visual') ? route('services.audio-visual') : route('services.show', $service->id) }}"
-                                                   class="inline-flex items-center gap-2 text-bytewave-blue hover:text-blue-700 font-semibold transition-colors duration-300 group/link">
+                                                   class="inline-flex items-center gap-2 text-bytewave-blue hover:text-bytewave-ink font-semibold transition-colors duration-300 group/link">
                                                     Learn More
                                                     <svg class="w-4 h-4 transform group-hover/link:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
@@ -154,9 +149,9 @@
                 @empty
                     <div class="text-center py-12">
                         <div class="inline-block p-8 bg-white rounded-2xl shadow-lg">
-                            <i class="fas fa-inbox text-6xl text-gray-300 mb-4"></i>
-                            <p class="text-xl text-gray-600">No services available at the moment.</p>
-                            <p class="text-gray-500 mt-2">Check back soon for exciting new offerings!</p>
+                            <i class="fas fa-inbox text-6xl text-bytewave-blue/30 mb-4"></i>
+                            <p class="text-xl text-bytewave-ink/70">No services available at the moment.</p>
+                            <p class="text-bytewave-ink/70 mt-2">Check back soon for exciting new offerings!</p>
                         </div>
                     </div>
                 @endforelse

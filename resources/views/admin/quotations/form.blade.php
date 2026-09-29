@@ -5,11 +5,10 @@
 @push('styles')
 <style>
 :root {
-    --bw-blue: #0773B8;
-    --bw-blue-dark: #04456E;
-    --bw-gold: #FBB145;
-    --bw-surface: #f8fafc;
-    --bw-border: #e2e8f0;
+    --bw-blue: #0773B9;
+    --bw-blue-dark: #0B1F33;
+    --bw-surface: #F3F8FC;
+    --bw-border: #CDE3F1;
     --bw-radius: 12px;
 }
 
@@ -22,7 +21,7 @@
     padding: 1.75rem 2rem;
     margin-bottom: 1.25rem;
 }
-.inv-title { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; }
+.inv-title { font-size: 1.5rem; font-weight: 700; color: #0B1F33; margin: 0; }
 .inv-back { color: var(--bw-blue); font-size: 0.85rem; text-decoration: none; }
 .inv-back:hover { text-decoration: underline; }
 
@@ -46,9 +45,9 @@
     margin-bottom: 1rem;
 }
 
-.form-label-sm { font-size: 0.78rem; font-weight: 600; color: #475569; margin-bottom: .3rem; }
+.form-label-sm { font-size: 0.78rem; font-weight: 600; color: #546270; margin-bottom: .3rem; }
 .form-control, .form-select { font-size: 0.875rem; border-color: var(--bw-border); border-radius: 8px; }
-.form-control:focus, .form-select:focus { border-color: var(--bw-blue); box-shadow: 0 0 0 3px rgba(7,115,184,.12); }
+.form-control:focus, .form-select:focus { border-color: var(--bw-blue); box-shadow: 0 0 0 3px rgba(7, 115, 185,.12); }
 
 .inv-number-badge {
     background: var(--bw-surface);
@@ -57,7 +56,7 @@
     padding: .6rem 1rem;
     font-size: 1rem;
     font-weight: 600;
-    color: #0f172a;
+    color: #0B1F33;
     display: inline-block;
     letter-spacing: .03em;
 }
@@ -81,27 +80,27 @@
 }
 .items-table { width: 100%; border-collapse: collapse; }
 .items-table thead th {
-    background: #f1f5f9;
+    background: #F3F8FC;
     padding: .6rem 1rem;
     font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .07em;
-    color: #64748b;
+    color: #546270;
     border-bottom: 1px solid var(--bw-border);
     white-space: nowrap;
 }
 .items-table tbody td {
     padding: .6rem .75rem;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid #CDE3F1;
     vertical-align: top;
 }
 .items-table tbody tr:last-child td { border-bottom: none; }
-.items-table tbody tr:hover td { background: #fafcff; }
+.items-table tbody tr:hover td { background: #F3F8FC; }
 .items-table .form-control,
 .items-table .form-select { font-size: 0.82rem; padding: .35rem .65rem; border-radius: 6px; }
 
-.line-amount { font-size: 0.875rem; font-weight: 600; color: #0f172a; white-space: nowrap; }
+.line-amount { font-size: 0.875rem; font-weight: 600; color: #0B1F33; white-space: nowrap; }
 
 /* Save-as-service toggle */
 .save-toggle {
@@ -111,7 +110,7 @@
     gap: 2px;
     padding-top: 4px;
 }
-.save-toggle label { font-size: 0.65rem; color: #94a3b8; line-height: 1; }
+.save-toggle label { font-size: 0.65rem; color: #546270; line-height: 1; }
 
 /* Totals */
 .totals-section { padding: 1rem 1.25rem 1.25rem; border-top: 1px solid var(--bw-border); }
@@ -119,13 +118,13 @@
     display: flex; justify-content: flex-end; align-items: center;
     gap: 1rem; padding: .3rem 0; font-size: 0.875rem;
 }
-.totals-row .t-label { color: #64748b; width: 130px; text-align: right; }
-.totals-row .t-value { width: 150px; text-align: right; font-weight: 600; color: #0f172a; }
+.totals-row .t-label { color: #546270; width: 130px; text-align: right; }
+.totals-row .t-value { width: 150px; text-align: right; font-weight: 600; color: #0B1F33; }
 .totals-row.total-final {
     border-top: 2px solid var(--bw-border);
     margin-top: .4rem; padding-top: .7rem; font-size: 1rem;
 }
-.totals-row.total-final .t-label { font-weight: 700; color: #0f172a; }
+.totals-row.total-final .t-label { font-weight: 700; color: #0B1F33; }
 .totals-row.total-final .t-value { font-size: 1.15rem; color: var(--bw-blue); }
 .tax-input { width: 80px; display: inline-block; }
 
@@ -140,7 +139,7 @@
     transition: all .15s;
     margin: .75rem 1.25rem;
 }
-.btn-add-line:hover { background: #e8f4fd; border-color: var(--bw-blue); }
+.btn-add-line:hover { background: #CDE3F1; border-color: var(--bw-blue); }
 
 /* Bottom notes */
 .inv-bottom { display: grid; grid-template-columns: 1fr; gap: 1.25rem; margin-bottom: 1.25rem; }
@@ -151,13 +150,13 @@
     background: #fff; border-top: 1px solid var(--bw-border);
     padding: .85rem 2rem;
     display: flex; justify-content: flex-end; align-items: center; gap: .75rem;
-    z-index: 100; box-shadow: 0 -4px 16px rgba(0,0,0,.06);
+    z-index: 100; box-shadow: 0 -4px 16px rgba(11, 31, 51,.06);
 }
 
 /* Locked banner */
 .locked-banner {
-    background: #fef9c3; border: 1px solid #fde047; border-radius: 10px;
-    padding: .75rem 1.25rem; font-size: .875rem; color: #713f12; margin-bottom: 1.25rem;
+    background: #FFF1D1; border: 1px solid #E8D5A3; border-radius: 10px;
+    padding: .75rem 1.25rem; font-size: .875rem; color: #92600C; margin-bottom: 1.25rem;
 }
 </style>
 @endpush
@@ -376,7 +375,7 @@
                                 <input class="form-check-input save-as-service" type="checkbox"
                                     name="items[{{ $idx }}][save_as_service]" value="1"
                                     {{ $locked ? 'disabled' : '' }}>
-                                <label style="font-size:.62rem;color:#94a3b8">save</label>
+                                <label style="font-size:.62rem;color:#546270">save</label>
                             </div>
                         </td>
                         <td>
@@ -413,7 +412,7 @@
                     <td>
                         <div class="save-toggle">
                             <input class="form-check-input save-as-service" type="checkbox" name="items[0][save_as_service]" value="1">
-                            <label style="font-size:.62rem;color:#94a3b8">save</label>
+                            <label style="font-size:.62rem;color:#546270">save</label>
                         </div>
                     </td>
                     <td>
@@ -476,12 +475,9 @@
 
 {{-- Sticky action bar --}}
 <div class="inv-actions">
-    <a href="{{ route('admin.quotations.index') }}" class="btn btn-outline-secondary">Cancel</a>
+    <x-admin.button href="{{ route('admin.quotations.index') }}" variant="secondary">Cancel</x-admin.button>
     @if(!$locked)
-    <button type="submit" class="btn btn-primary px-4">
-        <i class="fas fa-save me-1"></i>
-        {{ $isEdit ? 'Update Quotation' : 'Save Quotation' }}
-    </button>
+    <x-admin.button type="submit">{{ $isEdit ? 'Update Quotation' : 'Save Quotation' }}</x-admin.button>
     @endif
 </div>
 
@@ -514,7 +510,7 @@
         <td>
             <div class="save-toggle">
                 <input class="form-check-input save-as-service" type="checkbox" name="items[__IDX__][save_as_service]" value="1">
-                <label style="font-size:.62rem;color:#94a3b8">save</label>
+                <label style="font-size:.62rem;color:#546270">save</label>
             </div>
         </td>
         <td>
@@ -555,7 +551,7 @@
                     <div class="col-12">
                         <label class="form-label-sm">Suggested Rate <span class="text-danger">*</span></label>
                         <input type="number" class="form-control" id="service_modal_rate" step="0.01" min="0">
-                        <div style="font-size:.75rem;color:#94a3b8;margin-top:.25rem">Can be overridden per quotation.</div>
+                        <div style="font-size:.75rem;color:#546270;margin-top:.25rem">Can be overridden per quotation.</div>
                     </div>
                     <div class="col-12">
                         <label class="form-label-sm">Description <span class="text-muted fw-normal">(optional)</span></label>
@@ -565,10 +561,8 @@
                 <div class="text-danger small mt-2 d-none" id="service_modal_error"></div>
             </div>
             <div class="modal-footer" style="border-top:1px solid var(--bw-border)">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" id="service_modal_save">
-                    <i class="fas fa-save me-1"></i> Save Service
-                </button>
+                <x-admin.button type="button" data-bs-dismiss="modal" variant="secondary">Cancel</x-admin.button>
+                <x-admin.button type="button" id="service_modal_save">Save Service</x-admin.button>
             </div>
         </div>
     </div>
@@ -720,7 +714,7 @@
             }
 
             saveServiceBtn.disabled = true;
-            saveServiceBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Saving…';
+            bwLabel(saveServiceBtn, 'Saving…');
 
             try {
                 var res  = await fetch('{{ route('admin.client-services.quick-store') }}', {
@@ -762,7 +756,7 @@
                 if (errorEl) { errorEl.textContent = err?.message || 'Failed to create service.'; errorEl.classList.remove('d-none'); }
             } finally {
                 saveServiceBtn.disabled = false;
-                saveServiceBtn.innerHTML = '<i class="fas fa-save me-1"></i> Save Service';
+                bwLabel(saveServiceBtn, 'Save Service');
             }
         });
     }

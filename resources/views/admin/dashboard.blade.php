@@ -21,7 +21,7 @@
     }
 
     .dash-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
         display: flex;
@@ -39,7 +39,7 @@
 
     .stat-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         padding: 1.25rem 1.35rem;
         display: flex;
@@ -50,7 +50,7 @@
     }
 
     .stat-card:hover {
-        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 12px 28px rgba(11, 31, 51, 0.1);
         transform: translateY(-3px);
         border-color: var(--bytewave-blue-light);
     }
@@ -67,27 +67,26 @@
     }
 
     .stat-icon-box.blue { background: var(--bytewave-blue-light); color: var(--bytewave-blue-dark); }
-    .stat-icon-box.gold { background: rgba(251, 177, 69, 0.15); color: #92600C; }
-    .stat-icon-box.green { background: #E9F9EF; color: #1E8E4F; }
-    .stat-icon-box.purple { background: #F3E8FF; color: #7C3AED; }
+    .stat-icon-box.green { background: #E3F5EA; color: #17703F; }
+    .stat-icon-box.purple { background: #E6F1F8; color: #0773B9; }
 
     .stat-label {
         font-size: 0.78rem;
         font-weight: 600;
-        color: #8A97A0;
+        color: #546270;
         margin-bottom: 0.2rem;
     }
 
     .stat-value {
         font-size: 1.4rem;
         font-weight: 700;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     /* Section Cards */
     .dash-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
         height: 100%;
@@ -98,7 +97,7 @@
         align-items: center;
         gap: 0.6rem;
         padding: 1.1rem 1.35rem;
-        border-bottom: 1px solid #F1F3F5;
+        border-bottom: 1px solid #CDE3F1;
     }
 
     .dash-card-header i {
@@ -110,7 +109,7 @@
         margin: 0;
         font-weight: 700;
         font-size: 0.95rem;
-        color: #1F2A33;
+        color: #0B1F33;
     }
 
     .dash-card-body {
@@ -129,7 +128,7 @@
         align-items: center;
         gap: 0.75rem;
         padding: 0.9rem 1rem;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 12px;
         text-decoration: none;
         transition: border-color 0.2s ease, background 0.2s ease;
@@ -156,7 +155,7 @@
     .quick-action-title {
         font-weight: 600;
         font-size: 0.85rem;
-        color: #1F2A33;
+        color: #0B1F33;
         margin: 0;
     }
 
@@ -173,7 +172,7 @@
         align-items: center;
         gap: 0.75rem;
         padding: 0.85rem 0;
-        border-bottom: 1px solid #F4F6F8;
+        border-bottom: 1px solid #CDE3F1;
     }
 
     .activity-item:last-child {
@@ -187,19 +186,19 @@
 
     .activity-title {
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
         font-size: 0.88rem;
         margin-bottom: 0.15rem;
     }
 
     .activity-description {
         font-size: 0.8rem;
-        color: #8A97A0;
+        color: #546270;
     }
 
     .activity-time {
         font-size: 0.75rem;
-        color: #B0BAC2;
+        color: #546270;
         white-space: nowrap;
     }
 
@@ -214,15 +213,15 @@
         flex-shrink: 0;
     }
 
-    .status-pill.bg-secondary { background: #F1F4F7 !important; color: #6B7A85 !important; }
+    .status-pill.bg-secondary { background: #F3F8FC !important; color: #546270 !important; }
     .status-pill.bg-info { background: var(--bytewave-blue-light) !important; color: var(--bytewave-blue-dark) !important; }
     .status-pill.bg-primary { background: var(--bytewave-blue-light) !important; color: var(--bytewave-blue-dark) !important; }
-    .status-pill.bg-success { background: #E9F9EF !important; color: #1E8E4F !important; }
+    .status-pill.bg-success { background: #E3F5EA !important; color: #17703F !important; }
     .status-pill.bg-danger { background: #FDEDEC !important; color: #C0392B !important; }
-    .status-pill.bg-dark { background: #E7E9EC !important; color: #33393D !important; }
+    .status-pill.bg-dark { background: #E6F1F8 !important; color: #0B1F33 !important; }
 
     .activity-empty {
-        color: #8A97A0;
+        color: #546270;
         font-size: 0.85rem;
         text-align: center;
         padding: 1.5rem 0;
@@ -273,7 +272,7 @@
         </a>
 
         <a href="{{ route('admin.invoices.index', ['status' => 'issued']) }}" class="stat-card">
-            <div class="stat-icon-box gold"><i class="fas fa-file-invoice-dollar"></i></div>
+            <div class="stat-icon-box blue"><i class="fas fa-file-invoice-dollar"></i></div>
             <div>
                 <div class="stat-label">Pending Invoices</div>
                 <div class="stat-value">{{ App\Models\Invoice::whereIn('status', ['issued', 'partially_paid', 'overdue'])->count() }}</div>

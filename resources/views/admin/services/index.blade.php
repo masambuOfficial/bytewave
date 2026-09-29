@@ -21,7 +21,7 @@
     }
 
     .services-header p {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.9rem;
         margin-bottom: 0;
     }
@@ -55,7 +55,7 @@
 
     .service-card {
         background: #fff;
-        border: 1px solid #EEF1F4;
+        border: 1px solid #CDE3F1;
         border-radius: 16px;
         overflow: hidden;
         display: flex;
@@ -64,7 +64,7 @@
     }
 
     .service-card:hover {
-        box-shadow: 0 12px 28px rgba(4, 69, 110, 0.1);
+        box-shadow: 0 12px 28px rgba(11, 31, 51, 0.1);
         transform: translateY(-3px);
     }
 
@@ -99,7 +99,7 @@
     .service-card-title {
         font-size: 1.05rem;
         font-weight: 600;
-        color: #1F2A33;
+        color: #0B1F33;
         margin-bottom: 0.4rem;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -107,7 +107,7 @@
     }
 
     .service-card-text {
-        color: #6B7A85;
+        color: #546270;
         font-size: 0.875rem;
         line-height: 1.5;
         margin-bottom: 1.1rem;
@@ -121,7 +121,7 @@
     .service-card-actions {
         display: flex;
         gap: 0.5rem;
-        border-top: 1px solid #F1F3F5;
+        border-top: 1px solid #CDE3F1;
         padding-top: 0.9rem;
         margin-top: auto;
     }
@@ -156,7 +156,7 @@
     }
 
     .service-action-btn.delete:hover {
-        background: #E74C3C;
+        background: #C0392B;
         color: #fff;
     }
 
@@ -169,7 +169,7 @@
         text-align: center;
         padding: 4rem 1rem;
         background: #fff;
-        border: 1px dashed #DCE3E8;
+        border: 1px dashed #CDE3F1;
         border-radius: 16px;
     }
 
@@ -181,7 +181,7 @@
     }
 
     .services-empty p {
-        color: #6B7A85;
+        color: #546270;
         margin-bottom: 1.25rem;
     }
 </style>
@@ -194,18 +194,14 @@
             <h1>Website Services</h1>
             <p>Manage the services displayed on your public website.</p>
         </div>
-        <a href="{{ route('admin.services.create') }}" class="btn-add-service">
-            <i class="fas fa-plus"></i> Add New Service
-        </a>
+        <x-admin.button href="{{ route('admin.services.create') }}">Add New Service</x-admin.button>
     </div>
 
     @if($services->isEmpty())
         <div class="services-empty">
             <i class="fas fa-cogs"></i>
             <p>No services found.</p>
-            <a href="{{ route('admin.services.create') }}" class="btn-add-service">
-                Add your first service
-            </a>
+            <x-admin.button href="{{ route('admin.services.create') }}">Add your first service</x-admin.button>
         </div>
     @else
         <div class="services-grid">

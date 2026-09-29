@@ -55,7 +55,6 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     
     <!-- Alpine.js with Collapse Plugin -->
     <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
@@ -68,7 +67,7 @@
     <link rel="icon" type="image/png" href="{{ asset('favicon.png') }}">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
     <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}">
-    <meta name="theme-color" content="#ffffff">
+    <meta name="theme-color" content="#0773B9">
 
     <!-- Structured Data for Google/AI engines (sourced from config/company.php) -->
     <script type="application/ld+json">
@@ -166,7 +165,7 @@
         .logo-item:hover {
             filter: grayscale(0%);
             border-color: rgba(147, 197, 253, 1);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 15px -3px rgba(11, 31, 51, 0.1);
             transform: scale(1.05);
         }
 
@@ -192,7 +191,8 @@
     </style>
 </head>
 
-<body style="background-color: #F6F6F6;">
+<body class="bg-white text-bytewave-ink">
+    <x-art-sprite />
     @unless($__env->hasSection('minimal'))
         @include('layouts.partials.header')
     @endunless
@@ -256,16 +256,33 @@
         // Start the loop
         requestAnimationFrame(raf);
 
-        // Anchor link smooth scroll
+        // Anchor link smooth scroll. A bare "#" is not a selector, so only the back-to-top button acts on it.
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const href = this.getAttribute('href');
+                if (href === '#') {
+                    if (this.classList.contains('back-to-top')) lenis.scrollTo(0, { duration: 1.2 });
+                    return;
+                }
+                const target = document.querySelector(href);
                 if (target) {
                     lenis.scrollTo(target, { offset: 0, duration: 1.5 });
                 }
             });
         });
+
+        // Back to top: hidden at the top of the page, shown once the visitor has scrolled a little
+        const backToTop = document.querySelector('.back-to-top');
+        if (backToTop) {
+            const toggleBackToTop = () => {
+                const show = window.scrollY > 400;
+                backToTop.classList.toggle('opacity-0', !show);
+                backToTop.classList.toggle('pointer-events-none', !show);
+            };
+            window.addEventListener('scroll', toggleBackToTop, { passive: true });
+            toggleBackToTop();
+        }
     </script>
 
     @yield('scripts')

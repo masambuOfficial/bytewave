@@ -148,12 +148,8 @@
                         </div>
 
                         <div class="d-flex justify-content-between mt-4">
-                            <a href="{{ route('admin.tasks.index') }}" class="btn btn-secondary">
-                                <i class="fas fa-arrow-left"></i> Back to List
-                            </a>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fas fa-save"></i> {{ isset($task) ? 'Update' : 'Create' }} Task
-                            </button>
+                            <x-admin.button href="{{ route('admin.tasks.index') }}" variant="secondary">Back to List</x-admin.button>
+                            <x-admin.button type="submit">{{ isset($task) ? 'Update' : 'Create' }} Task</x-admin.button>
                         </div>
                     </form>
                 </div>
