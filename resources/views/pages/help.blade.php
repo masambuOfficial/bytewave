@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Help Center - BYTEWAVE')
+@section('title', 'Help Center – ByteWave Investments')
+@section('meta_description', 'Find help and support for ByteWave Investments services and products, including how to get started, request a quote and contact our team.')
 
 @section('content')
     <!-- Page Header Start -->

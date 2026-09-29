@@ -1,11 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Portfolio')
+@section('title', 'Our Portfolio – Websites, Systems & Media Projects | ByteWave')
+@section('meta_description', 'See websites, management systems, livestreams and design projects delivered by ByteWave Investments for clients across Uganda.')
 
 @section('content')
     <!-- Page Header Start -->
     <div class="w-full bg-gray-200 relative">
-        <h1 class="sr-only">Our Portfolio</h1>
+        <span class="sr-only">Our Portfolio</span>
         <img src="{{ asset('images/bytewave_portfolio.webp') }}"
              alt="Refine Portfolio - Built with Heart"
              width="592" height="178"

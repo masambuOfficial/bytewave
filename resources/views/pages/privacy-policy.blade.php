@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Privacy Policy - BYTEWAVE')
+@section('title', 'Privacy Policy – ByteWave Investments')
+@section('meta_description', 'How ByteWave Investments collects, uses and protects your personal information when you use our website and services.')
 
 @section('content')
     <!-- Page Header Start -->

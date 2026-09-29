@@ -23,20 +23,23 @@
     <!-- Primary Meta Tags -->
     <meta name="description" content="@yield('meta_description', 'ByteWave Investments — Empowering smart financial and digital growth through innovation, insights, and technology.')">
     <meta name="author" content="ByteWave Investments">
+    <meta name="robots" content="@yield('robots', 'index, follow, max-image-preview:large')">
     <link rel="canonical" href="@yield('canonical', url()->current())">
 
     <!-- Open Graph (Facebook, LinkedIn) -->
     <meta property="og:title" content="@yield('og_title', trim($__env->yieldContent('title', 'BYTEWAVE')))">
     <meta property="og:description" content="@yield('og_description', 'Empowering MSMEs to achieve smart digital growth by providing affordable ICT and multimedia solutions driven by innovation and technology.')">
-    <meta property="og:image" content="@yield('og_image', asset('favicon.png'))">
+    <meta property="og:image" content="@yield('og_image', asset('images/ByteWave_Logo.png'))">
     <meta property="og:url" content="@yield('og_url', url()->current())">
     <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:site_name" content="ByteWave Investments">
+    <meta property="og:locale" content="en_UG">
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="@yield('twitter_card', 'summary_large_image')">
     <meta name="twitter:title" content="@yield('og_title', trim($__env->yieldContent('title', 'BYTEWAVE')))">
     <meta name="twitter:description" content="@yield('og_description', 'Empowering MSMEs to achieve smart digital growth by providing affordable ICT and multimedia solutions driven by innovation and technology.')">
-    <meta name="twitter:image" content="@yield('og_image', asset('favicon.png'))">
+    <meta name="twitter:image" content="@yield('og_image', asset('images/ByteWave_Logo.png'))">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -73,27 +76,47 @@
     <meta name="msapplication-TileImage" content="{{ asset('favicon.png') }}">
     <meta name="theme-color" content="#ffffff">
 
-    <!-- ✅ Structured Data for Google/AI engines (LocalBusiness Schema, sourced from config/company.php) -->
+    <!-- Structured Data for Google/AI engines (sourced from config/company.php) -->
     <script type="application/ld+json">
     {
       "@@context": "https://schema.org",
-      "@type": "LocalBusiness",
-      "name": @json(config('company.name')),
-      "url": "https://bytewaveinvestments.com/",
-      "logo": @json(asset(config('company.logo'))),
-      "image": @json(asset(config('company.logo'))),
-      "telephone": @json(config('company.phone')),
-      "email": @json(config('company.email')),
-      "address": {
-        "@type": "PostalAddress",
-        "streetAddress": @json(config('company.address2') . ', ' . config('company.address3')),
-        "postOfficeBoxNumber": @json(config('company.address')),
-        "addressLocality": "Kampala",
-        "addressCountry": "UG"
-      },
-      "sameAs": [
-        "https://www.facebook.com/bytewaveinvestments",
-        "https://www.linkedin.com/company/bytewaveinvestments"
+      "@@graph": [
+        {
+          "@@type": ["LocalBusiness", "ProfessionalService"],
+          "@@id": "https://bytewaveinvestments.com/#organization",
+          "name": @json(config('company.name')),
+          "alternateName": "ByteWave Investments",
+          "description": "ByteWave Investments provides affordable software development, web design, POS and management systems, audio-visual production and ICT solutions for businesses in Kampala, Uganda and across East Africa.",
+          "url": "https://bytewaveinvestments.com/",
+          "logo": @json(asset(config('company.logo'))),
+          "image": @json(asset(config('company.logo'))),
+          "telephone": @json(config('company.phone')),
+          "email": @json(config('company.email')),
+          "priceRange": "$$",
+          "address": {
+            "@@type": "PostalAddress",
+            "streetAddress": @json(config('company.address2') . ', ' . config('company.address3')),
+            "postOfficeBoxNumber": @json(config('company.address')),
+            "addressLocality": "Kampala",
+            "addressCountry": "UG"
+          },
+          "areaServed": [
+            {"@@type": "Country", "name": "Uganda"},
+            {"@@type": "AdministrativeArea", "name": "East Africa"}
+          ],
+          "sameAs": [
+            "https://www.facebook.com/bytewaveinvestments",
+            "https://www.linkedin.com/company/bytewaveinvestments"
+          ]
+        },
+        {
+          "@@type": "WebSite",
+          "@@id": "https://bytewaveinvestments.com/#website",
+          "url": "https://bytewaveinvestments.com/",
+          "name": "ByteWave Investments",
+          "publisher": {"@@id": "https://bytewaveinvestments.com/#organization"},
+          "inLanguage": "en"
+        }
       ]
     }
     </script>

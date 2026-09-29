@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Blog - BYTEWAVE')
+@section('title', 'Tech Blog – Insights on Technology & Digital Growth | ByteWave')
 @section('meta_description', 'Insights, updates, and perspectives on technology and digital growth from the BYTEWAVE team.')
 
 @section('content')

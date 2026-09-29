@@ -1,4 +1,10 @@
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /newsletter/
+Disallow: /testimonials/submit
 
 Sitemap: https://bytewaveinvestments.com/sitemap.xml

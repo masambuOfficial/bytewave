@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Audio-Visual Production - BYTEWAVE')
+@section('title', 'Audio-Visual Production & Livestreaming in Uganda | ByteWave')
+@section('meta_description', 'Professional video production, event livestreaming, photography and multimedia services in Kampala, Uganda from ByteWave Investments.')
 
 @section('content')
     <!-- Page Header Start -->

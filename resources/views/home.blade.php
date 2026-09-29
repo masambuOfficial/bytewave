@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'BYTEWAVE - Innovative IT Solutions')
+@section('title', 'ByteWave Investments – Software, Web & ICT Solutions in Uganda')
+@section('meta_description', 'ByteWave Investments builds affordable websites, SACCO, healthcare and POS software, and audio-visual productions for businesses in Kampala, Uganda and East Africa.')
 
 @section('content')
 

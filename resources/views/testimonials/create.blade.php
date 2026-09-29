@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Submit Your Testimonial - ByteWave')
+@section('robots', 'noindex, follow')
 
 @section('content')
 <!-- Hero Banner -->

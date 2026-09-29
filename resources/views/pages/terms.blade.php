@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Terms of Service - BYTEWAVE')
+@section('title', 'Terms of Service – ByteWave Investments')
+@section('meta_description', 'Read the terms of service for using the ByteWave Investments website, products and services.')
 
 @section('content')
     <!-- Page Header Start -->

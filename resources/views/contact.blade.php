@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Contact Us - BYTEWAVE')
+@section('title', 'Contact ByteWave Investments – Kampala, Uganda')
+@section('meta_description', 'Get in touch with ByteWave Investments in Kampala for web development, software systems, IT support and audio-visual production. Call, email or send us a message.')
 
 @section('content')
     <!-- Page Header Start -->
@@ -23,7 +24,7 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mx-auto max-w-2xl mb-12">
                 <h5 class="text-bytewave-blue font-semibold text-base uppercase tracking-wider mb-4">Get In Touch</h5>
-                <h1 class="text-3xl md:text-4xl font-bold text-bytewave-gold mb-6">Contact Us for Any Query</h1>
+                <h2 class="text-3xl md:text-4xl font-bold text-bytewave-gold mb-6">Contact Us for Any Query</h2>
                 <p class="text-gray-600 text-lg">Have questions about our services? Need technical support? Want to discuss a project? We're here to help!</p>
             </div>
 

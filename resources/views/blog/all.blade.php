@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'All Articles - BYTEWAVE')
+@section('title', 'All Articles – ByteWave Tech Blog')
+@section('meta_description', 'Browse all ByteWave articles on technology, software, AI and digital growth, with news and insights for businesses in Uganda and beyond.')
 
 @section('content')
     <!-- Page Header Start -->

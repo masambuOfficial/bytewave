@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Frequently Asked Questions - BYTEWAVE')
+@section('title', 'FAQs – Web, Software & IT Services in Uganda | ByteWave')
 @section('meta_description', 'Answers to common questions about BYTEWAVE\'s web development, mobile app, cloud, digital marketing, and IT consulting services in Uganda and East Africa.')
 
 @php

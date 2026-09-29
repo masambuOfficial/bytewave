@@ -1,6 +1,6 @@
 /.phpunit.cache
 /node_modules
-# /public/build
+/public/build
 /public/hot
 /public/storage
 /storage/*.key
@@ -40,3 +40,6 @@ import-db.bat
 sync-db.bat
 sync-db.sh
 test-remote-connection.bat
+
+# Generated daily by sitemap:generate on the server
+public/sitemap.xml

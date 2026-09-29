@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Products - BYTEWAVE')
+@section('title', 'Software Products – SACCO, Healthcare & POS Systems | ByteWave')
+@section('meta_description', 'Discover ByteWave software products including FinSphere SACCO management, FinHealth healthcare management and FinPOS point-of-sale systems built for African businesses.')
 
 @section('content')
     <!-- Page Header Start -->

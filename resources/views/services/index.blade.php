@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
-@section('title', 'Services - BYTEWAVE')
+@section('title', 'Our Services – Web, Software & Digital Solutions | ByteWave')
+@section('meta_description', 'Explore ByteWave services: website design, custom software, management systems, IT support, digital marketing and audio-visual production for businesses in Uganda.')
 
 @section('content')
     <!-- Page Header Start -->
