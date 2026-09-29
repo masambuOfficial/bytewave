@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\NewTestimonialMail;
 use App\Models\Testimonial;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 
 class TestimonialController extends Controller
@@ -23,12 +26,12 @@ class TestimonialController extends Controller
     {
         // Honeypot check for spam prevention
         if ($request->filled('website')) {
-            return redirect()->back()->with('success', 'Thank you for your submission!');
+            return redirect()->route('testimonials.create')->with('success', true);
         }
 
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-            'title' => 'required|string|max:255',
+            'title' => 'nullable|string|max:255',
             'company' => 'nullable|string|max:255',
             'testimonial' => 'required|string|min:10|max:1000',
             'rating' => 'required|integer|min:1|max:5',
@@ -44,8 +47,15 @@ class TestimonialController extends Controller
         $validated['ip_address'] = $request->ip();
         $validated['status'] = 'pending';
 
-        Testimonial::create($validated);
+        $testimonial = Testimonial::create($validated);
 
-        return redirect()->back()->with('success', 'Thank you for your testimonial! It will be reviewed by our team shortly.');
+        // Notify admin; a mail failure must never break the submission
+        try {
+            Mail::to(config('mail.from.address'))->send(new NewTestimonialMail($testimonial));
+        } catch (\Throwable $e) {
+            Log::error('Testimonial notification email failed: ' . $e->getMessage());
+        }
+
+        return redirect()->route('testimonials.create')->with('success', true);
     }
 }

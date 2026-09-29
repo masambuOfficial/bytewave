@@ -1,197 +1,229 @@
 @extends('layouts.app')
 
-@section('title', 'Submit Your Testimonial - ByteWave')
-@section('robots', 'noindex, follow')
+@section('title', 'Share Your Experience - ByteWave')
+@section('robots', 'noindex, nofollow')
+@section('minimal', true)
+
+@section('styles')
+<style>[x-cloak]{display:none !important}</style>
+@endsection
 
 @section('content')
-<!-- Hero Banner -->
-<section class="relative bg-gradient-to-br from-bytewave-gold to-orange-500 py-20 md:py-32 overflow-hidden">
-    <!-- Background Pattern -->
-    <div class="absolute inset-0 opacity-10">
-        <div class="absolute top-0 left-0 w-96 h-96 bg-white rounded-full -translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full translate-x-1/2 translate-y-1/2"></div>
+@php
+    $field = 'w-full rounded-xl border border-gray-200 bg-white px-4 py-3 text-base text-gray-900 placeholder-gray-400 focus:border-bytewave-blue focus:outline-none focus:ring-4 focus:ring-bytewave-blue/10';
+    $label = 'mb-1 block text-sm font-semibold text-gray-900';
+@endphp
+
+{{-- Fits the screen; only scrolls internally if the device is too short to fit the form --}}
+<div class="relative flex h-dvh flex-col overflow-y-auto bg-gradient-to-br from-bytewave-blue-800 via-bytewave-blue-700 to-bytewave-blue">
+    {{-- Decorative background --}}
+    <div class="pointer-events-none fixed inset-0" aria-hidden="true">
+        <div class="absolute -top-32 -left-32 h-96 w-96 rounded-full bg-white/5"></div>
+        <div class="absolute top-1/3 -right-40 h-[28rem] w-[28rem] rounded-full bg-bytewave-gold/10 blur-3xl"></div>
+        <div class="absolute -bottom-40 left-1/4 h-96 w-96 rounded-full bg-white/5"></div>
     </div>
 
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <!-- Badge -->
-        <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 mb-6">
-            <div class="w-2 h-2 bg-white rounded-full"></div>
-            <span class="text-sm font-semibold text-white uppercase tracking-wide">Your Voice Matters</span>
-        </div>
+    {{-- Logo --}}
+    <header class="relative mx-auto flex w-full max-w-7xl shrink-0 justify-center px-4 pt-4 sm:px-6 lg:justify-start lg:px-8 lg:pt-6">
+        <a href="{{ url('/') }}" aria-label="ByteWave home">
+            <img src="{{ asset('images/BYTEWAVE_INVESTMENTS-LOGO.png') }}" alt="ByteWave Investments" class="h-8 w-auto sm:h-10">
+        </a>
+    </header>
 
-        <!-- Heading -->
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-            Share Your <span class="text-gray-900">Experience</span>
-        </h1>
+    <div class="relative mx-auto grid w-full max-w-7xl flex-1 content-center items-center gap-4 px-4 py-3 sm:gap-6 sm:px-6 lg:grid-cols-5 lg:gap-16 lg:px-8">
 
-        <!-- Description -->
-        <p class="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto">
-            We'd love to hear about your experience working with ByteWave. Your feedback helps us improve and inspires others.
-        </p>
+        {{-- Hero --}}
+        <section class="text-center lg:col-span-2 lg:text-left">
+            <span class="hidden items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-wider text-white/90 sm:inline-flex">
+                <span class="h-1.5 w-1.5 rounded-full bg-bytewave-gold"></span>
+                Your voice matters
+            </span>
 
-        <!-- Icon -->
-        <div class="flex justify-center mb-8">
-            <div class="w-20 h-20 bg-white/10 backdrop-blur-sm rounded-full flex items-center justify-center">
-                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-</section>
+            <h1 class="text-2xl font-bold leading-tight tracking-tight text-white sm:mt-4 sm:text-4xl lg:text-5xl xl:text-6xl">
+                Share your <span class="text-bytewave-gold">experience</span><span class="hidden sm:inline"> with ByteWave</span>
+            </h1>
 
-<div class="min-h-screen py-12 md:py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p class="mx-auto mt-1 max-w-xl text-sm text-white/80 sm:mt-4 sm:text-lg lg:mx-0">
+                A few kind words from you help small businesses find a partner they can trust.
+            </p>
 
-        <!-- Success Message -->
-        @if(session('success'))
-        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg mb-6">
-            <p class="font-medium">{{ session('success') }}</p>
-        </div>
-        @endif
+            <ul class="mt-8 hidden space-y-4 text-left lg:block">
+                @foreach([
+                    ['fa-regular fa-clock', 'Takes about a minute', 'Just a rating and a few sentences.'],
+                    ['fa-regular fa-eye', 'Reviewed before publishing', 'Nothing goes live without our approval.'],
+                    ['fa-regular fa-heart', 'Every word counts', 'Your feedback helps us keep improving.'],
+                ] as [$icon, $heading, $text])
+                    <li class="flex items-start gap-4">
+                        <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/10 text-bytewave-gold">
+                            <i class="{{ $icon }}"></i>
+                        </span>
+                        <span>
+                            <span class="block font-semibold text-white">{{ $heading }}</span>
+                            <span class="block text-sm text-white/70">{{ $text }}</span>
+                        </span>
+                    </li>
+                @endforeach
+            </ul>
+        </section>
 
-        <!-- Form -->
-        <div class="bg-white rounded-2xl shadow-lg p-8 md:p-12">
-            <form action="{{ route('testimonials.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <!-- Honeypot field (hidden from users, catches bots) -->
-                <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
-
-                <!-- Name -->
-                <div class="mb-6">
-                    <label for="name" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Your Name <span class="text-red-500">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="name" 
-                        name="name" 
-                        value="{{ old('name') }}"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('name') border-red-500 @enderror"
-                        required
-                    >
-                    @error('name')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Title/Position -->
-                <div class="mb-6">
-                    <label for="title" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Your Title/Position <span class="text-red-500">*</span>
-                    </label>
-                    <input 
-                        type="text" 
-                        id="title" 
-                        name="title" 
-                        value="{{ old('title') }}"
-                        placeholder="e.g., Project Manager"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('title') border-red-500 @enderror"
-                        required
-                    >
-                    @error('title')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Company -->
-                <div class="mb-6">
-                    <label for="company" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Company Name
-                    </label>
-                    <input 
-                        type="text" 
-                        id="company" 
-                        name="company" 
-                        value="{{ old('company') }}"
-                        placeholder="e.g., Stellar Industries"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('company') border-red-500 @enderror"
-                    >
-                    @error('company')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <!-- Rating -->
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">
-                        Rating <span class="text-red-500">*</span>
-                    </label>
-                    <div class="flex gap-2" x-data="{ rating: {{ old('rating', 5) }}, hoverRating: 0 }">
-                        @for($i = 1; $i <= 5; $i++)
-                        <button 
-                            type="button"
-                            @click="rating = {{ $i }}"
-                            @mouseenter="hoverRating = {{ $i }}"
-                            @mouseleave="hoverRating = 0"
-                            class="text-4xl transition-all duration-200 hover:scale-110 focus:outline-none"
-                            :class="(hoverRating >= {{ $i }} || (hoverRating === 0 && rating >= {{ $i }})) ? 'text-yellow-400' : 'text-gray-300'"
-                        >
-                            ★
-                        </button>
-                        @endfor
-                        <input type="hidden" name="rating" :value="rating">
-                        <span class="ml-2 text-sm text-gray-600 self-center" x-text="rating + ' / 5'"></span>
+        {{-- Form / thank-you card --}}
+        <section class="mx-auto w-full max-w-xl lg:col-span-3 lg:max-w-none">
+            @if(session('success'))
+                <div class="rounded-3xl bg-white p-8 text-center shadow-2xl shadow-black/20 sm:p-12">
+                    <div class="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-bytewave-blue-50 text-bytewave-blue">
+                        <i class="fa-solid fa-check text-2xl"></i>
                     </div>
-                    @error('rating')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
+                    <h2 class="text-2xl font-bold text-gray-900 sm:text-3xl">Thank you!</h2>
+                    <p class="mx-auto mt-3 max-w-sm text-gray-600">
+                        Your testimonial has been received. We really appreciate you taking the time.
+                    </p>
+                    <a href="{{ url('/') }}" class="mt-8 inline-flex items-center justify-center rounded-xl bg-bytewave-blue px-6 py-3.5 font-semibold text-white transition hover:bg-bytewave-blue-600">
+                        Back to ByteWave
+                    </a>
                 </div>
+            @else
+                <form
+                    action="{{ route('testimonials.store') }}"
+                    method="POST"
+                    enctype="multipart/form-data"
+                    class="space-y-4 rounded-3xl bg-white p-5 shadow-2xl shadow-black/20 sm:space-y-4 sm:p-6 lg:p-8"
+                    x-data="{ rating: {{ (int) old('rating', 5) }}, count: {{ mb_strlen(old('testimonial', '')) }}, sending: false, fileName: '' }"
+                    @submit="sending = true"
+                >
+                    @csrf
 
-                <!-- Testimonial -->
-                <div class="mb-6">
-                    <label for="testimonial" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Your Testimonial <span class="text-red-500">*</span>
-                    </label>
-                    <textarea 
-                        id="testimonial" 
-                        name="testimonial" 
-                        rows="6"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('testimonial') border-red-500 @enderror"
-                        placeholder="Share your experience working with ByteWave..."
-                        required
-                    >{{ old('testimonial') }}</textarea>
-                    <p class="mt-1 text-sm text-gray-500">Minimum 10 characters, maximum 1000 characters</p>
-                    @error('testimonial')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+                    {{-- Honeypot --}}
+                    <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-                <!-- Avatar Upload -->
-                <div class="mb-8">
-                    <label for="avatar" class="block text-sm font-semibold text-gray-900 mb-2">
-                        Profile Photo (Optional)
-                    </label>
-                    <input 
-                        type="file" 
-                        id="avatar" 
-                        name="avatar" 
-                        accept="image/*"
-                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent @error('avatar') border-red-500 @enderror"
-                    >
-                    <p class="mt-1 text-sm text-gray-500">JPG, PNG, or GIF. Max size: 2MB</p>
-                    @error('avatar')
-                        <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
-                    @enderror
-                </div>
+                    {{-- Rating --}}
+                    <div class="flex items-center justify-between gap-3">
+                        <span class="text-sm font-semibold text-gray-900">How was your experience?</span>
+                        <div class="flex items-center" role="radiogroup" aria-label="Rating">
+                            @for($i = 1; $i <= 5; $i++)
+                                <button
+                                    type="button"
+                                    @click="rating = {{ $i }}"
+                                    role="radio"
+                                    :aria-checked="rating === {{ $i }}"
+                                    aria-label="{{ $i }} star{{ $i > 1 ? 's' : '' }}"
+                                    class="flex h-10 w-8 items-center justify-center rounded-lg text-3xl leading-none transition active:scale-90 focus:outline-none focus-visible:ring-4 focus-visible:ring-bytewave-blue/20 sm:w-10"
+                                    :class="rating >= {{ $i }} ? 'text-bytewave-gold' : 'text-gray-200'"
+                                >★</button>
+                            @endfor
+                            <input type="hidden" name="rating" :value="rating">
+                        </div>
+                    </div>
+                    @error('rating')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
 
-                <!-- Submit Button -->
-                <div class="flex justify-center">
-                    <button 
-                        type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-lg transition-colors duration-300 shadow-lg hover:shadow-xl"
-                    >
-                        Submit Testimonial
-                    </button>
-                </div>
-            </form>
-        </div>
+                    {{-- Testimonial --}}
+                    <div>
+                        <label for="testimonial" class="{{ $label }}">Your testimonial</label>
+                        <textarea
+                            id="testimonial"
+                            name="testimonial"
+                            rows="4"
+                            maxlength="1000"
+                            required
+                            placeholder="What was it like working with ByteWave?"
+                            class="{{ $field }} resize-none @error('testimonial') border-red-400 @enderror"
+                            @input="count = $event.target.value.length"
+                        >{{ old('testimonial') }}</textarea>
+                        <div class="mt-1 flex justify-between text-xs text-gray-500">
+                            <span>@error('testimonial')<span class="text-red-600">{{ $message }}</span>@else Minimum 10 characters @enderror</span>
+                            <span x-text="count + ' / 1000'"></span>
+                        </div>
+                    </div>
 
-        <!-- Privacy Note -->
-        <p class="text-center text-sm text-gray-500 mt-6">
-            Your testimonial will be reviewed by our team before being published on our website.
-        </p>
+                    {{-- Name --}}
+                    <div>
+                        <label for="name" class="{{ $label }}">Your name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            value="{{ old('name') }}"
+                            autocomplete="name"
+                            required
+                            class="{{ $field }} @error('name') border-red-400 @enderror"
+                        >
+                        @error('name')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                    </div>
+
+                    {{-- Role + Company: stacked on phones, side by side from tablet up --}}
+                    <div class="grid gap-4 sm:grid-cols-2 sm:gap-3">
+                        <div>
+                            <label for="title" class="{{ $label }}">
+                                Role <span class="font-normal text-gray-400">(optional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value="{{ old('title') }}"
+                                placeholder="e.g. Friend, Client"
+                                class="{{ $field }} @error('title') border-red-400 @enderror"
+                            >
+                            @error('title')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+
+                        <div>
+                            <label for="company" class="{{ $label }}">
+                                Company <span class="font-normal text-gray-400">(optional)</span>
+                            </label>
+                            <input
+                                type="text"
+                                id="company"
+                                name="company"
+                                value="{{ old('company') }}"
+                                autocomplete="organization"
+                                class="{{ $field }} @error('company') border-red-400 @enderror"
+                            >
+                            @error('company')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        </div>
+                    </div>
+
+                    {{-- Photo + Submit on one row --}}
+                    <div>
+                        <div class="flex flex-col gap-3 sm:flex-row sm:items-stretch">
+                            <label
+                                for="avatar"
+                                class="flex min-w-0 cursor-pointer items-center justify-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-3 text-gray-600 transition hover:border-bytewave-blue hover:text-bytewave-blue sm:min-w-[9rem]"
+                                :class="fileName ? 'border-bytewave-blue text-bytewave-blue' : ''"
+                                title="Add a photo (optional)"
+                            >
+                                <i class="fa-regular fa-image text-lg"></i>
+                                <span class="max-w-[12rem] truncate text-sm sm:max-w-[7rem]" x-text="fileName || 'Add a photo'"></span>
+                            </label>
+                            <input
+                                type="file"
+                                id="avatar"
+                                name="avatar"
+                                accept="image/*"
+                                class="sr-only"
+                                @change="fileName = $event.target.files[0]?.name || ''"
+                            >
+
+                            <button
+                                type="submit"
+                                :disabled="sending"
+                                class="flex-1 rounded-xl bg-bytewave-blue px-6 py-4 sm:py-3.5 text-base font-semibold text-white transition hover:bg-bytewave-blue-600 active:scale-[0.99] focus:outline-none focus-visible:ring-4 focus-visible:ring-bytewave-blue/30 disabled:opacity-60"
+                            >
+                                <span x-show="!sending">Submit testimonial</span>
+                                <span x-show="sending" x-cloak>Sending…</span>
+                            </button>
+                        </div>
+                        @error('avatar')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
+                        <p class="mt-2 text-center text-xs text-gray-500">
+                            Photo is optional (JPG, PNG or GIF, up to 2MB). Testimonials are reviewed before publishing.
+                        </p>
+                    </div>
+                </form>
+            @endif
+        </section>
     </div>
+
+    <footer class="relative shrink-0 px-4 pb-3 text-center text-xs text-white/60">
+        &copy; {{ date('Y') }} ByteWave Investments
+    </footer>
 </div>
 @endsection

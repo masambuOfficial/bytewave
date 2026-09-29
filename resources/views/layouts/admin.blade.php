@@ -211,6 +211,21 @@
             text-align: center;
         }
 
+        .sidebar-badge {
+            margin-left: auto;
+            min-width: 22px;
+            height: 22px;
+            padding: 0 7px;
+            border-radius: 11px;
+            background-color: var(--bytewave-gold);
+            color: #011724;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
         .sidebar-section-title {
             color: var(--bytewave-gold);
             font-size: 0.75rem;
@@ -392,6 +407,10 @@
                    class="sidebar-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
                     <i class="fas fa-comments"></i>
                     <span>Testimonials</span>
+                    @php $pendingTestimonials = \App\Models\Testimonial::where('status', 'pending')->count(); @endphp
+                    @if($pendingTestimonials > 0)
+                        <span class="sidebar-badge" title="{{ $pendingTestimonials }} awaiting approval">{{ $pendingTestimonials > 99 ? '99+' : $pendingTestimonials }}</span>
+                    @endif
                 </a>
             </li>
         </ul>

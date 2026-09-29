@@ -193,13 +193,17 @@
 </head>
 
 <body style="background-color: #F6F6F6;">
-    @include('layouts.partials.header')
+    @unless($__env->hasSection('minimal'))
+        @include('layouts.partials.header')
+    @endunless
 
     <main>
         @yield('content')
     </main>
 
-    @include('layouts.partials.footer')
+    @unless($__env->hasSection('minimal'))
+        @include('layouts.partials.footer')
+    @endunless
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

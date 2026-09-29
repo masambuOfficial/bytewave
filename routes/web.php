@@ -62,7 +62,7 @@ Route::get('/portfolios/{portfolio}', [PortfolioController::class, 'show'])->nam
 
 // Testimonial submission routes (public)
 Route::get('/testimonials/submit', [TestimonialController::class, 'create'])->name('testimonials.create');
-Route::post('/testimonials/submit', [TestimonialController::class, 'store'])->name('testimonials.store');
+Route::post('/testimonials/submit', [TestimonialController::class, 'store'])->middleware('throttle:5,1')->name('testimonials.store');
 
 // Admin routes
 Route::get('/admin', function () {
