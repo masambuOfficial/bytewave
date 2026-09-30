@@ -26,8 +26,10 @@ To accept this quotation, please reply to this email or contact us directly.
 
 This quotation is valid until **{{ $quotation->valid_until->format('d M Y') }}**.
 
+> **Payment security:** Our bank details will never change by email. If you receive a request to change them, call us on {{ config('company.phone') }} before paying.
+
 Thanks & Regards,<br>
 **{{ config('company.name') }}**<br>
 Tel: {{ config('company.phone') }}<br>
-Email: {{ config('company.email') }}
+Email: {{ config('mail.billing_from.address') }}
 @endcomponent

@@ -93,7 +93,7 @@ $logo = is_file($logoFile)
         {{ config('company.address') }}<br>
         {{ config('company.address2') }}<br>
         {{ config('company.address3') }}<br>
-        Email: {{ config('company.email') }}<br>
+        Email: {{ config('mail.billing_from.address') }}<br>
         Tel: {{ config('company.phone') }}
       </td>
     </tr>
@@ -207,7 +207,7 @@ $logo = is_file($logoFile)
 
   {{-- ── FOOTER ───────────────────────────────── --}}
   <div class="footer-note">
-    To accept this quotation, please sign and return a copy or contact us at {{ config('company.email') }}<br>
+    To accept this quotation, please sign and return a copy or contact us at {{ config('mail.billing_from.address') }}<br>
     Thank you for your business!<br>
     <strong>{{ config('company.tagline') }}</strong>
   </div>

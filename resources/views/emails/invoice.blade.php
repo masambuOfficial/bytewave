@@ -27,15 +27,17 @@ Please find attached **Invoice {{ $invoice->invoice_number }}** from **{{ config
 
 Please ensure payment is made by **{{ $invoice->due_date->format('d M Y') }}**.
 
+> **Payment security:** Our bank details will never change by email. If you receive a request to change them, call us on {{ config('company.phone') }} before paying.
+
 @if($invoice->notes)
 **Notes:** {{ $invoice->notes }}
 
 @endif
 
-If you have any questions, please do not hesitate to contact us.
+Questions about this document? Reply to this email or call {{ config('company.phone') }}.
 
 Thanks & Regards,<br>
 **{{ config('company.name') }}**<br>
 Tel: {{ config('company.phone') }}<br>
-Email: {{ config('company.email') }}
+Email: {{ config('mail.billing_from.address') }}
 @endcomponent

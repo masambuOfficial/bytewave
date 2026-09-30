@@ -98,7 +98,7 @@ $logo = is_file($logoFile)
         {{ config('company.address') }}<br>
         {{ config('company.address2') }}<br>
         {{ config('company.address3') }}<br>
-        Email: {{ config('company.email') }}<br>
+        Email: {{ config('mail.billing_from.address') }}<br>
         Tel: {{ config('company.phone') }}
       </td>
     </tr>

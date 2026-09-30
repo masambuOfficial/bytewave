@@ -41,5 +41,5 @@ Thank you for doing business with us!
 Thanks & Regards,<br>
 **{{ config('company.name') }}**<br>
 Tel: {{ config('company.phone') }}<br>
-Email: {{ config('company.email') }}
+Email: {{ config('mail.billing_from.address') }}
 @endcomponent
