@@ -9,6 +9,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\ClientLogoController;
 use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ClientServiceController;
@@ -85,6 +86,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     });
     Route::middleware('module:portfolios')->group(function () {
         Route::resource('portfolios', AdminPortfolioController::class);
+    });
+    Route::middleware('module:client-logos')->group(function () {
+        Route::resource('client-logos', ClientLogoController::class)->except(['show']);
     });
     Route::middleware('module:testimonials')->group(function () {
         Route::patch('testimonials/{testimonial}/approve', [AdminTestimonialController::class, 'approve'])->name('testimonials.approve');

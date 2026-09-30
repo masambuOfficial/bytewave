@@ -336,6 +336,25 @@
             margin-top: 1rem;
         }
 
+        .sidebar-group-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            width: 100%;
+            background: none;
+            border: 0;
+            text-align: left;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+        .sidebar-group-toggle > span:first-child { flex: 1; }
+        .sidebar-group-toggle:hover { background: rgba(255, 255, 255, 0.08); }
+        .sidebar-group-toggle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: -2px; }
+        .sidebar-chev { font-size: 0.7rem; transition: transform 0.2s ease; }
+        .sidebar-group.open .sidebar-chev { transform: rotate(180deg); }
+        .sidebar-group:not(.open) .sidebar-group-list { display: none; }
+
         .sidebar-section-title:first-child {
             margin-top: 0;
         }
@@ -472,9 +491,10 @@
         </ul>
 
         <!-- Website Content Section -->
-        @if(collect(['products','services','posts','portfolios','testimonials'])->contains(fn ($m) => auth()->user()->canAccess($m)))
-        <div class="sidebar-section-title">Website Content</div>
-        <ul style="list-style: none;">
+        @if(collect(['products','services','posts','portfolios','testimonials','client-logos'])->contains(fn ($m) => auth()->user()->canAccess($m)))
+        <div class="sidebar-group" data-group="website">
+        <button type="button" class="sidebar-section-title sidebar-group-toggle" aria-expanded="false"><span>Website Content</span>@php $pendingTestimonialsCount = auth()->user()->canAccess('testimonials') ? \App\Models\Testimonial::where('status', 'pending')->count() : 0; @endphp@if($pendingTestimonialsCount > 0)<span class="sidebar-badge" title="{{ $pendingTestimonialsCount }} awaiting approval">{{ $pendingTestimonialsCount > 99 ? '99+' : $pendingTestimonialsCount }}</span>@endif<i class="fas fa-chevron-down sidebar-chev" aria-hidden="true"></i></button>
+        <ul class="sidebar-group-list" style="list-style: none;">
             @if(auth()->user()->canAccess('products'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.products.index') }}" 
@@ -524,14 +544,25 @@
                 </a>
             </li>
             @endif
+            @if(auth()->user()->canAccess('client-logos'))
+            <li class="sidebar-item">
+                <a href="{{ route('admin.client-logos.index') }}"
+                   class="sidebar-link {{ request()->routeIs('admin.client-logos.*') ? 'active' : '' }}">
+                    <i class="fas fa-images"></i>
+                    <span>Client Logos</span>
+                </a>
+            </li>
+            @endif
         </ul>
+        </div>
 
         <!-- Business Management Section -->
         @endif
 
         @if(collect(['clients','tasks','client-services','quotations','invoices'])->contains(fn ($m) => auth()->user()->canAccess($m)))
-        <div class="sidebar-section-title">Business Management</div>
-        <ul style="list-style: none;">
+        <div class="sidebar-group" data-group="business">
+        <button type="button" class="sidebar-section-title sidebar-group-toggle" aria-expanded="false"><span>Business Management</span><i class="fas fa-chevron-down sidebar-chev" aria-hidden="true"></i></button>
+        <ul class="sidebar-group-list" style="list-style: none;">
             @if(auth()->user()->canAccess('clients'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.clients.index') }}" 
@@ -578,11 +609,13 @@
             </li>
             @endif
         </ul>
+        </div>
         @endif
 
         @if(auth()->user()->canAccess('staff'))
-        <div class="sidebar-section-title">Administration</div>
-        <ul style="list-style: none;">
+        <div class="sidebar-group" data-group="admin">
+        <button type="button" class="sidebar-section-title sidebar-group-toggle" aria-expanded="false"><span>Administration</span><i class="fas fa-chevron-down sidebar-chev" aria-hidden="true"></i></button>
+        <ul class="sidebar-group-list" style="list-style: none;">
             <li class="sidebar-item">
                 <a href="{{ route('admin.staff.index') }}"
                    class="sidebar-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
@@ -591,6 +624,7 @@
                 </a>
             </li>
         </ul>
+        </div>
         @endif
     </aside>
 
@@ -631,6 +665,25 @@
             btn.querySelectorAll('.bw-btn__label > span').forEach(function (s) { s.textContent = text; });
         };
         document.addEventListener('DOMContentLoaded', function() {
+            // Expandable sidebar groups: the group holding the current page opens itself; others remember what you chose
+            document.querySelectorAll('.sidebar-group').forEach(function (group) {
+                var key = 'bwSidebar:' + group.dataset.group;
+                var btn = group.querySelector('.sidebar-group-toggle');
+                var stored = null;
+                try { stored = localStorage.getItem(key); } catch (e) {}
+                var open = !!group.querySelector('.sidebar-link.active') || stored === '1';
+                var set = function (state) {
+                    group.classList.toggle('open', state);
+                    btn.setAttribute('aria-expanded', state ? 'true' : 'false');
+                };
+                set(open);
+                btn.addEventListener('click', function () {
+                    var next = !group.classList.contains('open');
+                    set(next);
+                    try { localStorage.setItem(key, next ? '1' : '0'); } catch (e) {}
+                });
+            });
+
             const sidebar = document.getElementById('adminSidebar');
             const toggleBtn = document.getElementById('sidebarToggle');
 
