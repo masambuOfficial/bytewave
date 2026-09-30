@@ -136,15 +136,16 @@ img {
 .inner-body {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 600px;
+    -premailer-width: 680px;
     background-color: #ffffff;
     border-color: #CDE3F1;
     border-radius: 4px;
     border-width: 1px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
     margin: 0 auto;
+    max-width: 680px;
     padding: 0;
-    width: 600px;
+    width: 100%;
 }
 
 .inner-body a {
@@ -168,11 +169,12 @@ img {
 .footer {
     -premailer-cellpadding: 0;
     -premailer-cellspacing: 0;
-    -premailer-width: 600px;
+    -premailer-width: 680px;
     margin: 0 auto;
     padding: 0;
     text-align: center;
-    width: 600px;
+    max-width: 680px;
+    width: 100%;
 }
 
 .footer p {

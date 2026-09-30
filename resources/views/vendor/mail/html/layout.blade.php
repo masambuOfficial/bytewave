@@ -27,7 +27,7 @@ width: 100% !important;
 </head>
 <body>
 
-<table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+<table class="wrapper" width="100%" cellpadding="0" cellspacing="0" role="presentation" background="{{ asset('images/email-pattern.png') }}?v={{ @filemtime(public_path('images/email-pattern.png')) }}" style="background-color:#F3F8FC;background-image:url('{{ asset('images/email-pattern.png') }}?v={{ @filemtime(public_path('images/email-pattern.png')) }}');background-repeat:repeat;background-size:900px 600px;">
 <tr>
 <td align="center">
 <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
@@ -36,7 +36,7 @@ width: 100% !important;
 <!-- Email Body -->
 <tr>
 <td class="body" width="100%" cellpadding="0" cellspacing="0" style="border: hidden !important;">
-<table class="inner-body" align="center" width="600" cellpadding="0" cellspacing="0" role="presentation">
+<table class="inner-body" align="center" width="680" cellpadding="0" cellspacing="0" role="presentation">
 <!-- Body content -->
 <tr>
 <td class="content-cell">

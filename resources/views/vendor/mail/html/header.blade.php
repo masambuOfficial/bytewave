@@ -1,11 +1,11 @@
 @props(['url'])
 <tr>
-<td class="header" style="padding:0;background-color:#F3F8FC;">
-<table align="center" width="600" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:600px;">
+<td class="header" style="padding:0;background-color:transparent;">
+<table align="center" width="680" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:680px;">
 <tr>
 <td style="padding:0;">
 <a href="{{ $url }}" style="display:block;">
-<img src="{{ asset('images/email-banner.png') }}?v={{ @filemtime(public_path('images/email-banner.png')) }}" width="600" alt="{{ config('company.name') }} – {{ config('company.tagline') }}" style="display:block;width:100%;max-width:600px;height:auto;border:0;background-color:#0773B9;color:#ffffff;font-size:18px;">
+<img src="{{ asset('images/email-banner.png') }}?v={{ @filemtime(public_path('images/email-banner.png')) }}" width="680" alt="{{ config('company.name') }} – {{ config('company.tagline') }}" style="display:block;width:100%;max-width:680px;height:auto;border:0;background-color:#0773B9;color:#ffffff;font-size:18px;">
 </a>
 </td>
 </tr>

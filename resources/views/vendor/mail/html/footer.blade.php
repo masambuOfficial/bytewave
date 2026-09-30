@@ -1,6 +1,6 @@
 <tr>
-<td style="padding:0;background-color:#F3F8FC;">
-<table class="footer" align="center" width="600" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:600px;background-color:#0773B9;">
+<td style="padding:0;background-color:transparent;">
+<table class="footer" align="center" width="680" cellpadding="0" cellspacing="0" role="presentation" style="width:100%;max-width:680px;background-color:#0773B9;">
 <tr>
 <td align="center" style="padding:24px 16px;color:#ffffff;font-size:13px;line-height:20px;">
 <strong style="font-size:14px;color:#ffffff;">{{ config('company.name') }}</strong><br>
