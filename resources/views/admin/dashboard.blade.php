@@ -339,6 +339,12 @@
                             <p class="quick-action-title">New Post</p>
                         </a>
                         @endif
+                        @if(auth()->user()->canAccess('staff'))
+                        <a href="{{ route('admin.staff.index') }}" class="quick-action-card">
+                            <div class="quick-action-icon"><i class="fas fa-user-shield"></i></div>
+                            <p class="quick-action-title">Staff &amp; Roles</p>
+                        </a>
+                        @endif
                     </div>
                 </div>
             </div>

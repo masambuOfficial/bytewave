@@ -50,17 +50,17 @@
                     <div class="flex items-center justify-between mb-1.5">
                         <label for="password" class="block text-sm font-medium text-bytewave-ink">Password</label>
                     </div>
-                    <div class="relative">
+                    <div style="position:relative;">
                     <input
                         type="password"
                         id="password"
                         name="password"
-                        class="w-full pl-4 pr-12 py-2.5 border border-bytewave-ink/50 rounded-lg text-bytewave-ink placeholder-bytewave-ink/70 focus:outline-none focus:ring-2 focus:ring-bytewave-blue/20 focus:border-bytewave-blue transition-colors @error('password') border-bytewave-danger @enderror"
+                        style="padding-right:3rem;" class="w-full pl-4 py-2.5 border border-bytewave-ink/50 rounded-lg text-bytewave-ink placeholder-bytewave-ink/70 focus:outline-none focus:ring-2 focus:ring-bytewave-blue/20 focus:border-bytewave-blue transition-colors @error('password') border-bytewave-danger @enderror"
                         placeholder="••••••••"
                         required>
-                        <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 flex items-center px-3 text-bytewave-ink/70 hover:text-bytewave-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-bytewave-blue/40 rounded-r-lg" aria-label="Show password" aria-pressed="false">
-                            <svg id="eyeShow" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
-                            <svg id="eyeHide" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 19c-6.4 0-10-7-10-7a17.6 17.6 0 0 1 4.1-4.9M9.9 5.2A9.7 9.7 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-2.1 3M3 3l18 18M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
+                        <button type="button" id="togglePassword" style="position:absolute;top:0;bottom:0;right:0;display:flex;align-items:center;padding:0 .85rem;background:none;border:0;cursor:pointer;color:#546270;" class="hover:text-bytewave-blue focus:outline-none focus-visible:ring-2 focus-visible:ring-bytewave-blue/40 rounded-r-lg" aria-label="Show password" aria-pressed="false">
+                            <svg id="eyeShow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
+                            <svg id="eyeHide" width="20" height="20" style="display:none;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17.9 17.9A10.4 10.4 0 0 1 12 19c-6.4 0-10-7-10-7a17.6 17.6 0 0 1 4.1-4.9M9.9 5.2A9.7 9.7 0 0 1 12 5c6.4 0 10 7 10 7a17.7 17.7 0 0 1-2.1 3M3 3l18 18M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>
                         </button>
                     </div>
                     @error('password')
@@ -95,8 +95,8 @@
             input.type = show ? 'text' : 'password';
             btn.setAttribute('aria-pressed', show ? 'true' : 'false');
             btn.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
-            document.getElementById('eyeShow').classList.toggle('hidden', show);
-            document.getElementById('eyeHide').classList.toggle('hidden', !show);
+            document.getElementById('eyeShow').style.display = show ? 'none' : '';
+            document.getElementById('eyeHide').style.display = show ? '' : 'none';
         });
     })();
 </script>
