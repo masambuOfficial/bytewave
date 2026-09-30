@@ -73,7 +73,10 @@ $cur   = $quotation->currency ?? 'UGX';
 $fmt   = fn($n) => $cur === 'UGX' ? 'UGX '.number_format($n, 0) : 'USD '.number_format($n, 2);
 $words = $numToWords((int) round($quotation->total_amount))
        . ($cur === 'UGX' ? ' Uganda Shillings' : ' US Dollars');
-$logo  = public_path(config('company.logo', 'images/BYTEWAVE_INVESTMENTS-LOGO.png'));
+$logoFile  = public_path(config('company.logo', 'images/ByteWave_Logo.png'));
+$logo = is_file($logoFile)
+    ? 'data:image/'.pathinfo($logoFile, PATHINFO_EXTENSION).';base64,'.base64_encode(file_get_contents($logoFile))
+    : '';
 @endphp
 
 <div class="page">
