@@ -5,13 +5,15 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 
 /**
- * Staff accounts and their roles (Owner only). Staff are never deleted, only deactivated,
- * so invoices and quotations keep pointing at the person who issued them.
+ * Staff accounts and their roles (Owner only). Someone who has handled quotations, invoices or
+ * payments can only be deactivated, so those records keep pointing at the right person. An account
+ * with no records (for example one made by mistake) can be deleted.
  */
 class StaffController extends Controller
 {
@@ -55,7 +57,7 @@ class StaffController extends Controller
 
     public function edit(User $staff)
     {
-        return view('admin.staff.form', ['member' => $staff, 'roles' => config('roles.roles')]);
+        return view('admin.staff.form', ['member' => $staff, 'roles' => config('roles.roles'), 'linkedRecords' => $staff->linkedRecordCount()]);
     }
 
     public function update(Request $request, User $staff)
@@ -92,5 +94,22 @@ class StaffController extends Controller
         $staff->save();
 
         return redirect()->route('admin.staff.index')->with('success', $staff->name . ' was updated.');
+    }
+
+    public function destroy(Request $request, User $staff)
+    {
+        if ($staff->id === $request->user()->id) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+
+        if ($staff->linkedRecordCount() > 0) {
+            return back()->with('error', $staff->name . ' has quotations, invoices or payments on record, so they can only be deactivated.');
+        }
+
+        $name = $staff->name;
+        DB::table('sessions')->where('user_id', $staff->id)->delete();
+        $staff->delete();
+
+        return redirect()->route('admin.staff.index')->with('success', $name . ' was deleted.');
     }
 }

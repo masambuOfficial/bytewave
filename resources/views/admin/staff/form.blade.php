@@ -54,6 +54,10 @@
     .pw-eye { position: absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; padding: 0 .85rem; background: none; border: 0; color: #546270; cursor: pointer; }
     .pw-eye:hover { color: #0773B9; }
 
+    .sf-danger { margin-top: 1.25rem; border-color: #F3C9C5; }
+    .sf-delete { background: #FDEDEC; color: #C0392B; border: 0; border-radius: 10px; padding: .6rem 1.1rem; font-weight: 600; font-size: .85rem; transition: background .2s, color .2s; }
+    .sf-delete:hover { background: #C0392B; color: #fff; }
+
     .sf-actions { display: flex; gap: .75rem; flex-wrap: wrap; margin-top: 2rem; }
 
     @media (max-width: 640px) { .sf-row { grid-template-columns: 1fr; } .sf-card { padding: 1.25rem; } }
@@ -146,6 +150,22 @@
         <x-admin.button href="{{ route('admin.staff.index') }}" variant="secondary">Cancel</x-admin.button>
     </div>
 </form>
+
+@if($member->exists && ! $isSelf)
+    <div class="sf-card sf-danger">
+        <p class="sf-section" style="border:0;padding:0;margin:0 0 .75rem;">Delete account</p>
+        @if(($linkedRecords ?? 0) > 0)
+            <p class="sf-hint" style="margin:0;">{{ $member->name }} appears on {{ $linkedRecords }} {{ Str::plural('record', $linkedRecords) }} (quotations, invoices or payments), so the account cannot be deleted. Turn off <strong>Can sign in</strong> above to lock them out and keep the history.</p>
+        @else
+            <p class="sf-hint" style="margin:0 0 1rem;">{{ $member->name }} has no records in the system, so this account can be deleted for good. This cannot be undone.</p>
+            <form method="POST" action="{{ route('admin.staff.destroy', $member) }}" onsubmit="return confirm('Delete {{ addslashes($member->name) }} permanently?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="sf-delete">Delete {{ $member->name }}</button>
+            </form>
+        @endif
+    </div>
+@endif
 
 @push('scripts')
 <script>

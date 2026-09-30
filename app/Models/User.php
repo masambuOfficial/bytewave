@@ -70,4 +70,28 @@ class User extends Authenticatable
 
         return in_array('*', $modules, true) || in_array($module, $modules, true);
     }
+
+    /**
+     * How many records point at this person (quotations prepared, invoices issued, payments received...).
+     * Found by scanning every *user_id column, so new tables are covered without touching this code.
+     * Login sessions do not count.
+     */
+    public function linkedRecordCount(): int
+    {
+        $total = 0;
+
+        foreach (\Illuminate\Support\Facades\Schema::getTables() as $table) {
+            if ($table['name'] === 'sessions') {
+                continue;
+            }
+
+            foreach (\Illuminate\Support\Facades\Schema::getColumnListing($table['name']) as $column) {
+                if (preg_match('/(^|_)user_id$/', $column)) {
+                    $total += \Illuminate\Support\Facades\DB::table($table['name'])->where($column, $this->id)->count();
+                }
+            }
+        }
+
+        return $total;
+    }
 }

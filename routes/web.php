@@ -133,7 +133,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     // Staff and roles (Owner only)
     Route::middleware('module:staff')->group(function () {
-        Route::resource('staff', StaffController::class)->except(['show', 'destroy']);
+        Route::resource('staff', StaffController::class)->except(['show']);
     });
 });
 

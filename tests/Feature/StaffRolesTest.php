@@ -95,6 +95,43 @@ class StaffRolesTest extends TestCase
         $this->get('/forgot-password')->assertNotFound();
     }
 
+    public function test_owner_can_delete_a_staff_member_with_no_records_but_not_themselves(): void
+    {
+        $owner = $this->staff('owner');
+        $mistake = $this->staff('sales');
+
+        $this->actingAs($owner)->delete(route('admin.staff.destroy', $mistake))
+            ->assertRedirect(route('admin.staff.index'));
+        $this->assertDatabaseMissing('users', ['id' => $mistake->id]);
+
+        $this->actingAs($owner)->delete(route('admin.staff.destroy', $owner))->assertSessionHas('error');
+        $this->assertDatabaseHas('users', ['id' => $owner->id]);
+    }
+
+    public function test_staff_with_records_cannot_be_deleted(): void
+    {
+        $invoice = \App\Models\Invoice::first();
+        if (! $invoice) {
+            $this->markTestSkipped('No invoice in the database to test with.');
+        }
+
+        $owner = $this->staff('owner');
+        $accountant = $this->staff('accounts');
+        $invoice->forceFill(['issued_by_user_id' => $accountant->id])->saveQuietly(); // rolled back with the transaction
+
+        $this->actingAs($owner)->delete(route('admin.staff.destroy', $accountant))->assertSessionHas('error');
+        $this->assertDatabaseHas('users', ['id' => $accountant->id]);
+    }
+
+    public function test_only_owners_can_delete_staff(): void
+    {
+        $victim = $this->staff('content');
+
+        $this->actingAs($this->staff('accounts'))->delete(route('admin.staff.destroy', $victim))
+            ->assertRedirect(route('admin.dashboard'));
+        $this->assertDatabaseHas('users', ['id' => $victim->id]);
+    }
+
     public function test_owner_can_add_staff_and_the_last_owner_cannot_be_demoted(): void
     {
         $owner = $this->staff('owner');
