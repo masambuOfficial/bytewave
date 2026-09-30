@@ -9,6 +9,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TaskController;
+use App\Http\Controllers\Admin\StaffController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ClientServiceController;
 use App\Http\Controllers\Admin\QuotationController;
@@ -71,41 +72,65 @@ Route::get('/admin', function () {
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    
-    // Website Content Management
-    Route::resource('products', AdminProductController::class);
-    Route::resource('services', AdminServiceController::class);
-    Route::resource('posts', AdminPostController::class);
-    Route::resource('portfolios', AdminPortfolioController::class);
-    
-    // Testimonials Management
-    Route::patch('testimonials/{testimonial}/approve', [AdminTestimonialController::class, 'approve'])->name('testimonials.approve');
-    Route::patch('testimonials/{testimonial}/reject', [AdminTestimonialController::class, 'reject'])->name('testimonials.reject');
-    Route::resource('testimonials', AdminTestimonialController::class);
-    
-    // Business Management
-    Route::resource('clients', ClientController::class);
-    Route::post('client-services/quick-store', [ClientServiceController::class, 'quickStore'])->name('client-services.quick-store');
-    Route::resource('client-services', ClientServiceController::class);
-    Route::resource('tasks', TaskController::class);
-    
-    // Quotations & Invoices
-    Route::get('quotations/{quotation}/print', [QuotationController::class, 'print'])->name('quotations.print');
-    Route::get('quotations/{quotation}/pdf', [QuotationController::class, 'pdf'])->name('quotations.pdf');
-    Route::get('quotations/{quotation}/items', [QuotationController::class, 'items'])->name('quotations.items');
-    Route::post('quotations/{quotation}/convert-to-invoice', [QuotationController::class, 'convertToInvoice'])->name('quotations.convert-to-invoice');
-    Route::post('quotations/{quotation}/send-email', [QuotationController::class, 'sendEmail'])->name('quotations.send-email');
-    Route::resource('quotations', QuotationController::class);
 
-    Route::get('invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
-    Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
-    Route::get('invoices/{invoice}/receipt', [InvoiceController::class, 'receipt'])->name('invoices.receipt');
-    Route::get('invoices/{invoice}/receipt-pdf', [InvoiceController::class, 'receiptPdf'])->name('invoices.receipt-pdf');
-    Route::post('invoices/{invoice}/send-email', [InvoiceController::class, 'sendEmail'])->name('invoices.send-email');
-    Route::post('invoices/{invoice}/send-receipt', [InvoiceController::class, 'sendReceipt'])->name('invoices.send-receipt');
-    Route::post('invoices/{invoice}/payments', [PaymentController::class, 'store'])->name('invoices.payments.store');
-    Route::delete('invoices/{invoice}/payments/{payment}', [PaymentController::class, 'destroy'])->name('invoices.payments.destroy');
-    Route::resource('invoices', InvoiceController::class);
+    // Website content (Owner, Content)
+    Route::middleware('module:products')->group(function () {
+        Route::resource('products', AdminProductController::class);
+    });
+    Route::middleware('module:services')->group(function () {
+        Route::resource('services', AdminServiceController::class);
+    });
+    Route::middleware('module:posts')->group(function () {
+        Route::resource('posts', AdminPostController::class);
+    });
+    Route::middleware('module:portfolios')->group(function () {
+        Route::resource('portfolios', AdminPortfolioController::class);
+    });
+    Route::middleware('module:testimonials')->group(function () {
+        Route::patch('testimonials/{testimonial}/approve', [AdminTestimonialController::class, 'approve'])->name('testimonials.approve');
+        Route::patch('testimonials/{testimonial}/reject', [AdminTestimonialController::class, 'reject'])->name('testimonials.reject');
+        Route::resource('testimonials', AdminTestimonialController::class);
+    });
+
+    // Business management
+    Route::middleware('module:clients')->group(function () {
+        Route::resource('clients', ClientController::class);
+    });
+    Route::middleware('module:client-services')->group(function () {
+        Route::post('client-services/quick-store', [ClientServiceController::class, 'quickStore'])->name('client-services.quick-store');
+        Route::resource('client-services', ClientServiceController::class);
+    });
+    Route::middleware('module:tasks')->group(function () {
+        Route::resource('tasks', TaskController::class);
+    });
+
+    // Quotations (Owner, Accounts, Sales)
+    Route::middleware('module:quotations')->group(function () {
+        Route::get('quotations/{quotation}/print', [QuotationController::class, 'print'])->name('quotations.print');
+        Route::get('quotations/{quotation}/pdf', [QuotationController::class, 'pdf'])->name('quotations.pdf');
+        Route::get('quotations/{quotation}/items', [QuotationController::class, 'items'])->name('quotations.items');
+        Route::post('quotations/{quotation}/send-email', [QuotationController::class, 'sendEmail'])->name('quotations.send-email');
+        Route::resource('quotations', QuotationController::class);
+    });
+
+    // Invoices, payments and receipts (Owner, Accounts only)
+    Route::middleware('module:invoices')->group(function () {
+        Route::post('quotations/{quotation}/convert-to-invoice', [QuotationController::class, 'convertToInvoice'])->name('quotations.convert-to-invoice');
+        Route::get('invoices/{invoice}/print', [InvoiceController::class, 'print'])->name('invoices.print');
+        Route::get('invoices/{invoice}/pdf', [InvoiceController::class, 'pdf'])->name('invoices.pdf');
+        Route::get('invoices/{invoice}/receipt', [InvoiceController::class, 'receipt'])->name('invoices.receipt');
+        Route::get('invoices/{invoice}/receipt-pdf', [InvoiceController::class, 'receiptPdf'])->name('invoices.receipt-pdf');
+        Route::post('invoices/{invoice}/send-email', [InvoiceController::class, 'sendEmail'])->name('invoices.send-email');
+        Route::post('invoices/{invoice}/send-receipt', [InvoiceController::class, 'sendReceipt'])->name('invoices.send-receipt');
+        Route::post('invoices/{invoice}/payments', [PaymentController::class, 'store'])->name('invoices.payments.store');
+        Route::delete('invoices/{invoice}/payments/{payment}', [PaymentController::class, 'destroy'])->name('invoices.payments.destroy');
+        Route::resource('invoices', InvoiceController::class);
+    });
+
+    // Staff and roles (Owner only)
+    Route::middleware('module:staff')->group(function () {
+        Route::resource('staff', StaffController::class)->except(['show', 'destroy']);
+    });
 });
 
 require __DIR__.'/auth.php';

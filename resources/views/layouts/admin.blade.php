@@ -472,8 +472,10 @@
         </ul>
 
         <!-- Website Content Section -->
+        @if(collect(['products','services','posts','portfolios','testimonials'])->contains(fn ($m) => auth()->user()->canAccess($m)))
         <div class="sidebar-section-title">Website Content</div>
         <ul style="list-style: none;">
+            @if(auth()->user()->canAccess('products'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.products.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.products.*') ? 'active' : '' }}">
@@ -481,6 +483,8 @@
                     <span>Products</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('services'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.services.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.services.*') ? 'active' : '' }}">
@@ -488,6 +492,8 @@
                     <span>Services</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('posts'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.posts.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.posts.*') ? 'active' : '' }}">
@@ -495,6 +501,8 @@
                     <span>Blog Posts</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('portfolios'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.portfolios.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.portfolios.*') ? 'active' : '' }}">
@@ -502,6 +510,8 @@
                     <span>Portfolio</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('testimonials'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.testimonials.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.testimonials.*') ? 'active' : '' }}">
@@ -513,11 +523,16 @@
                     @endif
                 </a>
             </li>
+            @endif
         </ul>
 
         <!-- Business Management Section -->
+        @endif
+
+        @if(collect(['clients','tasks','client-services','quotations','invoices'])->contains(fn ($m) => auth()->user()->canAccess($m)))
         <div class="sidebar-section-title">Business Management</div>
         <ul style="list-style: none;">
+            @if(auth()->user()->canAccess('clients'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.clients.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.clients.*') ? 'active' : '' }}">
@@ -525,6 +540,8 @@
                     <span>Clients</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('tasks'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.tasks.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.tasks.*') ? 'active' : '' }}">
@@ -532,6 +549,8 @@
                     <span>Task Management</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('client-services'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.client-services.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.client-services.*') ? 'active' : '' }}">
@@ -539,6 +558,8 @@
                     <span>Client Services</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('quotations'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.quotations.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.quotations.*') ? 'active' : '' }}">
@@ -546,6 +567,8 @@
                     <span>Quotations</span>
                 </a>
             </li>
+            @endif
+            @if(auth()->user()->canAccess('invoices'))
             <li class="sidebar-item">
                 <a href="{{ route('admin.invoices.index') }}" 
                    class="sidebar-link {{ request()->routeIs('admin.invoices.*') ? 'active' : '' }}">
@@ -553,7 +576,22 @@
                     <span>Invoices</span>
                 </a>
             </li>
+            @endif
         </ul>
+        @endif
+
+        @if(auth()->user()->canAccess('staff'))
+        <div class="sidebar-section-title">Administration</div>
+        <ul style="list-style: none;">
+            <li class="sidebar-item">
+                <a href="{{ route('admin.staff.index') }}"
+                   class="sidebar-link {{ request()->routeIs('admin.staff.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Staff &amp; Roles</span>
+                </a>
+            </li>
+        </ul>
+        @endif
     </aside>
 
     <!-- Main Content -->

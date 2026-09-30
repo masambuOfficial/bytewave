@@ -22,6 +22,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
+        'is_active',
         'is_admin'
     ];
 
@@ -43,6 +45,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
-        'is_admin' => 'boolean'
+        'is_admin' => 'boolean',
+        'is_active' => 'boolean'
     ];
+
+    public function isOwner(): bool
+    {
+        return $this->role === 'owner';
+    }
+
+    public function roleLabel(): string
+    {
+        return config("roles.roles.{$this->role}.label", ucfirst((string) $this->role));
+    }
+
+    /** Whether this staff member may open the given module (see config/roles.php). */
+    public function canAccess(string $module): bool
+    {
+        if (! $this->is_admin || ! $this->is_active) {
+            return false;
+        }
+
+        $modules = config("roles.roles.{$this->role}.modules", []);
+
+        return in_array('*', $modules, true) || in_array($module, $modules, true);
+    }
 }

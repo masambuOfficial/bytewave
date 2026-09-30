@@ -10,8 +10,12 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check() && Auth::user()->is_admin) {
+        if (Auth::check() && Auth::user()->is_admin && Auth::user()->is_active) {
             return $next($request);
+        }
+
+        if (Auth::check() && ! Auth::user()->is_active) {
+            Auth::logout();
         }
 
         return redirect()->route('home')->with('error', 'Unauthorized access.');

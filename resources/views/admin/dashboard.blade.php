@@ -239,7 +239,8 @@
     </div>
 
     @php
-        $activity = App\Models\Invoice::with('client')->latest()->take(3)->get()
+        $user = auth()->user();
+        $activity = ($user->canAccess('invoices') ? App\Models\Invoice::with('client')->latest()->take(3)->get() : collect())
             ->map(fn ($invoice) => [
                 'title' => 'Invoice #' . $invoice->invoice_number,
                 'client' => $invoice->client->name ?? 'Unknown Client',
@@ -248,7 +249,7 @@
                 'color' => $invoice->status_color,
             ])
             ->concat(
-                App\Models\Quotation::with('client')->latest()->take(3)->get()
+                ($user->canAccess('quotations') ? App\Models\Quotation::with('client')->latest()->take(3)->get() : collect())
                     ->map(fn ($quotation) => [
                         'title' => 'Quotation #' . $quotation->quote_number,
                         'client' => $quotation->client->name ?? 'Unknown Client',
@@ -263,6 +264,7 @@
 
     <!-- Statistics Cards -->
     <div class="stats-grid">
+        @if(auth()->user()->canAccess('quotations'))
         <a href="{{ route('admin.quotations.index', ['status' => 'sent']) }}" class="stat-card">
             <div class="stat-icon-box blue"><i class="fas fa-file-invoice"></i></div>
             <div>
@@ -270,7 +272,9 @@
                 <div class="stat-value">{{ App\Models\Quotation::where('status', 'sent')->count() }}</div>
             </div>
         </a>
+        @endif
 
+        @if(auth()->user()->canAccess('invoices'))
         <a href="{{ route('admin.invoices.index', ['status' => 'issued']) }}" class="stat-card">
             <div class="stat-icon-box blue"><i class="fas fa-file-invoice-dollar"></i></div>
             <div>
@@ -278,7 +282,9 @@
                 <div class="stat-value">{{ App\Models\Invoice::whereIn('status', ['issued', 'partially_paid', 'overdue'])->count() }}</div>
             </div>
         </a>
+        @endif
 
+        @if(auth()->user()->canAccess('client-services'))
         <a href="{{ route('admin.client-services.index', ['status' => 'active']) }}" class="stat-card">
             <div class="stat-icon-box green"><i class="fas fa-cogs"></i></div>
             <div>
@@ -286,7 +292,9 @@
                 <div class="stat-value">{{ App\Models\ClientService::where('status', 'active')->count() }}</div>
             </div>
         </a>
+        @endif
 
+        @if(auth()->user()->canAccess('posts'))
         <a href="{{ route('admin.posts.index', ['status' => 'published']) }}" class="stat-card">
             <div class="stat-icon-box purple"><i class="fas fa-blog"></i></div>
             <div>
@@ -294,6 +302,7 @@
                 <div class="stat-value">{{ App\Models\Post::published()->count() }}</div>
             </div>
         </a>
+        @endif
     </div>
 
     <div class="row">
@@ -306,22 +315,30 @@
                 </div>
                 <div class="dash-card-body">
                     <div class="quick-actions-grid">
+                        @if(auth()->user()->canAccess('quotations'))
                         <a href="{{ route('admin.quotations.create') }}" class="quick-action-card">
                             <div class="quick-action-icon"><i class="fas fa-file-invoice"></i></div>
                             <p class="quick-action-title">New Quotation</p>
                         </a>
+                        @endif
+                        @if(auth()->user()->canAccess('invoices'))
                         <a href="{{ route('admin.invoices.create') }}" class="quick-action-card">
                             <div class="quick-action-icon"><i class="fas fa-file-invoice-dollar"></i></div>
                             <p class="quick-action-title">New Invoice</p>
                         </a>
+                        @endif
+                        @if(auth()->user()->canAccess('client-services'))
                         <a href="{{ route('admin.client-services.create') }}" class="quick-action-card">
                             <div class="quick-action-icon"><i class="fas fa-cog"></i></div>
                             <p class="quick-action-title">Add Service</p>
                         </a>
+                        @endif
+                        @if(auth()->user()->canAccess('posts'))
                         <a href="{{ route('admin.posts.create') }}" class="quick-action-card">
                             <div class="quick-action-icon"><i class="fas fa-pen"></i></div>
                             <p class="quick-action-title">New Post</p>
                         </a>
+                        @endif
                     </div>
                 </div>
             </div>
