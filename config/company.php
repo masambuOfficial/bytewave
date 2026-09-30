@@ -6,7 +6,7 @@ return [
     'address'             => 'P.O. Box 156535 Kampala GPO (U)',
     'address2'            => 'Tower of Faith Building Level 01',
     'address3'            => 'Suite No. 01 - West Wing Plot 5134, Block 224',
-    'email'               => 'bytewaveinvestment@gmail.com',
+    'email'               => 'info@bytewaveinvestments.com',
     'phone'               => '+256782440907',
     'website'             => 'www.bytewaveinvestments.com',
     'tin'                 => '1050854640',
