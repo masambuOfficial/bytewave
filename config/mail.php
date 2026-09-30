@@ -49,6 +49,18 @@ return [
             'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
         ],
 
+        // Dedicated mailbox for quotations, invoices and receipts.
+        'billing' => [
+            'transport' => 'smtp',
+            'scheme' => env('BILLING_MAIL_SCHEME'),
+            'host' => env('BILLING_MAIL_HOST', env('MAIL_HOST', '127.0.0.1')),
+            'port' => env('BILLING_MAIL_PORT', env('MAIL_PORT', 2525)),
+            'username' => env('BILLING_MAIL_USERNAME'),
+            'password' => env('BILLING_MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url(env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
         'ses' => [
             'transport' => 'ses',
         ],
@@ -111,6 +123,11 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
+
+    'billing_from' => [
+        'address' => env('BILLING_MAIL_FROM_ADDRESS', env('MAIL_FROM_ADDRESS', 'hello@example.com')),
+        'name' => env('BILLING_MAIL_FROM_NAME', env('MAIL_FROM_NAME', 'Example')),
     ],
 
 ];

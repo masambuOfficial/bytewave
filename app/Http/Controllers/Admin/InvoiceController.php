@@ -276,7 +276,7 @@ class InvoiceController extends Controller
         $bcc = $this->parseEmails($request->input('bcc', ''));
 
         try {
-            $mailer = Mail::to($invoice->client->email, $invoice->client->name);
+            $mailer = Mail::mailer('billing')->to($invoice->client->email, $invoice->client->name);
             if ($cc)  $mailer = $mailer->cc($cc);
             if ($bcc) $mailer = $mailer->bcc($bcc);
             $mailer->send(new InvoiceMail($invoice));
@@ -315,7 +315,7 @@ class InvoiceController extends Controller
         $bcc = $this->parseEmails($request->input('bcc', ''));
 
         try {
-            $mailer = Mail::to($invoice->client->email, $invoice->client->name);
+            $mailer = Mail::mailer('billing')->to($invoice->client->email, $invoice->client->name);
             if ($cc)  $mailer = $mailer->cc($cc);
             if ($bcc) $mailer = $mailer->bcc($bcc);
             $mailer->send(new ReceiptMail($invoice));
