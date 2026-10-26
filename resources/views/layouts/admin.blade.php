@@ -23,6 +23,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
 
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet">
+
     <style>
         * {
             font-family: 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
@@ -133,6 +135,112 @@
         .form-control, .form-select { border-color: #858F99; color: #0B1F33; }
         .form-control::placeholder { color: #546270; }
         .form-control:focus, .form-select:focus { border-color: #0773B9; box-shadow: 0 0 0 0.2rem rgba(7, 115, 185, 0.2); }
+
+        /* Date picker (flatpickr), on the brand palette: Blue, White, Ink */
+        .flatpickr-calendar { font-family: 'Mona Sans', ui-sans-serif, system-ui, sans-serif; border-radius: 8px; border: 1px solid #CDE3F1; box-shadow: 0 8px 24px rgba(11, 31, 51, 0.12); color: #0B1F33; }
+        .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop:after { border-bottom-color: #0773B9; }
+        .flatpickr-calendar.arrowBottom:before, .flatpickr-calendar.arrowBottom:after { border-top-color: #FFFFFF; }
+        .flatpickr-months { background: #0773B9; border-radius: 7px 7px 0 0; }
+        .flatpickr-months .flatpickr-month, .flatpickr-current-month .flatpickr-monthDropdown-months, .flatpickr-current-month input.cur-year { color: #FFFFFF; fill: #FFFFFF; font-weight: 600; }
+        .flatpickr-current-month .flatpickr-monthDropdown-months { background: #0773B9; }
+        .flatpickr-current-month .flatpickr-monthDropdown-months:hover, .flatpickr-current-month .flatpickr-monthDropdown-months:focus { background: #0B1F33; }
+        .flatpickr-current-month .flatpickr-monthDropdown-months .flatpickr-monthDropdown-month { background: #0773B9; color: #FFFFFF; }
+        .numInputWrapper:hover { background: rgba(255, 255, 255, 0.12); }
+        .numInputWrapper span.arrowUp:after { border-bottom-color: #FFFFFF; }
+        .numInputWrapper span.arrowDown:after { border-top-color: #FFFFFF; }
+        .flatpickr-months .flatpickr-prev-month, .flatpickr-months .flatpickr-next-month { color: #FFFFFF; fill: #FFFFFF; }
+        .flatpickr-months .flatpickr-prev-month:hover svg, .flatpickr-months .flatpickr-next-month:hover svg { fill: #FFFFFF; opacity: .75; }
+        .flatpickr-weekdays { background: #F3F8FC; }
+        span.flatpickr-weekday { background: #F3F8FC; color: #546270; font-weight: 600; }
+        .flatpickr-day { color: #0B1F33; border-radius: 6px; }
+        .flatpickr-day:hover, .flatpickr-day:focus { background: #E6F1F8; border-color: #E6F1F8; }
+        .flatpickr-day.today { border-color: #0773B9; }
+        .flatpickr-day.today:hover, .flatpickr-day.today:focus { background: #0773B9; border-color: #0773B9; color: #FFFFFF; }
+        .flatpickr-day.selected, .flatpickr-day.selected:hover, .flatpickr-day.selected:focus { background: #0773B9; border-color: #0773B9; color: #FFFFFF; }
+        .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay, .flatpickr-day.flatpickr-disabled { color: #546270; }
+        .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover { color: #858F99; }
+        /* Admin forms (.pf): flat, quiet, Blue/White/Ink only (BRAND.md) */
+    /* Portfolio form: flat, quiet, Blue/White/Ink only (BRAND.md) */
+    .pf { max-width: 1180px; margin: 0 auto; }
+    .pf--narrow { max-width: 820px; }
+    .pf-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 1rem; margin-bottom: 1.75rem; }
+    .pf-head h1 { font-size: 1.5rem; font-weight: 700; color: #0B1F33; margin: 0; letter-spacing: -0.01em; }
+    .pf-head p { margin: .25rem 0 0; color: #546270; font-size: .9rem; }
+    .pf-back { color: #546270; text-decoration: none; font-size: .875rem; white-space: nowrap; }
+    .pf-back:hover { color: #0773B9; }
+
+    .pf-panel { background: #fff; border: 1px solid #CDE3F1; border-radius: 12px; padding: 1.5rem; margin-bottom: 1.25rem; }
+    .pf-panel__title { font-size: .72rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #0773B9; margin: 0 0 1.25rem; display: flex; justify-content: space-between; align-items: center; }
+    .pf-panel__title .badge { text-transform: none; letter-spacing: 0; font-weight: 500; background: #F3F8FC !important; color: #546270 !important; border: 0 !important; }
+
+    .pf .form-label { font-size: .8125rem; font-weight: 600; color: #0B1F33; margin-bottom: .4rem; }
+    .pf .form-control, .pf .form-select { border-radius: 8px; border-color: #CDE3F1; padding: .6rem .8rem; font-size: .925rem; background-color: #fff; }
+    .pf .form-control::placeholder { color: #858F99; }
+    .pf textarea.form-control { resize: vertical; line-height: 1.55; }
+    .pf .hint { display: block; margin-top: .4rem; font-size: .78rem; color: #546270; }
+    .pf .mb-field { margin-bottom: 1.15rem; }
+    .pf .mb-field:last-child { margin-bottom: 0; }
+
+    .pf-sub { padding: 1.25rem 0; border-top: 1px solid #E6F1F8; }
+    .pf-sub:first-of-type { border-top: 0; padding-top: 0; }
+    .pf-sub:last-child { padding-bottom: 0; }
+    .pf-sub__head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: .6rem; }
+    .pf-sub__head .form-label { margin: 0; }
+    .pf-link-btn { background: none; border: 0; padding: 0; color: #0773B9; font-size: .8125rem; font-weight: 600; cursor: pointer; }
+    .pf-link-btn:hover { color: #0B1F33; }
+    .pf .repeat-row .btn { border-color: #CDE3F1; color: #546270; border-radius: 8px; }
+    .pf .repeat-row .btn:hover { background: #F3F8FC; color: #C0392B; border-color: #CDE3F1; }
+    .pf .repeat-row.border { border-color: #E6F1F8 !important; background: #F3F8FC; border-radius: 10px !important; padding: .75rem !important; }
+
+    .pf-details summary { list-style: none; cursor: pointer; }
+    .pf-details summary::-webkit-details-marker { display: none; }
+    .pf-details summary::after { content: '+'; font-size: 1.1rem; font-weight: 400; color: #546270; }
+    .pf-details[open] summary::after { content: '\2212'; }
+
+    .image-preview { width: 100%; height: 100%; object-fit: cover; }
+    .preview-wrapper { position: relative; width: 100%; height: 200px; border: 1px dashed #CDE3F1; border-radius: 10px; background: #F3F8FC; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+    .preview-wrapper:hover .preview-overlay { opacity: 1; }
+    .preview-overlay { position: absolute; inset: 0; background: rgba(11, 31, 51, 0.55); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity .2s; }
+    #placeholderText { color: #546270; }
+    #placeholderText i { font-size: 1.75rem; color: #0773B9; opacity: .6; }
+
+    .technologies-input { border: 0; padding: 0; min-height: 0; margin-top: .75rem; display: flex; flex-wrap: wrap; gap: .4rem; }
+    .technology-tag { display: inline-flex; align-items: center; gap: .4rem; background: #E6F1F8; color: #0B1F33; padding: .25rem .65rem; margin: 0; border-radius: 999px; font-size: .8125rem; }
+    .technology-tag .remove { margin: 0; cursor: pointer; color: #546270; line-height: 1; }
+    .technology-tag .remove:hover { color: #C0392B; }
+    .pf .input-group .btn-primary { border-radius: 0 8px 8px 0; }
+
+    .pf-side { position: sticky; top: 1rem; }
+    .pf-actions { position: sticky; bottom: 0; z-index: 5; display: flex; justify-content: flex-end; align-items: center; gap: 1.25rem; padding: 1rem 0; margin-top: .5rem; background: rgba(243, 248, 252, .94); backdrop-filter: blur(4px); border-top: 1px solid #CDE3F1; }
+
+    /* Hints: bare <small class="text-muted"> inside a form panel reads as a hint */
+    .pf small.text-muted, .pf .form-text { display: block; margin-top: .4rem; font-size: .78rem; color: #546270 !important; }
+    .pf .form-check-input { border-color: #858F99; }
+    .pf .form-check-label { font-size: .9rem; color: #0B1F33; }
+    .pf .form-switch .form-check-input { width: 2.25em; height: 1.2em; }
+    .pf .input-group-text { background: #F3F8FC; border-color: #CDE3F1; color: #546270; border-radius: 8px 0 0 8px; }
+    .pf .input-group > .form-control:not(:first-child), .pf .input-group > .form-select:not(:first-child) { border-radius: 0 8px 8px 0; }
+    .pf .input-group > .form-control:not(:last-child) { border-radius: 8px 0 0 8px; }
+    .pf .input-group > .btn { border-radius: 0 8px 8px 0; }
+    .pf input[type="file"].form-control { padding: .45rem .6rem; }
+    .pf .pf-note { margin: 0; padding-left: 1.1rem; font-size: .8125rem; color: #546270; line-height: 1.7; }
+    .pf-preview { text-align: center; }
+    .pf-preview__stage { padding: 1.5rem; background: #F3F8FC; border-radius: 10px; }
+    .pf-avatar { width: 72px; height: 72px; border-radius: 50%; background: #0773B9; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 1.75rem; font-weight: 600; }
+    .ck.ck-editor__editable { border-radius: 0 0 8px 8px !important; }
+    .ck.ck-toolbar { border-radius: 8px 8px 0 0 !important; border-color: #CDE3F1 !important; background: #F3F8FC !important; }
+    .ck.ck-editor__main > .ck-editor__editable { border-color: #CDE3F1 !important; }
+
+    /* Older forms that have not moved to .pf yet pick up the same quiet look */
+    .card:has(form) { box-shadow: none !important; border: 1px solid #CDE3F1; border-radius: 12px; }
+    .card:has(form) > .card-header { background: #fff; border-bottom: 1px solid #E6F1F8; }
+    .card:has(form) .form-label, .card:has(form) label:not(.form-check-label) { font-size: .8125rem; font-weight: 600; color: #0B1F33; }
+    .card:has(form) .form-control, .card:has(form) .form-select { border-radius: 8px; border-color: #CDE3F1; }
+
+        .bw-date-wrap { position: relative; }
+        .bw-date-wrap .form-control { padding-right: 2.5rem; }
+        .bw-date-icon { position: absolute; right: .9rem; top: 50%; transform: translateY(-50%); color: #0773B9; pointer-events: none; }
+        input.flatpickr-input[readonly], input.form-control.input[readonly] { background-color: #FFFFFF; cursor: pointer; }
         .form-check-input:checked { background-color: #0773B9; border-color: #0773B9; }
         .text-muted { color: #546270 !important; }
 
@@ -189,47 +297,67 @@
         }
 
         .admin-dropdown .dropdown-toggle {
-            color: white !important;
+            color: #FFFFFF !important;
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: .6rem;
             font-weight: 600;
-            transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
+            font-size: .9rem;
+            padding: .35rem .6rem .35rem .35rem;
+            border-radius: 999px;
+            transition: background-color .15s ease;
         }
-
-        .admin-dropdown .dropdown-toggle:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: #FFFFFF !important;
-        }
-
+        .admin-dropdown .dropdown-toggle:hover,
+        .admin-dropdown .dropdown-toggle.show { background-color: rgba(255, 255, 255, .14); }
         .admin-dropdown .dropdown-toggle::after {
-            border-top-color: currentColor;
+            border: 0; width: .5rem; height: .5rem; margin: 0 .15rem 0 0;
+            border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor;
+            transform: translateY(-2px) rotate(45deg); transition: transform .15s ease;
+        }
+        .admin-dropdown .dropdown-toggle.show::after { transform: translateY(1px) rotate(-135deg); }
+        .admin-dropdown .dropdown-toggle:focus-visible { outline: 2px solid #FFFFFF; outline-offset: 2px; }
+
+        .admin-avatar {
+            width: 32px; height: 32px; border-radius: 50%;
+            background: #FFFFFF; color: #0773B9;
+            display: inline-flex; align-items: center; justify-content: center;
+            font-size: .78rem; font-weight: 700; letter-spacing: .02em; flex-shrink: 0;
         }
 
         .admin-dropdown .dropdown-menu {
-            border: none;
+            min-width: 240px;
+            padding: .4rem;
+            margin-top: .6rem !important;
+            background: #FFFFFF;
+            border: 1px solid #CDE3F1;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(11, 31, 51, 0.15);
-            min-width: 220px;
+            box-shadow: 0 12px 32px rgba(11, 31, 51, .14);
         }
+        .admin-menu-head { display: flex; align-items: center; gap: .75rem; padding: .7rem .75rem .8rem; }
+        .admin-menu-head .admin-avatar { width: 38px; height: 38px; background: #0773B9; color: #FFFFFF; font-size: .85rem; }
+        .admin-menu-name { display: block; font-size: .9rem; font-weight: 600; color: #0B1F33; line-height: 1.25; }
+        .admin-menu-meta { display: block; font-size: .78rem; color: #546270; line-height: 1.35; word-break: break-all; }
+        .admin-menu-role {
+            display: inline-block; margin-top: .3rem; padding: .05rem .5rem;
+            font-size: .68rem; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+            color: #0B1F33; background: #E6F1F8; border-radius: 999px;
+        }
+        .admin-dropdown .dropdown-divider { margin: .3rem 0; border-color: #E6F1F8; }
 
         .admin-dropdown .dropdown-item {
-            color: var(--bytewave-blue-dark);
-            font-weight: 500;
-            padding: 0.75rem 1.5rem;
-            transition: all 0.2s ease;
-            border-radius: 8px;
-            margin: 0.25rem;
+            display: flex; align-items: center; gap: .65rem;
+            color: #0B1F33; font-size: .875rem; font-weight: 500;
+            padding: .55rem .75rem; margin: 0;
+            border-radius: 8px; transition: background-color .15s ease, color .15s ease;
         }
-
-        .admin-dropdown .dropdown-item:hover {
-            background-color: var(--bytewave-blue-light);
-            color: var(--bytewave-blue);
-            padding-left: 2rem;
-        }
+        .admin-dropdown .dropdown-item i { width: 1rem; text-align: center; color: #546270; transition: color .15s ease; }
+        .admin-dropdown .dropdown-item:hover,
+        .admin-dropdown .dropdown-item:focus { background-color: #F3F8FC; color: #0B1F33; }
+        .admin-dropdown .dropdown-item:hover i { color: #0773B9; }
+        .admin-dropdown .dropdown-item--danger:hover,
+        .admin-dropdown .dropdown-item--danger:focus { background-color: #FBECEA; color: #C0392B; }
+        .admin-dropdown .dropdown-item--danger:hover i { color: #C0392B; }
 
         .admin-dropdown form {
             display: contents;
@@ -386,6 +514,13 @@
             margin-left: 280px;
             padding: 2rem;
             min-height: calc(100vh - 70px);
+            /* Brand pattern: Blue-at-5% base, edges are flat so it tiles without seams */
+            background-color: #F3F8FC;
+            /* Flat base-colour veil over the image: raise the .82 to fade the pattern further, lower it to strengthen it */
+            background-image: linear-gradient(rgba(243, 248, 252, .82), rgba(243, 248, 252, .82)), url('{{ asset('images/email-pattern.png') }}');
+            background-size: auto, 1350px auto;
+            background-repeat: no-repeat, repeat;
+            background-attachment: fixed, fixed;
         }
 
         /* Alert Styling */
@@ -460,16 +595,29 @@
 
         <!-- Admin Dropdown -->
         <div class="admin-dropdown dropdown">
-            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fas fa-user-circle" style="font-size: 1.2rem;"></i>
+            @php
+                $adminInitials = collect(preg_split('/\s+/', trim(Auth::user()->name)))->filter()->take(2)
+                    ->map(fn ($w) => mb_strtoupper(mb_substr($w, 0, 1)))->implode('');
+            @endphp
+            <a class="dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Account menu">
+                <span class="admin-avatar" aria-hidden="true">{{ $adminInitials }}</span>
                 <span>{{ Auth::user()->name }}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-end">
+                <li class="admin-menu-head">
+                    <span class="admin-avatar" aria-hidden="true">{{ $adminInitials }}</span>
+                    <span>
+                        <span class="admin-menu-name">{{ Auth::user()->name }}</span>
+                        <span class="admin-menu-meta">{{ Auth::user()->email }}</span>
+                        <span class="admin-menu-role">{{ Auth::user()->roleLabel() }}</span>
+                    </span>
+                </li>
+                <li><hr class="dropdown-divider"></li>
                 <li>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-                        <button type="submit" class="dropdown-item">
-                            <i class="fas fa-sign-out-alt" style="margin-right: 0.5rem;"></i>Logout
+                        <button type="submit" class="dropdown-item dropdown-item--danger">
+                            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>Log out
                         </button>
                     </form>
                 </li>
@@ -787,6 +935,20 @@
         });
     </script>
 
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js"></script>
+    <script>
+        // Branded date picker for every date field. The form still submits Y-m-d.
+        document.querySelectorAll('input[type="date"]').forEach(function (el) {
+            const fp = flatpickr(el, { dateFormat: 'Y-m-d', altInput: true, altFormat: 'j M Y', allowInput: false, disableMobile: true });
+            const alt = fp.altInput;
+            alt.placeholder = el.getAttribute('placeholder') || 'Select date';
+            const wrap = document.createElement('div');
+            wrap.className = 'bw-date-wrap';
+            alt.parentNode.insertBefore(wrap, alt);
+            wrap.appendChild(alt);
+            wrap.insertAdjacentHTML('beforeend', '<i class="far fa-calendar-alt bw-date-icon" aria-hidden="true"></i>');
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

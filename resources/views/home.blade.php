@@ -216,7 +216,7 @@
             },
             {
                 icon: 'code',
-                image: '{{ asset('images/gavin_in_the_field-01.jpg') }}',
+                image: '{{ asset('images/bytewave_web_development.jpg') }}',
                 title: 'Web & Software Development',
                 features: [
                     'Custom web applications',
@@ -227,7 +227,7 @@
             },
             {
                 icon: 'chart',
-                image: '{{ asset('images/bytewave_computer_repair_and_maintenance.jpg') }}',
+                image: '{{ asset('images/bytewave_digital_marketing.jpg') }}',
                 title: 'Digital Marketing',
                 features: [
                     'Social media management',
@@ -588,7 +588,7 @@
                     </div>
 
                     <!-- Testimonial Content -->
-                    <div class="flex-1 bg-bytewave-blue/5 rounded-lg p-6">
+                    <div class="flex-1 bg-white/5 rounded-lg p-6">
                         <!-- Star Rating -->
                         <div class="flex gap-1 mb-4">
                             <template x-for="i in 5" :key="i">
@@ -599,12 +599,12 @@
                         </div>
 
                         <!-- Testimonial Text -->
-                        <p class="text-bytewave-ink mb-6 leading-relaxed" x-text="testimonials[currentTestimonial].text"></p>
+                        <p class="text-white mb-6 leading-relaxed" x-text="testimonials[currentTestimonial].text"></p>
 
                         <!-- Client Info -->
                         <div>
-                            <h4 class="text-lg font-bold text-bytewave-ink" x-text="testimonials[currentTestimonial].name"></h4>
-                            <p class="text-sm text-bytewave-ink/70" x-text="testimonials[currentTestimonial].title"></p>
+                            <h4 class="text-lg font-bold text-white" x-text="testimonials[currentTestimonial].name"></h4>
+                            <p class="text-sm text-white/80" x-text="testimonials[currentTestimonial].title"></p>
                         </div>
                     </div>
                 </div>
@@ -625,12 +625,12 @@
                     <!-- Bottom Card: Stats -->
                     <div class="bg-bytewave-blue rounded-lg p-6 grid grid-cols-2 gap-6">
                         <div>
-                            <div class="text-4xl md:text-5xl font-bold text-white mb-2">98%</div>
-                            <p class="text-white text-sm">On-Time delivery rate</p>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{ $stats['projects'] }}+</div>
+                            <p class="text-white text-sm">Projects delivered</p>
                         </div>
                         <div>
-                            <div class="text-4xl md:text-5xl font-bold text-white mb-2">50+</div>
-                            <p class="text-white text-sm">Skilled professionals</p>
+                            <div class="text-4xl md:text-5xl font-bold text-white mb-2">{{ $stats['years'] }}</div>
+                            <p class="text-white text-sm">Years in business</p>
                         </div>
                     </div>
                 </div>

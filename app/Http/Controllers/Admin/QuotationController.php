@@ -7,6 +7,8 @@ use App\Models\Quotation;
 use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\ClientService;
+use App\Support\DocText;
+use Illuminate\Support\Str;
 use App\Models\WorkOrder;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -104,7 +106,7 @@ class QuotationController extends Controller
 
             $description = $item['description'] ?? null;
             if (!$description && $service) {
-                $description = $service->name;
+                $description = DocText::fromService($service);
             }
 
             if (!$description) {
@@ -115,9 +117,9 @@ class QuotationController extends Controller
 
             if (empty($item['service_id']) && !empty($item['save_as_service'])) {
                 $service = ClientService::firstOrCreate(
-                    ['name' => $description],
+                    ['name' => Str::limit(DocText::title($description), 255, '')],
                     [
-                        'description' => null,
+                        'description' => DocText::body($description),
                         'rate' => $item['rate'],
                         'unit' => $item['unit'] ?? null,
                     ]
@@ -219,7 +221,7 @@ class QuotationController extends Controller
 
             $description = $item['description'] ?? null;
             if (!$description && $service) {
-                $description = $service->name;
+                $description = DocText::fromService($service);
             }
 
             if (!$description) {

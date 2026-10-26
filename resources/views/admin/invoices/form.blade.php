@@ -313,16 +313,15 @@
                             <option value="{{ $svc->id }}"
                                 data-rate="{{ $svc->rate }}"
                                 data-unit="{{ $svc->unit }}"
-                                data-name="{{ $svc->name }}"
+                                data-name="{{ $svc->name }}" data-description="{{ $svc->description }}"
                                 {{ ($item['service_id'] ?? $item->service_id ?? '') == $svc->id ? 'selected' : '' }}>
                                 {{ $svc->name }}
                             </option>
                             @endforeach
                         </select>
-                        <input type="text" class="form-control description"
+                        <textarea class="form-control description doc-text" rows="2"
                             name="items[{{ $idx }}][description]"
-                            value="{{ $item['description'] ?? $item->description ?? '' }}"
-                            placeholder="Description *" required>
+                            placeholder="Description *" required>{{ $item['description'] ?? $item->description ?? '' }}</textarea>
                     </td>
                     <td><input type="text" class="form-control unit" name="items[{{ $idx }}][unit]" value="{{ $item['unit'] ?? $item->unit ?? '' }}"></td>
                     <td><input type="number" class="form-control quantity" name="items[{{ $idx }}][quantity]" value="{{ $item['quantity'] ?? $item->quantity ?? 1 }}" min="1" required></td>
@@ -342,12 +341,12 @@
                         <select class="form-select service-select mb-1" name="items[0][service_id]">
                             <option value="">— pick or type below —</option>
                             @foreach($services as $svc)
-                            <option value="{{ $svc->id }}" data-rate="{{ $svc->rate }}" data-unit="{{ $svc->unit }}" data-name="{{ $svc->name }}">
+                            <option value="{{ $svc->id }}" data-rate="{{ $svc->rate }}" data-unit="{{ $svc->unit }}" data-name="{{ $svc->name }}" data-description="{{ $svc->description }}">
                                 {{ $svc->name }}
                             </option>
                             @endforeach
                         </select>
-                        <input type="text" class="form-control description" name="items[0][description]" placeholder="Description *" required>
+                        <textarea class="form-control description doc-text" rows="2" name="items[0][description]" placeholder="Description *" required></textarea>
                     </td>
                     <td><input type="text" class="form-control unit" name="items[0][unit]"></td>
                     <td><input type="number" class="form-control quantity" name="items[0][quantity]" value="1" min="1" required></td>
@@ -424,12 +423,12 @@
             <select class="form-select service-select mb-1" name="items[__IDX__][service_id]">
                 <option value="">— pick or type below —</option>
                 @foreach($services as $svc)
-                <option value="{{ $svc->id }}" data-rate="{{ $svc->rate }}" data-unit="{{ $svc->unit }}" data-name="{{ $svc->name }}">
+                <option value="{{ $svc->id }}" data-rate="{{ $svc->rate }}" data-unit="{{ $svc->unit }}" data-name="{{ $svc->name }}" data-description="{{ $svc->description }}">
                     {{ $svc->name }}
                 </option>
                 @endforeach
             </select>
-            <input type="text" class="form-control description" name="items[__IDX__][description]" placeholder="Description *" required>
+            <textarea class="form-control description doc-text" rows="2" name="items[__IDX__][description]" placeholder="Description *" required></textarea>
         </td>
         <td><input type="text" class="form-control unit" name="items[__IDX__][unit]"></td>
         <td><input type="number" class="form-control quantity" name="items[__IDX__][quantity]" value="1" min="1" required></td>
@@ -445,6 +444,7 @@
 @endsection
 
 @push('scripts')
+@include('admin.partials.doc-text-editor')
 <script>
 (function () {
     'use strict';
@@ -501,7 +501,7 @@
 
         if (data) {
             if (data.service_id) row.querySelector('.service-select').value = data.service_id;
-            row.querySelector('.description').value = data.description || '';
+            bwSetDocText(row.querySelector('.description'), data.description || '');
             row.querySelector('.unit').value        = data.unit || '';
             row.querySelector('.quantity').value    = data.quantity || 1;
             row.querySelector('.rate').value        = data.rate || 0;
@@ -534,7 +534,15 @@
         var name = opt.dataset.name || '';
         row.querySelector('.rate').value = rate;
         if (unit && !row.querySelector('.unit').value) row.querySelector('.unit').value = unit;
-        if (name && !row.querySelector('.description').value) row.querySelector('.description').value = name;
+        var descEl = row.querySelector('.description');
+        if (name) {
+            var svcDesc = (opt.dataset.description || '').trim();
+            var filled  = '**' + name + '**' + (svcDesc ? '\n' + svcDesc : '');
+            if (!descEl.value.trim() || descEl.value === descEl.dataset.autofill) {
+                bwSetDocText(descEl, filled);
+                descEl.dataset.autofill = filled;
+            }
+        }
         recalc();
     });
 

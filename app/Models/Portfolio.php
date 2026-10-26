@@ -24,13 +24,78 @@ class Portfolio extends Model
         'primary_media_type',
         'primary_media_path',
         'primary_media_embed',
-        'project_url'
+        'project_url',
+        'project_type',
+        'challenge',
+        'solution',
+        'results',
+        'highlights',
+        'process_steps',
+        'testimonial',
+        'testimonial_author',
     ];
 
     protected $casts = [
         'completion_date' => 'date',
-        'technologies' => 'array'
+        'technologies' => 'array',
+        'highlights' => 'array',
+        'process_steps' => 'array',
     ];
+
+    public const TYPES = [
+        'ict' => 'ICT (websites, systems, apps)',
+        'multimedia' => 'Multimedia (events, video, design)',
+    ];
+
+    public function isMultimedia(): bool
+    {
+        return $this->project_type === 'multimedia';
+    }
+
+    /**
+     * A project counts as a full case study once it tells the problem and the fix.
+     */
+    public function isCaseStudy(): bool
+    {
+        return filled($this->challenge) && filled($this->solution);
+    }
+
+    /**
+     * Split free text into paragraphs and numbered/bulleted lists so
+     * pasted content keeps its structure on the public page.
+     *
+     * @return array<int, array{type: string, items: array<int, string>}>
+     */
+    public static function textBlocks(?string $text): array
+    {
+        $blocks = [];
+
+        foreach (preg_split('/\R/', (string) $text) as $line) {
+            $line = trim($line);
+            if ($line === '') {
+                continue;
+            }
+
+            if (preg_match('/^\d+[.)]\s+(.+)$/', $line, $m)) {
+                $type = 'ol';
+                $line = $m[1];
+            } elseif (preg_match('/^[-•*]\s+(.+)$/u', $line, $m)) {
+                $type = 'ul';
+                $line = $m[1];
+            } else {
+                $type = 'p';
+            }
+
+            $last = count($blocks) - 1;
+            if ($type !== 'p' && $last >= 0 && $blocks[$last]['type'] === $type) {
+                $blocks[$last]['items'][] = $line;
+            } else {
+                $blocks[] = ['type' => $type, 'items' => [$line]];
+            }
+        }
+
+        return $blocks;
+    }
 
     protected static function boot()
     {

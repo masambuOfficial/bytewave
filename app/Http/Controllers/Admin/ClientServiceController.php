@@ -131,7 +131,8 @@ class ClientServiceController extends Controller
         );
 
         return response()->json([
-            'id'       => $service->id,
+            'id'          => $service->id,
+            'description' => $service->description,
             'name'     => $service->name,
             'rate'     => $service->rate,
             'currency' => $service->currency ?? 'UGX',

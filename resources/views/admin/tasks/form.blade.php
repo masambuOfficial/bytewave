@@ -3,22 +3,22 @@
 @section('title', isset($task) ? 'Edit Task' : 'Create Task')
 
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        {{ isset($task) ? 'Edit Task' : 'Create New Task' }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form action="{{ isset($task) ? route('admin.tasks.update', $task) : route('admin.tasks.store') }}" 
+<div class="container-fluid pf pf--narrow">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($task) ? 'Edit task' : 'New task' }}</h1>
+        </div>
+        <a href="{{ route('admin.tasks.index') }}" class="pf-back">&larr; All tasks</a>
+    </div>
+
+    <form action="{{ isset($task) ? route('admin.tasks.update', $task) : route('admin.tasks.store') }}" 
                           method="POST">
-                        @csrf
+        @csrf
                         @if(isset($task))
                             @method('PUT')
                         @endif
+
+        <div class="pf-panel">
 
                         <div class="row">
                             <div class="col-md-6">
@@ -146,16 +146,13 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <x-admin.button href="{{ route('admin.tasks.index') }}" variant="secondary">Back to List</x-admin.button>
-                            <x-admin.button type="submit">{{ isset($task) ? 'Update' : 'Create' }} Task</x-admin.button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
+
+        <div class="pf-actions">
+            <a href="{{ route('admin.tasks.index') }}" class="pf-back">Cancel</a>
+            <x-admin.button type="submit">{{ isset($task) ? 'Update' : 'Create' }} task</x-admin.button>
+        </div>
+    </form>
 </div>
 @endsection
 
@@ -189,13 +186,13 @@ document.addEventListener('DOMContentLoaded', function() {
     dueDate.addEventListener('change', function() {
         if (startDate.value && this.value < startDate.value) {
             alert('Due date cannot be earlier than start date');
-            this.value = startDate.value;
+            dueDate._flatpickr.setDate(startDate.value, true);
         }
     });
 
     startDate.addEventListener('change', function() {
         if (dueDate.value && dueDate.value < this.value) {
-            dueDate.value = this.value;
+            dueDate._flatpickr.setDate(this.value, true);
         }
     });
 });

@@ -29,7 +29,13 @@ class HomeController extends Controller
             ->take(5)
             ->get();
 
-        return view('home', compact('latestPortfolios', 'recentArticles', 'testimonials'));
+        // Figures shown in the testimonials section, taken from real data
+        $stats = [
+            'projects' => Portfolio::count(),
+            'years' => max(1, now()->year - 2020), // the site says "Since 2020"
+        ];
+
+        return view('home', compact('latestPortfolios', 'recentArticles', 'testimonials', 'stats'));
     }
 
     public function about()

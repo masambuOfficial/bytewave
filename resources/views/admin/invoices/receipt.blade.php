@@ -74,6 +74,7 @@ body { font-family: DejaVu Sans, Arial, sans-serif; font-size: 9.5pt; color: #0B
 .no-print button { padding: 8px 20px; background: #0773B9; color: #fff; border: none; border-radius: 5px; cursor: pointer; font-size: 9pt; }
 @media print { .no-print { display: none; } }
 </style>
+@include('admin.partials.doc-text-styles')
 </head>
 <body>
 
@@ -188,7 +189,7 @@ $logo = is_file($logoFile)
       @foreach($invoice->items as $i => $item)
       <tr>
         <td class="c">{{ $i + 1 }}</td>
-        <td>{{ $item->description }}</td>
+        <td class="doc-text">{!! \App\Support\DocText::render($item->description) !!}</td>
         <td class="c">{{ $item->quantity }}{{ $item->unit ? ' '.$item->unit : '' }}</td>
         <td class="r">{{ $fmt($item->rate) }}</td>
         <td class="r">{{ $fmt($item->line_total ?? ($item->quantity * $item->rate)) }}</td>

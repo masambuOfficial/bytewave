@@ -3,6 +3,7 @@
 @section('title', 'Invoice #' . $invoice->invoice_number)
 
 @push('styles')
+@include('admin.partials.doc-text-styles')
 <style>
     .bw-card { border: 1px solid rgba(11, 31, 51,0.06); border-radius: 12px; }
     .bw-card-header { background: #fff; border-bottom: 1px solid rgba(11, 31, 51,0.06); }
@@ -105,7 +106,7 @@
                                 @foreach($invoice->items as $index => $item)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $item->description }}</td>
+                                    <td class="doc-text">{!! \App\Support\DocText::render($item->description) !!}</td>
                                     <td>{{ $item->unit ?? '—' }}</td>
                                     <td class="text-end">{{ $item->quantity }}</td>
                                     <td class="text-end">{{ $fmt($item->rate) }}</td>

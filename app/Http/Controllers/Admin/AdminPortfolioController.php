@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
 use App\Models\Portfolio;
 use App\Models\PortfolioMedia;
 use Illuminate\Http\Request;
@@ -21,7 +22,8 @@ class AdminPortfolioController extends Controller
     public function create()
     {
         $categories = Portfolio::distinct()->pluck('category')->filter();
-        return view('admin.portfolios.form', compact('categories'));
+        $clients = Client::orderBy('name')->pluck('name');
+        return view('admin.portfolios.form', compact('categories', 'clients'));
     }
 
     public function store(Request $request)
@@ -30,7 +32,6 @@ class AdminPortfolioController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'meta_description' => 'nullable|string|max:320',
-            'work_done' => 'nullable|string',
             'client' => 'nullable|string|max:255',
             'completion_date' => 'nullable|date',
             'category' => 'nullable|string|max:255',
@@ -44,8 +45,24 @@ class AdminPortfolioController extends Controller
             'gallery_uploads' => 'nullable|array',
             'gallery_uploads.*' => 'file|mimes:jpeg,png,jpg,gif,mp4,webm,mov|max:51200',
             'gallery_embeds' => 'nullable|string',
-            'project_url' => 'nullable|url|max:255'
+            'project_url' => 'nullable|url|max:255',
+            'project_type' => 'nullable|in:ict,multimedia',
+            'challenge' => 'nullable|string',
+            'solution' => 'nullable|string',
+            'results' => 'nullable|string',
+            'testimonial' => 'nullable|string',
+            'testimonial_author' => 'nullable|string|max:255',
+            'highlights' => 'nullable|array',
+            'highlights.*.value' => 'nullable|string|max:50',
+            'highlights.*.label' => 'nullable|string|max:100',
+            'process_steps' => 'nullable|array',
+            'process_steps.*.title' => 'nullable|string|max:150',
+            'process_steps.*.description' => 'nullable|string',
         ]);
+
+        $validated['project_type'] = $validated['project_type'] ?? 'ict';
+        $validated['highlights'] = $this->cleanRows($validated['highlights'] ?? [], ['value', 'label']);
+        $validated['process_steps'] = $this->cleanRows($validated['process_steps'] ?? [], ['title', 'description']);
 
         $primaryType = $validated['primary_media_type'] ?? null;
         if (!$primaryType) {
@@ -135,7 +152,8 @@ class AdminPortfolioController extends Controller
     public function edit(Portfolio $portfolio)
     {
         $categories = Portfolio::distinct()->pluck('category')->filter();
-        return view('admin.portfolios.form', compact('portfolio', 'categories'));
+        $clients = Client::orderBy('name')->pluck('name');
+        return view('admin.portfolios.form', compact('portfolio', 'categories', 'clients'));
     }
 
     /**
@@ -154,7 +172,6 @@ class AdminPortfolioController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'meta_description' => 'nullable|string|max:320',
-            'work_done' => 'nullable|string',
             'client' => 'nullable|string|max:255',
             'completion_date' => 'nullable|date',
             'category' => 'nullable|string|max:255',
@@ -168,8 +185,24 @@ class AdminPortfolioController extends Controller
             'gallery_uploads' => 'nullable|array',
             'gallery_uploads.*' => 'file|mimes:jpeg,png,jpg,gif,mp4,webm,mov|max:51200',
             'gallery_embeds' => 'nullable|string',
-            'project_url' => 'nullable|url|max:255'
+            'project_url' => 'nullable|url|max:255',
+            'project_type' => 'nullable|in:ict,multimedia',
+            'challenge' => 'nullable|string',
+            'solution' => 'nullable|string',
+            'results' => 'nullable|string',
+            'testimonial' => 'nullable|string',
+            'testimonial_author' => 'nullable|string|max:255',
+            'highlights' => 'nullable|array',
+            'highlights.*.value' => 'nullable|string|max:50',
+            'highlights.*.label' => 'nullable|string|max:100',
+            'process_steps' => 'nullable|array',
+            'process_steps.*.title' => 'nullable|string|max:150',
+            'process_steps.*.description' => 'nullable|string',
         ]);
+
+        $validated['project_type'] = $validated['project_type'] ?? 'ict';
+        $validated['highlights'] = $this->cleanRows($validated['highlights'] ?? [], ['value', 'label']);
+        $validated['process_steps'] = $this->cleanRows($validated['process_steps'] ?? [], ['title', 'description']);
 
         $primaryType = $validated['primary_media_type'] ?? ($portfolio->getRawOriginal('primary_media_type') ?: 'image');
         $validated['primary_media_type'] = $primaryType;
@@ -276,6 +309,25 @@ class AdminPortfolioController extends Controller
 
         return redirect()->route('admin.portfolios.index')
             ->with('success', 'Portfolio item updated successfully');
+    }
+
+    /**
+     * Drop rows where every key is blank and reindex, so empty form rows are not stored.
+     */
+    private function cleanRows(array $rows, array $keys): ?array
+    {
+        $clean = [];
+        foreach ($rows as $row) {
+            $item = [];
+            foreach ($keys as $key) {
+                $item[$key] = trim((string) ($row[$key] ?? ''));
+            }
+            if (implode('', $item) !== '') {
+                $clean[] = $item;
+            }
+        }
+
+        return $clean ?: null;
     }
 
     public function destroy(Portfolio $portfolio)

@@ -1,26 +1,26 @@
 @extends('layouts.admin')
 
+@section('title', isset($client) ? 'Edit Client' : 'Create Client')
+
 @section('content')
-<div class="container-fluid px-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mt-4">{{ isset($client) ? 'Edit Client' : 'Create New Client' }}</h1>
-        <x-admin.button href="{{ route('admin.clients.index') }}" variant="secondary">Back to Clients</x-admin.button>
+<div class="container-fluid pf pf--narrow">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($client) ? 'Edit client' : 'New client' }}</h1>
+        </div>
+        <a href="{{ route('admin.clients.index') }}" class="pf-back">&larr; All clients</a>
     </div>
 
-    <div class="card mb-4">
-        <div class="card-header">
-            <i class="fas fa-user-edit me-1"></i>
-            Client Details
-        </div>
-        <div class="card-body">
-            <form action="{{ isset($client) ? route('admin.clients.update', $client) : route('admin.clients.store') }}" 
+    <form action="{{ isset($client) ? route('admin.clients.update', $client) : route('admin.clients.store') }}" 
                   method="POST" 
                   class="needs-validation" 
                   novalidate>
-                @csrf
+        @csrf
                 @if(isset($client))
                     @method('PUT')
                 @endif
+
+        <div class="pf-panel">
 
                 <div class="row mb-3">
                     <div class="col-md-6">
@@ -90,15 +90,14 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="d-flex justify-content-end mt-4">
-                    <x-admin.button type="submit">{{ isset($client) ? 'Update Client' : 'Create Client' }}</x-admin.button>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
 
+        <div class="pf-actions">
+            <a href="{{ route('admin.clients.index') }}" class="pf-back">Cancel</a>
+            <x-admin.button type="submit">{{ isset($client) ? 'Update' : 'Create' }} client</x-admin.button>
+        </div>
+    </form>
+</div>
 @push('scripts')
 <script>
     // Form validation

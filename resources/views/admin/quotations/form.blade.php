@@ -340,6 +340,7 @@
                                     data-currency="{{ $svc->currency ?? 'UGX' }}"
                                     data-unit="{{ $svc->unit }}"
                                     data-name="{{ $svc->name }}"
+                                    data-description="{{ $svc->description }}"
                                     {{ $item->service_id == $svc->id ? 'selected' : '' }}>
                                     {{ $svc->name }}{{ $svc->unit ? ' ('.ucfirst($svc->unit).')' : '' }}
                                 </option>
@@ -347,10 +348,9 @@
                             </select>
                         </td>
                         <td>
-                            <input type="text" class="form-control"
+                            <textarea class="form-control doc-text" rows="2"
                                 name="items[{{ $idx }}][description]"
-                                value="{{ $item->description }}"
-                                placeholder="Description" required {{ $locked ? 'readonly' : '' }}>
+                                placeholder="Description" required {{ $locked ? 'readonly' : '' }}>{{ $item->description }}</textarea>
                         </td>
                         <td>
                             <input type="text" class="form-control"
@@ -398,13 +398,14 @@
                                 data-rate="{{ $svc->rate }}"
                                 data-currency="{{ $svc->currency ?? 'UGX' }}"
                                 data-unit="{{ $svc->unit }}"
-                                data-name="{{ $svc->name }}">
+                                data-name="{{ $svc->name }}"
+                                    data-description="{{ $svc->description }}">
                                 {{ $svc->name }}{{ $svc->unit ? ' ('.ucfirst($svc->unit).')' : '' }}
                             </option>
                             @endforeach
                         </select>
                     </td>
-                    <td><input type="text" class="form-control" name="items[0][description]" placeholder="Description" required></td>
+                    <td><textarea class="form-control doc-text" rows="2" name="items[0][description]" placeholder="Description" required></textarea></td>
                     <td><input type="text" class="form-control" name="items[0][unit]"></td>
                     <td><input type="number" class="form-control quantity" name="items[0][quantity]" value="1" min="1" required></td>
                     <td><input type="number" step="0.01" class="form-control rate" name="items[0][rate]" value="0" required></td>
@@ -496,13 +497,14 @@
                     data-rate="{{ $svc->rate }}"
                     data-currency="{{ $svc->currency ?? 'UGX' }}"
                     data-unit="{{ $svc->unit }}"
-                    data-name="{{ $svc->name }}">
+                    data-name="{{ $svc->name }}"
+                                    data-description="{{ $svc->description }}">
                     {{ $svc->name }}{{ $svc->unit ? ' ('.ucfirst($svc->unit).')' : '' }}
                 </option>
                 @endforeach
             </select>
         </td>
-        <td><input type="text" class="form-control" name="items[__IDX__][description]" placeholder="Description" required></td>
+        <td><textarea class="form-control doc-text" rows="2" name="items[__IDX__][description]" placeholder="Description" required></textarea></td>
         <td><input type="text" class="form-control" name="items[__IDX__][unit]"></td>
         <td><input type="number" class="form-control quantity" name="items[__IDX__][quantity]" value="1" min="1" required></td>
         <td><input type="number" step="0.01" class="form-control rate" name="items[__IDX__][rate]" value="0" required></td>
@@ -555,7 +557,7 @@
                     </div>
                     <div class="col-12">
                         <label class="form-label-sm">Description <span class="text-muted fw-normal">(optional)</span></label>
-                        <textarea class="form-control" id="service_modal_description" rows="2" placeholder="Optional"></textarea>
+                        <textarea class="form-control" id="service_modal_description" rows="3" placeholder="Optional. Use lines starting with - for bullets."></textarea>
                     </div>
                 </div>
                 <div class="text-danger small mt-2 d-none" id="service_modal_error"></div>
@@ -570,6 +572,7 @@
 @endsection
 
 @push('scripts')
+@include('admin.partials.doc-text-editor')
 <script>
 (function () {
     'use strict';
@@ -677,7 +680,15 @@
         if (unit && unitEl && !unitEl.value) unitEl.value = unit;
 
         var descEl = row.querySelector('[name$="[description]"]');
-        if (name && descEl && !descEl.value) descEl.value = name;
+        if (name && descEl) {
+            var svcDesc = (opt.dataset.description || '').trim();
+            var filled  = '**' + name + '**' + (svcDesc ? '\n' + svcDesc : '');
+            // Replace if empty or still holding the previous auto-fill; never clobber hand edits.
+            if (!descEl.value.trim() || descEl.value === descEl.dataset.autofill) {
+                bwSetDocText(descEl, filled);
+                descEl.dataset.autofill = filled;
+            }
+        }
 
         var saveEl = row.querySelector('.save-as-service');
         if (saveEl) saveEl.checked = false;
@@ -740,6 +751,7 @@
                     existing.dataset.currency = data.currency || 'UGX';
                     existing.dataset.unit     = data.unit || '';
                     existing.dataset.name     = data.name;
+                    existing.dataset.description = data.description || '';
                     activeServiceSelect.value = String(data.id);
 
                     var rateEl = row?.querySelector('.rate');
@@ -747,7 +759,11 @@
                     var unitEl = row?.querySelector('[name$="[unit]"]');
                     if (unitEl && data.unit && !unitEl.value) unitEl.value = data.unit;
                     var descEl = row?.querySelector('[name$="[description]"]');
-                    if (descEl && !descEl.value) descEl.value = data.name;
+                    if (descEl && !descEl.value) {
+                        var f = '**' + data.name + '**' + (data.description ? '\n' + data.description : '');
+                        bwSetDocText(descEl, f);
+                        descEl.dataset.autofill = f;
+                    }
 
                     recalc();
                 }

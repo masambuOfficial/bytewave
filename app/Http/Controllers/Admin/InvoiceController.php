@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Invoice;
 use App\Models\Client;
 use App\Models\ClientService;
+use App\Support\DocText;
 use App\Models\Quotation;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -120,7 +121,7 @@ class InvoiceController extends Controller
 
             $description = $item['description'] ?? null;
             if (!$description && $service) {
-                $description = $service->name;
+                $description = DocText::fromService($service);
             }
 
             if (!$description) {
@@ -231,7 +232,7 @@ class InvoiceController extends Controller
 
             $description = $item['description'] ?? null;
             if (!$description && $service) {
-                $description = $service->name;
+                $description = DocText::fromService($service);
             }
 
             if (!$description) {

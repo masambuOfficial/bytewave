@@ -2,39 +2,24 @@
 
 @section('title', isset($service) ? 'Edit Service' : 'Add New Service')
 
-@push('styles')
-<style>
-    .bw-card {
-        border: 1px solid rgba(11, 31, 51, 0.06);
-        border-radius: 12px;
-    }
-    .bw-card-header {
-        background: #fff;
-        border-bottom: 1px solid rgba(11, 31, 51, 0.06);
-    }
-    .bw-help {
-        font-size: 0.85rem;
-        color: #546270;
-    }
-</style>
-@endpush
-
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-sm bw-card">
-                <div class="card-header bw-card-header py-3">
-                    <h5 class="mb-1">{{ isset($service) ? 'Edit Service' : 'Add Service' }}</h5>
-                    <div class="bw-help">Services are templates. You can override rate per quotation/invoice.</div>
-                </div>
-                <div class="card-body p-4">
-                    <form action="{{ isset($service) ? route('admin.client-services.update', $service) : route('admin.client-services.store') }}" 
+<div class="container-fluid pf pf--narrow">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($service) ? 'Edit service' : 'New service' }}</h1>
+            <p>Services are templates. You can override the rate per quotation or invoice.</p>
+        </div>
+        <a href="{{ route('admin.client-services.index') }}" class="pf-back">&larr; All services</a>
+    </div>
+
+    <form action="{{ isset($service) ? route('admin.client-services.update', $service) : route('admin.client-services.store') }}" 
                           method="POST">
-                        @csrf
+        @csrf
                         @if(isset($service))
                             @method('PUT')
                         @endif
+
+        <div class="pf-panel">
 
                         <div class="row g-3">
                             <div class="col-12">
@@ -52,11 +37,11 @@
 
                             <div class="col-12">
                                 <label for="description" class="form-label">Description</label>
-                                <textarea class="form-control @error('description') is-invalid @enderror" 
+                                <textarea class="form-control doc-text @error('description') is-invalid @enderror" 
                                           id="description" 
                                           name="description" 
-                                          rows="3">{{ old('description', $service->description ?? '') }}</textarea>
-                                <div class="bw-help mt-1">Optional. Use this for internal notes or what the service typically includes.</div>
+                                          rows="4">{{ old('description', $service->description ?? '') }}</textarea>
+                                <div class="bw-help mt-1">Optional. Appears on quotations and invoices when this service is picked. Use bullets to itemize what is included.</div>
                                 @error('description')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -137,15 +122,16 @@
                                 </div>
                             @endif
                         </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <x-admin.button href="{{ route('admin.client-services.index') }}" variant="secondary">Back to List</x-admin.button>
-                            <x-admin.button type="submit">{{ isset($service) ? 'Update' : 'Create' }} Service</x-admin.button>
-                        </div>
-                    </form>
-                </div>
-            </div>
         </div>
-    </div>
+
+        <div class="pf-actions">
+            <a href="{{ route('admin.client-services.index') }}" class="pf-back">Cancel</a>
+            <x-admin.button type="submit">{{ isset($service) ? 'Update' : 'Create' }} service</x-admin.button>
+        </div>
+    </form>
 </div>
 @endsection
+
+@push('scripts')
+@include('admin.partials.doc-text-editor')
+@endpush

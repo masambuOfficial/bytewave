@@ -287,7 +287,7 @@
                             @endphp
                             <tr>
                                 <td class="fw-semibold">{{ $service->name }}</td>
-                                <td>{{ Str::limit($service->description, 100) }}</td>
+                                <td>{{ Str::limit(str_replace(['**', "\n"], ['', ' '], (string) $service->description), 100) }}</td>
                                 <td>
                                     <span class="currency-pill">{{ $svcCurrency }}</span>
                                 </td>

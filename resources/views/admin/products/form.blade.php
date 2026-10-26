@@ -2,65 +2,27 @@
 
 @section('title', isset($product) ? 'Edit Product' : 'Create Product')
 
-@push('styles')
-<style>
-    .image-preview {
-        max-width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: 0.375rem;
-    }
-    .preview-wrapper {
-        position: relative;
-        width: 100%;
-        height: 200px;
-        border: 2px dashed #CDE3F1;
-        border-radius: 0.375rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-    .preview-wrapper:hover .preview-overlay {
-        opacity: 1;
-    }
-    .preview-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(11, 31, 51, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.2s;
-    }
-</style>
-@endpush
-
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        {{ isset($product) ? 'Edit Product' : 'Create New Product' }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form action="{{ isset($product) ? route('admin.products.update', $product) : route('admin.products.store') }}" 
+<div class="container-fluid pf">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($product) ? 'Edit product' : 'New product' }}</h1>
+        </div>
+        <a href="{{ route('admin.products.index') }}" class="pf-back">&larr; All products</a>
+    </div>
+
+    <form action="{{ isset($product) ? route('admin.products.update', $product) : route('admin.products.store') }}" 
                           method="POST" 
                           enctype="multipart/form-data">
-                        @csrf
+        @csrf
                         @if(isset($product))
                             @method('PUT')
                         @endif
 
-                        <div class="row">
-                            <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Details</h2>
                                 <!-- Name -->
                                 <div class="mb-3">
                                     <label for="name" class="form-label">Product Name</label>
@@ -198,8 +160,11 @@
                                     @enderror
                                 </div>
                             </div>
+            </div>
 
-                            <div class="col-md-4">
+            <div class="col-lg-4">
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Image &amp; status</h2>
                                 <!-- Image -->
                                 <div class="mb-3">
                                     <label class="form-label">Product Image</label>
@@ -256,17 +221,14 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <x-admin.button href="{{ route('admin.products.index') }}" variant="secondary">Back to List</x-admin.button>
-                            <x-admin.button type="submit">{{ isset($product) ? 'Update' : 'Create' }} Product</x-admin.button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
-    </div>
+
+        <div class="pf-actions">
+            <a href="{{ route('admin.products.index') }}" class="pf-back">Cancel</a>
+            <x-admin.button type="submit">{{ isset($product) ? 'Update' : 'Create' }} product</x-admin.button>
+        </div>
+    </form>
 </div>
 @endsection
 

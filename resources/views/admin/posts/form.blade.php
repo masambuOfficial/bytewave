@@ -4,66 +4,31 @@
 
 @push('styles')
 <style>
-    .image-preview {
-        max-width: 100%;
-        height: 250px;
-        object-fit: cover;
-        border-radius: 0.375rem;
-    }
-    .preview-wrapper {
-        position: relative;
-        width: 100%;
-        height: 250px;
-        border: 2px dashed #CDE3F1;
-        border-radius: 0.375rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        overflow: hidden;
-    }
-    .preview-wrapper:hover .preview-overlay {
-        opacity: 1;
-    }
-    .preview-overlay {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(11, 31, 51, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        opacity: 0;
-        transition: opacity 0.2s;
-    }
-    .ck-editor__editable {
-        min-height: 300px;
-    }
+    .ck-editor__editable { min-height: 300px; }
 </style>
 @endpush
 
 @section('content')
-<div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-lg-9">
-            <div class="card shadow">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">
-                        {{ isset($post) ? 'Edit Blog Post' : 'Write New Blog Post' }}
-                    </h6>
-                </div>
-                <div class="card-body">
-                    <form action="{{ isset($post) ? route('admin.posts.update', $post) : route('admin.posts.store') }}" 
+<div class="container-fluid pf">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($post) ? 'Edit post' : 'New post' }}</h1>
+        </div>
+        <a href="{{ route('admin.posts.index') }}" class="pf-back">&larr; All posts</a>
+    </div>
+
+    <form action="{{ isset($post) ? route('admin.posts.update', $post) : route('admin.posts.store') }}" 
                           method="POST" 
                           enctype="multipart/form-data">
-                        @csrf
+        @csrf
                         @if(isset($post))
                             @method('PUT')
                         @endif
 
-                        <div class="row">
-                            <div class="col-md-8">
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Content</h2>
                                 <!-- Title -->
                                 <div class="mb-3">
                                     <label for="title" class="form-label">Post Title</label>
@@ -121,8 +86,11 @@
                                     @enderror
                                 </div>
                             </div>
+            </div>
 
-                            <div class="col-md-4">
+            <div class="col-lg-4">
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Publishing</h2>
                                 <!-- Image -->
                                 <div class="mb-3">
                                     <label class="form-label">Featured Image</label>
@@ -226,22 +194,17 @@
                                     @enderror
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="d-flex justify-content-between mt-4">
-                            <x-admin.button href="{{ route('admin.posts.index') }}" variant="secondary">Back to List</x-admin.button>
-                            <div>
-                                @if(isset($post) && $post->status == 'draft')
-                                    <x-admin.button type="submit" name="action" value="save_draft" variant="secondary">Save Draft</x-admin.button>
-                                @endif
-                                <x-admin.button type="submit" name="action" value="publish">{{ isset($post) ? 'Update' : 'Publish' }} Post</x-admin.button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
-    </div>
+
+        <div class="pf-actions">
+            <a href="{{ route('admin.posts.index') }}" class="pf-back">Cancel</a>
+            @if(isset($post) && $post->status == 'draft')
+                <x-admin.button type="submit" name="action" value="save_draft" variant="secondary">Save draft</x-admin.button>
+            @endif
+            <x-admin.button type="submit" name="action" value="publish">{{ isset($post) ? 'Update' : 'Publish' }} post</x-admin.button>
+        </div>
+    </form>
 </div>
 @endsection
 

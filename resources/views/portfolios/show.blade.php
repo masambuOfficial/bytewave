@@ -86,6 +86,9 @@
                         </div>
 
                         @if($portfolio->technologies)
+                            @if($portfolio->isMultimedia())
+                                <p class="text-xs font-semibold tracking-wide uppercase text-bytewave-ink/70 mt-6 -mb-3">Tools &amp; Equipment</p>
+                            @endif
                             <div class="flex flex-wrap gap-2 mt-6">
                                 @foreach($portfolio->technologies as $tech)
                                     <span class="bg-bytewave-blue/5 text-bytewave-blue border border-bytewave-blue/20 text-xs font-medium px-3 py-1.5 rounded-full">{{ $tech }}</span>
@@ -114,13 +117,16 @@
 
                     <div class="mb-8">
                         <h2 class="text-xs font-semibold tracking-widest uppercase text-bytewave-blue mb-3 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Overview</h2>
-                        <p class="text-lg text-bytewave-ink leading-relaxed">{{ $portfolio->description }}</p>
+                        @include('portfolios.partials.text', ['text' => $portfolio->description, 'class' => 'text-lg text-bytewave-ink leading-relaxed'])
                     </div>
 
+                    {{-- Legacy: only for projects with no case study --}}
+                    @if($portfolio->work_done && !$portfolio->challenge && !$portfolio->solution && empty($portfolio->process_steps))
                     <div class="mb-10">
                         <h2 class="text-xs font-semibold tracking-widest uppercase text-bytewave-blue mb-3 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Work Done</h2>
-                        <p class="text-bytewave-ink leading-relaxed">{{ $portfolio->work_done }}</p>
+                        @include('portfolios.partials.text', ['text' => $portfolio->work_done])
                     </div>
+                    @endif
 
                     <div class="p-6 sm:p-8 bg-bytewave-blue/5 rounded-2xl border border-bytewave-blue/20">
                         <h3 class="text-xl font-bold mb-2 text-bytewave-ink">Start Your Project with Us</h3>
@@ -129,6 +135,83 @@
                     </div>
                 </div>
             </div>
+
+            @if($portfolio->isMultimedia())
+                @include('portfolios.partials.gallery')
+            @endif
+
+            {{-- Case study sections: each renders only when filled in --}}
+            @if(!empty($portfolio->highlights))
+            @php
+                $highlightCols = [1 => 'lg:grid-cols-1', 2 => 'lg:grid-cols-2', 3 => 'lg:grid-cols-3'][count($portfolio->highlights)] ?? 'lg:grid-cols-4';
+            @endphp
+            <div class="mt-20 grid grid-cols-2 {{ $highlightCols }} gap-4">
+                @foreach($portfolio->highlights as $highlight)
+                    <div class="rounded-2xl bg-bytewave-ink text-white p-6 text-center">
+                        <p class="text-3xl md:text-4xl font-bold">{{ $highlight['value'] }}</p>
+                        <p class="text-sm text-white/70 mt-2">{{ $highlight['label'] }}</p>
+                    </div>
+                @endforeach
+            </div>
+            @endif
+
+            @if($portfolio->challenge || $portfolio->solution)
+            <div class="mt-20 grid grid-cols-1 md:grid-cols-2 gap-6">
+                @if($portfolio->challenge)
+                <div class="p-6 sm:p-8 rounded-2xl border border-bytewave-blue/20 bg-white">
+                    <h2 class="text-xs font-semibold tracking-widest uppercase text-bytewave-blue mb-3">The Challenge</h2>
+                    @include('portfolios.partials.text', ['text' => $portfolio->challenge])
+                </div>
+                @endif
+                @if($portfolio->solution)
+                <div class="p-6 sm:p-8 rounded-2xl bg-bytewave-blue/5 border border-bytewave-blue/20">
+                    <h2 class="text-xs font-semibold tracking-widest uppercase text-bytewave-blue mb-3">Our Solution</h2>
+                    @include('portfolios.partials.text', ['text' => $portfolio->solution])
+                </div>
+                @endif
+            </div>
+            @endif
+
+            @if(!empty($portfolio->process_steps))
+            <div class="mt-20">
+                <div class="text-center mx-auto pb-10 max-w-2xl">
+                    <p class="text-bytewave-blue text-sm font-semibold uppercase tracking-wide mb-2">Our Approach</p>
+                    <h2 class="text-3xl md:text-4xl font-bold text-bytewave-ink">How We Did It</h2>
+                </div>
+                <ol class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    @foreach($portfolio->process_steps as $step)
+                        <li class="flex gap-4 p-6 rounded-2xl border border-bytewave-blue/20 bg-white">
+                            <span class="shrink-0 w-10 h-10 rounded-full bg-bytewave-blue text-white font-bold flex items-center justify-center">{{ $loop->iteration }}</span>
+                            <div>
+                                @if($step['title'] !== '')
+                                    <h3 class="text-lg font-bold text-bytewave-ink mb-2">{{ $step['title'] }}</h3>
+                                @endif
+                                @include('portfolios.partials.text', ['text' => $step['description'], 'class' => 'text-bytewave-ink/80 leading-relaxed'])
+                            </div>
+                        </li>
+                    @endforeach
+                </ol>
+            </div>
+            @endif
+
+            @if($portfolio->results)
+            <div class="mt-20 max-w-3xl mx-auto text-center">
+                <p class="text-bytewave-blue text-sm font-semibold uppercase tracking-wide mb-2">The Outcome</p>
+                <h2 class="text-3xl md:text-4xl font-bold text-bytewave-ink mb-6">Results</h2>
+                <div class="text-left">
+                    @include('portfolios.partials.text', ['text' => $portfolio->results, 'class' => 'text-lg text-bytewave-ink leading-relaxed'])
+                </div>
+            </div>
+            @endif
+
+            @if($portfolio->testimonial)
+            <figure class="mt-20 max-w-3xl mx-auto p-8 rounded-2xl bg-bytewave-blue/5 border border-bytewave-blue/20 text-center">
+                <blockquote class="text-xl text-bytewave-ink leading-relaxed">&ldquo;{{ $portfolio->testimonial }}&rdquo;</blockquote>
+                @if($portfolio->testimonial_author)
+                    <figcaption class="mt-4 text-sm font-semibold text-bytewave-blue">{{ $portfolio->testimonial_author }}</figcaption>
+                @endif
+            </figure>
+            @endif
 
             @if($relatedPortfolios->isNotEmpty())
             <!-- Related Projects Start -->
@@ -159,35 +242,9 @@
             <!-- Related Projects End -->
             @endif
 
-            @if($portfolio->media && $portfolio->media->isNotEmpty())
-            <div class="mt-24 pt-14 border-t border-bytewave-blue/20">
-                <div class="text-center mx-auto pb-10 max-w-2xl">
-                    <p class="text-bytewave-blue text-sm font-semibold uppercase tracking-wide mb-2 before:content-[''] before:inline-block before:w-1.5 before:h-1.5 before:bg-bytewave-gold before:mr-2 before:align-middle">Gallery</p>
-                    <h2 class="text-3xl md:text-4xl font-bold text-bytewave-ink">More Media</h2>
-                </div>
-
-                <div class="flex flex-wrap justify-center gap-6">
-                    @foreach($portfolio->media as $media)
-                        @php
-                            $mType = $media->media_type;
-                            $mSrc = $media->media_path ? asset('storage/' . ltrim($media->media_path, '/')) : null;
-                            $mEmbed = \App\Models\Portfolio::embedSrcFromRaw($media->media_embed);
-                        @endphp
-                        <div class="w-full sm:w-[calc(50%-0.75rem)] lg:w-[calc(33.333%-1rem)] max-w-sm bg-bytewave-blue/5 rounded-lg overflow-hidden shadow border border-bytewave-blue/20">
-                            @if($mType === 'video' && $mSrc)
-                                <video class="w-full h-64 object-cover" controls playsinline preload="metadata">
-                                    <source src="{{ $mSrc }}" type="video/mp4">
-                                </video>
-                            @elseif($mType === 'embed' && $mEmbed)
-                                <iframe class="w-full h-64" src="{{ $mEmbed }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-                            @else
-                                <img loading="lazy" decoding="async" src="{{ $mSrc }}" class="w-full h-64 object-cover" alt="{{ $portfolio->title }}">
-                            @endif
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @endif
+            @unless($portfolio->isMultimedia())
+                @include('portfolios.partials.gallery')
+            @endunless
 
             <!-- Back to Portfolio -->
             <div class="text-center mt-16">

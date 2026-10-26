@@ -3,158 +3,113 @@
 @section('title', isset($clientLogo) ? 'Edit Client Logo' : 'Add Client Logo')
 
 @section('content')
-<div class="container-fluid">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="h3 mb-0 text-gray-800">{{ isset($clientLogo) ? 'Edit' : 'Add' }} Client Logo</h1>
-        <x-admin.button href="{{ route('admin.client-logos.index') }}" variant="secondary">Back to List</x-admin.button>
+<div class="container-fluid pf">
+    <div class="pf-head">
+        <div>
+            <h1>{{ isset($clientLogo) ? 'Edit client logo' : 'New client logo' }}</h1>
+            <p>Logos appear in the "trusted by" strip on the public site.</p>
+        </div>
+        <a href="{{ route('admin.client-logos.index') }}" class="pf-back">&larr; All logos</a>
     </div>
 
-    <div class="row">
-        <div class="col-lg-8">
-            <div class="card shadow">
-                <div class="card-body">
-                    <form action="{{ isset($clientLogo) ? route('admin.client-logos.update', $clientLogo) : route('admin.client-logos.store') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @if(isset($clientLogo))
-                            @method('PUT')
-                        @endif
+    <form action="{{ isset($clientLogo) ? route('admin.client-logos.update', $clientLogo) : route('admin.client-logos.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @if(isset($clientLogo))
+            @method('PUT')
+        @endif
 
-                        <!-- Client Name -->
-                        <div class="form-group">
-                            <label for="name">Client Name <span class="text-danger">*</span></label>
-                            <input 
-                                type="text" 
-                                class="form-control @error('name') is-invalid @enderror" 
-                                id="name" 
-                                name="name" 
-                                value="{{ old('name', $clientLogo->name ?? '') }}" 
-                                required
-                            >
-                            @error('name')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+        <div class="row g-4">
+            <div class="col-lg-8">
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Details</h2>
+
+                    <div class="mb-field">
+                        <label for="name" class="form-label">Client name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name"
+                               value="{{ old('name', $clientLogo->name ?? '') }}" placeholder="e.g. Stellar Industries" required>
+                        @error('name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-field">
+                        <label for="logo" class="form-label">Logo <span class="text-danger">*</span></label>
+                        <input type="file" class="form-control @error('logo') is-invalid @enderror" id="logo" name="logo" accept="image/*"
+                               {{ isset($clientLogo) ? '' : 'required' }}>
+                        <small class="text-muted">PNG, JPG, GIF or SVG. Max size 2MB. Transparent backgrounds work best.</small>
+                        @error('logo')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-field">
+                        <label for="url" class="form-label">Website URL <span class="text-muted fw-normal">(optional)</span></label>
+                        <input type="url" class="form-control @error('url') is-invalid @enderror" id="url" name="url"
+                               value="{{ old('url', $clientLogo->url ?? '') }}" placeholder="https://example.com">
+                        <small class="text-muted">If provided, the logo links to this address.</small>
+                        @error('url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="pf-panel">
+                    <h2 class="pf-panel__title">Display</h2>
+
+                    <div class="mb-field">
+                        <label for="order" class="form-label">Display order</label>
+                        <input type="number" class="form-control @error('order') is-invalid @enderror" id="order" name="order"
+                               value="{{ old('order', $clientLogo->order ?? 0) }}" min="0" style="max-width: 10rem;">
+                        <small class="text-muted">Lower numbers appear first (0 = default).</small>
+                        @error('order')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-field">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" role="switch" id="is_active" name="is_active" value="1"
+                                   {{ old('is_active', $clientLogo->is_active ?? true) ? 'checked' : '' }}>
+                            <label class="form-check-label" for="is_active">Active (show on website)</label>
                         </div>
+                    </div>
+                </div>
+            </div>
 
-                        <!-- Logo Upload -->
-                        <div class="form-group">
-                            <label for="logo">Logo <span class="text-danger">*</span></label>
+            <div class="col-lg-4">
+                <div class="pf-side">
+                    <div class="pf-panel pf-preview">
+                        <h2 class="pf-panel__title">Preview</h2>
+                        <div class="pf-preview__stage">
                             @if(isset($clientLogo) && $clientLogo->logo)
-                                <div class="mb-2">
-                                    <img src="{{ asset('storage/' . $clientLogo->logo) }}" alt="Current logo" class="img-thumbnail" style="max-width: 200px;">
+                                <img src="{{ asset('storage/' . $clientLogo->logo) }}" alt="Logo preview" class="img-fluid" style="max-height: 100px;">
+                            @else
+                                <div style="color:#546270">
+                                    <i class="fas fa-image mb-2" style="font-size:1.75rem;color:#0773B9;opacity:.6"></i>
+                                    <p class="mb-0 small">Logo preview will appear here</p>
                                 </div>
                             @endif
-                            <input 
-                                type="file" 
-                                class="form-control-file @error('logo') is-invalid @enderror" 
-                                id="logo" 
-                                name="logo" 
-                                accept="image/*"
-                                {{ isset($clientLogo) ? '' : 'required' }}
-                            >
-                            <small class="form-text text-muted">PNG, JPG, GIF, or SVG. Max size: 2MB. Transparent backgrounds recommended.</small>
-                            @error('logo')
-                                <div class="invalid-feedback d-block">{{ $message }}</div>
-                            @enderror
                         </div>
+                        <strong class="d-block mt-3">{{ old('name', $clientLogo->name ?? 'Client name') }}</strong>
+                    </div>
 
-                        <!-- Website URL -->
-                        <div class="form-group">
-                            <label for="url">Website URL (Optional)</label>
-                            <input 
-                                type="url" 
-                                class="form-control @error('url') is-invalid @enderror" 
-                                id="url" 
-                                name="url" 
-                                value="{{ old('url', $clientLogo->url ?? '') }}" 
-                                placeholder="https://example.com"
-                            >
-                            <small class="form-text text-muted">If provided, logo will be clickable</small>
-                            @error('url')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Display Order -->
-                        <div class="form-group">
-                            <label for="order">Display Order</label>
-                            <input 
-                                type="number" 
-                                class="form-control @error('order') is-invalid @enderror" 
-                                id="order" 
-                                name="order" 
-                                value="{{ old('order', $clientLogo->order ?? 0) }}" 
-                                min="0"
-                            >
-                            <small class="form-text text-muted">Lower numbers appear first (0 = default)</small>
-                            @error('order')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <!-- Is Active -->
-                        <div class="form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input 
-                                    type="checkbox" 
-                                    class="custom-control-input" 
-                                    id="is_active" 
-                                    name="is_active" 
-                                    value="1"
-                                    {{ old('is_active', $clientLogo->is_active ?? true) ? 'checked' : '' }}
-                                >
-                                <label class="custom-control-label" for="is_active">
-                                    Active (Display on website)
-                                </label>
-                            </div>
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="form-group mb-0">
-                            <x-admin.button type="submit">{{ isset($clientLogo) ? 'Update' : 'Add' }} Logo</x-admin.button>
-                            <x-admin.button href="{{ route('admin.client-logos.index') }}" variant="secondary">Cancel</x-admin.button>
-                        </div>
-                    </form>
+                    <div class="pf-panel">
+                        <h2 class="pf-panel__title">Tips</h2>
+                        <ul class="pf-note">
+                            <li>Use a transparent PNG for best results</li>
+                            <li>Recommended size: 200x100px</li>
+                            <li>Keep the file under 500KB</li>
+                            <li>SVG is ideal for logos</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Preview Card -->
-        <div class="col-lg-4">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">Preview</h6>
-                </div>
-                <div class="card-body text-center">
-                    <div class="p-4 bg-light rounded">
-                        @if(isset($clientLogo) && $clientLogo->logo)
-                            <img src="{{ asset('storage/' . $clientLogo->logo) }}" alt="Logo preview" class="img-fluid" style="max-height: 100px;">
-                        @else
-                            <div class="text-muted">
-                                <i class="fas fa-image fa-3x mb-2"></i>
-                                <p>Logo preview will appear here</p>
-                            </div>
-                        @endif
-                    </div>
-                    <div class="mt-3">
-                        <strong>{{ old('name', $clientLogo->name ?? 'Client Name') }}</strong>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card shadow mt-3">
-                <div class="card-header">
-                    <h6 class="m-0 font-weight-bold text-primary">Tips</h6>
-                </div>
-                <div class="card-body">
-                    <ul class="small mb-0">
-                        <li>Use transparent PNG for best results</li>
-                        <li>Recommended size: 200x100px</li>
-                        <li>Keep file size under 500KB</li>
-                        <li>SVG format is ideal for logos</li>
-                    </ul>
-                </div>
-            </div>
+        <div class="pf-actions">
+            <a href="{{ route('admin.client-logos.index') }}" class="pf-back">Cancel</a>
+            <x-admin.button type="submit">{{ isset($clientLogo) ? 'Update' : 'Add' }} logo</x-admin.button>
         </div>
-    </div>
+    </form>
 </div>
 @endsection
