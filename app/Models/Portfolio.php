@@ -79,7 +79,7 @@ class Portfolio extends Model
             if (preg_match('/^\d+[.)]\s+(.+)$/', $line, $m)) {
                 $type = 'ol';
                 $line = $m[1];
-            } elseif (preg_match('/^[-•*]\s+(.+)$/u', $line, $m)) {
+            } elseif (preg_match('/^(?:[-•*]\s+|[➢▪●]\s*)(.+)$/u', $line, $m)) {
                 $type = 'ul';
                 $line = $m[1];
             } else {

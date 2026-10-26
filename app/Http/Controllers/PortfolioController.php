@@ -25,6 +25,16 @@ class PortfolioController extends Controller
             ->take(3)
             ->get();
 
+        // Top up with other projects so the section is a full row of three.
+        if ($relatedPortfolios->count() < 3) {
+            $relatedPortfolios = $relatedPortfolios->concat(
+                Portfolio::whereNotIn('id', $relatedPortfolios->pluck('id')->push($portfolio->id))
+                    ->inRandomOrder()
+                    ->take(3 - $relatedPortfolios->count())
+                    ->get()
+            );
+        }
+
         return view('portfolios.show', compact('portfolio', 'relatedPortfolios'));
     }
 }

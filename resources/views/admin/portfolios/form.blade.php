@@ -171,15 +171,16 @@
                                 <label class="form-label">How we did it</label>
                                 <button type="button" id="addStep" class="pf-link-btn">+ Add step</button>
                             </div>
-                            <span class="hint mb-2 mt-0">Ordered steps, shown as numbered cards.</span>
+                            <span class="hint mb-2 mt-0">One row per step, in order. Each step has a short <strong>name</strong> and a one- or two-sentence <strong>description</strong>; the public page shows them as a numbered timeline. Example: <em>Planning</em> &mdash; Met the client's team on 6 January to agree the programme.</span>
                             <div id="stepRows">
                                 @foreach($steps as $i => $step)
                                     <div class="border rounded p-2 mb-2 repeat-row">
                                         <div class="input-group mb-2">
-                                            <input type="text" class="form-control" name="process_steps[{{ $i }}][title]" value="{{ $step['title'] ?? '' }}" placeholder="Step title" maxlength="150">
-                                            <button type="button" class="btn btn-outline-secondary remove-row" aria-label="Remove">&times;</button>
+                                            <span class="input-group-text step-num">{{ $loop->iteration }}</span>
+                                            <input type="text" class="form-control" name="process_steps[{{ $i }}][title]" value="{{ $step['title'] ?? '' }}" placeholder="Step name, e.g. Planning" maxlength="150">
+                                            <button type="button" class="btn btn-outline-secondary remove-row" aria-label="Remove step">&times;</button>
                                         </div>
-                                        <textarea class="form-control" name="process_steps[{{ $i }}][description]" rows="2" placeholder="What happened in this step? Start lines with - for bullets.">{{ $step['description'] ?? '' }}</textarea>
+                                        <textarea class="form-control" name="process_steps[{{ $i }}][description]" rows="2" placeholder="Short description, e.g. Met the client's team to agree the programme and what the stream must show.">{{ $step['description'] ?? '' }}</textarea>
                                     </div>
                                 @endforeach
                             </div>
@@ -556,22 +557,29 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>`);
     });
 
+    function numberSteps() {
+        stepRows.querySelectorAll('.step-num').forEach((el, n) => { el.textContent = n + 1; });
+    }
+
     document.getElementById('addStep').addEventListener('click', function() {
         const i = rowIndex++;
         stepRows.insertAdjacentHTML('beforeend', `
             <div class="border rounded p-2 mb-2 repeat-row">
                 <div class="input-group mb-2">
-                    <input type="text" class="form-control" name="process_steps[${i}][title]" placeholder="Step title" maxlength="150">
-                    <button type="button" class="btn btn-outline-secondary remove-row" aria-label="Remove">&times;</button>
+                    <span class="input-group-text step-num"></span>
+                    <input type="text" class="form-control" name="process_steps[${i}][title]" placeholder="Step name, e.g. Planning" maxlength="150">
+                    <button type="button" class="btn btn-outline-secondary remove-row" aria-label="Remove step">&times;</button>
                 </div>
-                <textarea class="form-control" name="process_steps[${i}][description]" rows="2" placeholder="What happened in this step? Start lines with - for bullets."></textarea>
+                <textarea class="form-control" name="process_steps[${i}][description]" rows="2" placeholder="Short description, e.g. Met the client's team to agree the programme and what the stream must show."></textarea>
             </div>`);
+        numberSteps();
     });
 
     caseStudyFields.addEventListener('click', function(e) {
         const btn = e.target.closest('.remove-row');
         if (btn) {
             btn.closest('.repeat-row').remove();
+            numberSteps();
             updateCaseStudyCount();
         }
     });
