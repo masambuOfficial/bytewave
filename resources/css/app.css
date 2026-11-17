@@ -9,6 +9,7 @@
 @theme {
     --font-sans: 'Mona Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
+    --font-heading: 'Cal Sans', 'Mona Sans', ui-sans-serif, system-ui, sans-serif;
     
     /* BYTEWAVE brand: Blue, White, Ink. See BRAND.md.
        Lighter strengths use opacity, e.g. bg-bytewave-blue/5, border-bytewave-blue/20, text-bytewave-ink/70 */
@@ -30,4 +31,11 @@
 /* Prevent horizontal scroll */
 body {
     overflow-x: hidden;
+}
+
+/* Headings use Cal Sans, which has a single weight. Kept outside Tailwind's layers so utilities like
+   font-bold cannot force a fake-bold look on it. */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 400;
 }

@@ -52,7 +52,7 @@
 
                 <!-- CTA Button (Right) -->
                 <div class="hidden lg:flex items-center">
-                    <x-cta-button href="{{ url('/contact') }}" />
+                    <x-cta-button href="{{ route('website-quote') }}" text="Get a Website Quote" />
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -116,7 +116,7 @@
                         </form>
                     @endauth
                     <div class="mt-4">
-                        <x-cta-button href="{{ url('/contact') }}" :fullWidthMobile="true" />
+                        <x-cta-button href="{{ route('website-quote') }}" text="Get a Website Quote" :fullWidthMobile="true" />
                     </div>
                 </div>
             </div>

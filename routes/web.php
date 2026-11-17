@@ -35,6 +35,14 @@ Route::view('/terms', 'pages.terms')->name('terms');
 Route::view('/faqs', 'pages.faqs')->name('faqs');
 Route::view('/help', 'pages.help')->name('help');
 
+// Website quotation form. Standalone page (its CSS targets bare header/footer/button
+// selectors, so it is served as-is rather than inside the site layout).
+// Supports ?service=online|school|church|redesign to preselect the website type.
+Route::get('/website-quote', fn () => response()->file(
+    resource_path('views/pages/website-quote.html'),
+    ['Content-Type' => 'text/html; charset=UTF-8']
+))->name('website-quote');
+
 // Blog routes
 Route::prefix('blog')->name('blog.')->group(function () {
     Route::get('/', [BlogController::class, 'index'])->name('index');

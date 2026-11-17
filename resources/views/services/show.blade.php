@@ -68,6 +68,11 @@
                     <div class="mt-6">
                         <x-cta-button :href="route('contact')" text="Contact Us" full-width />
                     </div>
+                    @if(Str::contains(strtolower($service->name . ' ' . $service->category), ['web', 'website']))
+                        <div class="mt-4">
+                            <x-cta-button :href="route('website-quote')" text="Get a Website Quote" full-width />
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

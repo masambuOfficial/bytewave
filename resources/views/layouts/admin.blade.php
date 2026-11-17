@@ -18,10 +18,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Mona Sans: the same font as the public site -->
+    <!-- Mona Sans + Cal Sans: the same fonts as the public site -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mona+Sans:ital,wght@0,200..900;1,200..900&family=Cal+Sans&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet">
 
@@ -137,6 +137,7 @@
         .form-control:focus, .form-select:focus { border-color: #0773B9; box-shadow: 0 0 0 0.2rem rgba(7, 115, 185, 0.2); }
 
         /* Date picker (flatpickr), on the brand palette: Blue, White, Ink */
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 { font-family: 'Cal Sans', 'Mona Sans', ui-sans-serif, system-ui, sans-serif; font-weight: 400; }
         .flatpickr-calendar { font-family: 'Mona Sans', ui-sans-serif, system-ui, sans-serif; border-radius: 8px; border: 1px solid #CDE3F1; box-shadow: 0 8px 24px rgba(11, 31, 51, 0.12); color: #0B1F33; }
         .flatpickr-calendar.arrowTop:before, .flatpickr-calendar.arrowTop:after { border-bottom-color: #0773B9; }
         .flatpickr-calendar.arrowBottom:before, .flatpickr-calendar.arrowBottom:after { border-top-color: #FFFFFF; }

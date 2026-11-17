@@ -143,6 +143,25 @@
                                         </div>
                                     @endforeach
                                 </div>
+
+                                @if(Str::contains(strtolower($category), 'web'))
+                                    <!-- Website quote CTA -->
+                                    <div class="mt-8 bg-white rounded-xl shadow p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+                                        <div>
+                                            <h4 class="text-xl font-bold text-bytewave-ink mb-2">Need a website?</h4>
+                                            <p class="text-bytewave-ink/70 mb-4">Answer a few questions and we'll prepare a tailored quotation. It takes about 5 minutes.</p>
+                                            <div class="flex flex-wrap gap-2">
+                                                <a href="{{ route('website-quote', ['service' => 'online']) }}" class="px-4 py-2 rounded-full border border-bytewave-blue/20 text-bytewave-blue text-sm font-medium hover:bg-bytewave-blue hover:text-white transition-colors">Online shop</a>
+                                                <a href="{{ route('website-quote', ['service' => 'school']) }}" class="px-4 py-2 rounded-full border border-bytewave-blue/20 text-bytewave-blue text-sm font-medium hover:bg-bytewave-blue hover:text-white transition-colors">School</a>
+                                                <a href="{{ route('website-quote', ['service' => 'church']) }}" class="px-4 py-2 rounded-full border border-bytewave-blue/20 text-bytewave-blue text-sm font-medium hover:bg-bytewave-blue hover:text-white transition-colors">Church</a>
+                                                <a href="{{ route('website-quote', ['service' => 'redesign']) }}" class="px-4 py-2 rounded-full border border-bytewave-blue/20 text-bytewave-blue text-sm font-medium hover:bg-bytewave-blue hover:text-white transition-colors">Website redesign</a>
+                                            </div>
+                                        </div>
+                                        <div class="flex-shrink-0">
+                                            <x-cta-button href="{{ route('website-quote') }}" text="Get a Website Quote" fullWidthMobile />
+                                        </div>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>

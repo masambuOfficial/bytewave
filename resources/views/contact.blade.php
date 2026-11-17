@@ -63,6 +63,15 @@
                 </div>
             </div>
 
+            <!-- Website quote -->
+            <div class="mb-12 bg-bytewave-blue rounded-xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Need a website?</h3>
+                    <p class="text-white">Tell us what you need and we'll prepare a tailored quotation. It takes about 5 minutes.</p>
+                </div>
+                <x-cta-button href="{{ route('website-quote') }}" text="Get a Website Quote" variant="light" fullWidthMobile />
+            </div>
+
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
                 <!-- Map -->
                 <div class="animate-fadeIn flex">

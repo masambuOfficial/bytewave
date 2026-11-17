@@ -307,6 +307,11 @@
                                                 <span class="text-bytewave-ink" x-text="feature"></span>
                                             </div>
                                         </template>
+                                        <template x-if="service.icon === 'code'">
+                                            <div class="pt-4">
+                                                <x-cta-button href="{{ route('website-quote') }}" text="Get a Website Quote" size="sm" />
+                                            </div>
+                                        </template>
                                     </div>
                                 </div>
 
@@ -522,16 +527,27 @@
                     </div>
                 </div>
                 
-                <!-- Contact Button -->
-                <x-cta-button 
-                    href="{{ url('/contact') }}" 
-                    text="Contact us now"
-                    bgColor="bg-white"
-                    hoverBgColor="hover:bg-bytewave-blue/10"
-                    textColor="text-bytewave-blue"
-                    arrowBgColor="bg-bytewave-blue"
-                    arrowColor="text-white"
-                />
+                <!-- Contact Buttons -->
+                <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+                    <x-cta-button
+                        href="{{ url('/contact') }}"
+                        text="Contact us now"
+                        bgColor="bg-white"
+                        hoverBgColor="hover:bg-bytewave-blue/10"
+                        textColor="text-bytewave-blue"
+                        arrowBgColor="bg-bytewave-blue"
+                        arrowColor="text-white"
+                    />
+                    <x-cta-button
+                        href="{{ route('website-quote') }}"
+                        text="Get a Website Quote"
+                        bgColor="bg-white"
+                        hoverBgColor="hover:bg-bytewave-blue/10"
+                        textColor="text-bytewave-blue"
+                        arrowBgColor="bg-bytewave-blue"
+                        arrowColor="text-white"
+                    />
+                </div>
             </div>
         </div>
     </section>
@@ -990,7 +1006,7 @@
                         </div>
                         <div>
                             <p class="text-white/90 text-sm mb-1">Call Us Now</p>
-                            <h3 class="text-white text-2xl md:text-3xl font-bold">{{ config('company.phone') }}</h3>
+                            <p class="text-white text-2xl md:text-3xl font-bold">{{ config('company.phone') }}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-6">

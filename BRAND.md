@@ -131,11 +131,11 @@ The full-colour logo is never placed on solid Blue or on a photograph. The blue 
 
 ## 4. Typography
 
-**Typeface: Mona Sans** (Google Fonts, already loaded on the public site). One family for the whole system.
+**Typeface: Cal Sans for headings, Mona Sans for everything else** (both Google Fonts, loaded in all three layouts). Cal Sans has one weight, so headings are never bold.
 
-- The admin panel currently uses Outfit (`layouts/admin.blade.php`). It moves to Mona Sans so admin and public site match.
-- Fallback stack, already in `app.css`: `'Mona Sans', ui-sans-serif, system-ui, sans-serif`.
-- Documents rendered as PDF must confirm Mona Sans loads, or fall back to a system sans-serif.
+- The public site, auth pages and admin panel all use the same pair.
+- Fallback stacks, in `app.css`: body `'Mona Sans', ui-sans-serif, system-ui, sans-serif`; headings `'Cal Sans', 'Mona Sans', ui-sans-serif, system-ui, sans-serif`.
+- Documents rendered as PDF must confirm Mona Sans and Cal Sans load, or fall back to a system sans-serif.
 
 ### 4.1 Scale
 
@@ -246,7 +246,7 @@ Invoices, receipts and quotations are seen by clients and must match the website
 - **Total row:** solid Blue with white bold text (5.05:1).
 - **Text:** body `#0B1F33`, labels and notes `#546270`. Paid and balance rows on receipts use the status colours (`#17703F` on `#E3F5EA`, `#C0392B` on `#FDEDEC`).
 - **Print button** (screen only, hidden when printing): Blue.
-- **Font:** DejaVu Sans, because DomPDF cannot load web fonts. Mona Sans would need its font files installed for DomPDF (open decision 4).
+- **Font:** DejaVu Sans, because DomPDF cannot load web fonts. Mona Sans and Cal Sans would need their font files installed for DomPDF (open decision 4).
 - The old `#1565C0` blue is gone from all three templates (step 7 done).
 - Currency uses tabular numerals, right-aligned. The business bills in UGX and USD.
 
@@ -352,7 +352,7 @@ Each step is a separate, reviewable change.
 3. **Remove gold.** Find every use with `grep -rniE "gold|yellow|FBB145|F59E0B" resources/views` and replace per Section 6. This is the largest manual step; review page by page rather than find-and-replace.
 4. **Neutrals.** Replace `gray-*` and the grey hex codes with Ink, Ink 70% and Blue strengths.
 5. **Footer and hero.** Solid Blue footer with 100% white text; Ink overlay on the hero.
-6. **Admin panel.** Switch the font to Mona Sans, replace hex literals with tokens, apply the status badges.
+6. **Admin panel.** Switch the font to Mona Sans and Cal Sans, replace hex literals with tokens, apply the status badges.
 7. **Print documents.** Replace `#1565C0` and the neutrals with the literal hex values in Section 7, and add the Blue total rule.
 8. **Cleanup (done).** `public/css/style.css` and the unused `public/css/bootstrap.min.css` are deleted. The back-to-top button now appears after scrolling, the legacy pages have the standard image banner, and banners with a missing photo fall back to solid Ink.
 9. **Logo.** Recolour the parallelogram, export the reversed version, replace the files (Section 3).
@@ -370,11 +370,11 @@ Each step is a separate, reviewable change.
 - Primary button: Blue, hover Ink. On hero or Blue: White, hover Blue 5%.
 - Footer: solid Blue. Hero overlay: Ink.
 - No gold, no yellow, no stock Tailwind blues.
-- One font: **Mona Sans**. Signature button corner `8px 8px 20px 8px`.
+- Fonts: **Cal Sans** (headings) and **Mona Sans** (everything else). Signature button corner `8px 8px 20px 8px`.
 
 **Open decisions**
 
 1. **Logo parallelogram colour.** Blue at 60% (recommended), Ink, or solid Blue. Decide before step 9.
 2. **Reversed logo.** A white version is needed for the footer and hero. It does not exist yet.
 3. **Ink button hover.** Blue-to-Ink is a strong change. If it feels too heavy, the alternative is the same Blue with a 2px Ink underline on the label. Try it on the first button and decide.
-4. **Print fonts.** Confirm Mona Sans embeds in the PDF generator or choose a fallback.
+4. **Print fonts.** Confirm Mona Sans and Cal Sans embed in the PDF generator or choose a fallback.
